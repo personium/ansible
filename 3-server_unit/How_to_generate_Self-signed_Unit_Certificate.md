@@ -1,10 +1,10 @@
-# How to generate Self-signed Unit Certificate 
+# How to generate Self-signed Unit Certificate
 
 -------------------------------------------------
 
 ## Introduction
 
-This is a manual for the procedure to generate the Self-signed unit certificate, which is required for the ansible execution to build personium.io unit.  
+This is a manual for the procedure to generate the Self-signed unit certificate, which is required for the ansible execution to build Personium unit.  
 Followings will be created by openssl, after performing the procedure below.
 
 | File name | Explanation |
@@ -17,7 +17,7 @@ Now you can get these certificate and key! Below is the procedure to generate th
 
 ---------------------------------------
 
-### Part 1. Create personium.io unit secret key (unit.key) on Bastion server
+### Part 1. Create Personium unit secret key (unit.key) on Bastion server
 
 1. Change directory to the certificate deployment directory of Bastion server.
 
@@ -54,7 +54,7 @@ Confirm that the unit.key is created
     # ls
     total 4
     -rw-r--r--. 1 root root 1675 Sep  1 20:27 unit.key
-```	
+```
 
 ### Part 2. Create self-signed unit certificate
 
@@ -134,4 +134,4 @@ Confirm that the unit.key is created
 ### Summary
 
 Though there are several option to generate the certificate, this time we generate it by self-signing.
-Generally, self-signed unit certificate can't be used in public, so this procedure should be used only in preparing private personium.io unit.
+Generally, self-signed unit certificate can't be used in public, so this procedure should be used only in preparing private Personium unit.

@@ -2,7 +2,7 @@
 ---------------------------------------
 
 ## Overview
-The purpose of this document is to explain explecitely how to construct personium unit on 3 servers using ansible.
+The purpose of this document is to explain explecitely how to construct Personium unit on 3 servers using Ansible.
 
 ## Server setup :white_check_mark:
 
@@ -27,7 +27,7 @@ The purpose of this document is to explain explecitely how to construct personiu
 |---|---|
 | `/init_personium.yml`  |		yml file which should be executed by Ansible-playbook|
 | `/[group name].yml`	   |		yml file to retrieve the variable of each group and execute its related tasks|
-| `/Ansible.cfg`         |		Describes the required Settings for Ansible execution. (\*Modification is not required)|
+| `/ansible.cfg`         |		Describes the required Settings for Ansible execution. (\*Modification is not required)|
 | `/static_inventory/`   |		This folder contains all the essential information of different environments|
 | `/static_inventory/hosts\*#`	          |        Describes information of hosts (IP address, FQDN, group, User name, Private Key, etc.)|
 | `/group_vars/`	       |		Folder to organize files in order to perform various customization or tuning on servers|
@@ -85,7 +85,7 @@ The following key file will be generated automatically during the Ansible execut
 #### 4: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
-  * Deploy the **self-signed unit certificate** and **private key** under `Ansible/resource/ap/opt/x509/` folder with the following file names.
+  * Deploy the **self-signed unit certificate** and **private key** under `ansible/resource/ap/opt/x509/` folder with the following file names.
     - unit-self-sign.crt（self-signed unit certificate）
     - unit.key（private key）  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md "").
@@ -97,7 +97,7 @@ The following key file will be generated automatically during the Ansible execut
 Following is the self-signed ssl certificate creation procedure.
 
 ```console
-    # cd /root/Ansible/resource/web/opt/nginx/conf
+    # cd /root/ansible/resource/web/opt/nginx/conf
     # openssl genrsa -des3 -out server.key 1024
            Enter pass phrase for server.key:                            \* Optional (Characters length: is 4 - 8191)
     # openssl req -new -key server.key -out server.csr
@@ -132,9 +132,9 @@ Following is the self-signed ssl certificate creation procedure.
 #### 6: Deploy SSL certificate / private key
 
 * Certificate deployment
-   * Deploy the certificate under `/root/Ansible/resource/web/opt/nginx/conf/` folder
+   * Deploy the certificate under `/root/ansible/resource/web/opt/nginx/conf/` folder
 ```
-    /root/Ansible/resource/web/opt/nginx/conf/
+    /root/ansible/resource/web/opt/nginx/conf/
        - server.crt（SSL certificate）
        - server.key（private key）
 ```
@@ -271,7 +271,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 * Install Ansible
 
 ```console
-    # yum install Ansible
+    # yum install ansible
     this ok [y/N]:  (\* type [y] and press enter)
 ```
 
@@ -283,7 +283,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
   \* Check the hosts file if anything is missing
 
 ```console
-      # cat /root/Ansible/static_inventory/hosts | grep "{"
+      # cat /root/ansible/static_inventory/hosts | grep "{"
 ```
 
   - If nothing shows, meaning all are configured
@@ -292,13 +292,13 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
   \* Check if all the yml files under group_vars are modified as required
 
 ```console
-      # cat /root/Ansible/group_vars/ap.yml
-      # cat /root/Ansible/group_vars/bastion.yml
-      # cat /root/Ansible/group_vars/common.yml
-      # cat /root/Ansible/group_vars/es.yml
-      # cat /root/Ansible/group_vars/mysql.yml
-      # cat /root/Ansible/group_vars/nfs.yml
-      # cat /root/Ansible/group_vars/web.yml
+      # cat /root/ansible/group_vars/ap.yml
+      # cat /root/ansible/group_vars/bastion.yml
+      # cat /root/ansible/group_vars/common.yml
+      # cat /root/ansible/group_vars/es.yml
+      # cat /root/ansible/group_vars/mysql.yml
+      # cat /root/ansible/group_vars/nfs.yml
+      # cat /root/ansible/group_vars/web.yml
 ```
 
 #### 3: Execute Ansible
@@ -306,7 +306,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 * Access to the Bastion server and change to the `Ansible` directory
 
 ```console
-    # cd /root/Ansible/
+    # cd /root/ansible/
 ```
 
 * Execute Ansible
@@ -315,7 +315,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
     # date; Ansible-playbook init_personium.yml ; date
 ```
 
-  \* After few minutes-hours (varies on case by case) Ansible process will be done. (\* Don't kill the process in between) personium Unit will be created with the configured FQDN. Also will be accessible from web (ex: https://FQDN)
+  \* After few minutes-hours (varies on case by case) Ansible process will be done. (\* Don't kill the process in between) Personium Unit will be created with the configured FQDN. Also will be accessible from web (ex: https://FQDN)
 
 * Confirm if Ansible executed properly
 
@@ -336,7 +336,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 
 \* reachability testing is done, if it shows the same
 
- For the developers conveniency this document introduced the procedure to construct personium unit using ansible.
-Hope developers will enjoy deploying personium unit on any of their suitable environment. Please try personium and let us know your feedback or comments for further betterment of personium. Your feedback and comments will be highly appreciated.
+ For the developers conveniency this document introduced the procedure to construct Personium unit using Ansible.
+Hope developers will enjoy deploying Personium unit on any of their suitable environment. Please try Personium and let us know your feedback or comments for further betterment of Personium. Your feedback and comments will be highly appreciated.
 
 --------------------------------------------------------------------

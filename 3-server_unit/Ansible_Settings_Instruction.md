@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is the setup document to launch personium unit by ansible. Part 1 (Initial Configuration) must be completed, where Part 2 (Tuning personium) modification is optional, based on the developers requirement.
+This is the setup document to launch Personium unit by ansible. Part 1 (Initial Configuration) must be completed, where Part 2 (Tuning Personium) modification is optional, based on the developers requirement.
 
 Below are the files where modification is required.
 
@@ -117,7 +117,7 @@ Below are the files where modification is required.
 # EX: {nfs_Tag_Name}->test-NFS
 ```
 
-### Part 2 (Tuning personium) :white_check_mark:
+### Part 2 (Tuning Personium) :white_check_mark:
 
 * **Item to be set upon ansible execution(File destination : /group_vars/[group name].yml)**
 * As an option, changing the recorded values of all .yml files under group_vars directory is possible. But basically, no modification is required unless server tuning is necessary.
@@ -203,4 +203,4 @@ Below are the files where modification is required.
 
 ## Summary
 
-In this document we tried to explain what are the file we require you to modify before executing ansible and build personium unit. Please use this document as reference.
+In this document we tried to explain what are the file we require you to modify before executing ansible and build Personium unit. Please use this document as reference.

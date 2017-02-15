@@ -1,0 +1,20 @@
+# Copyright FUJITSU LIMITED 2017.
+
+- name: JDKのダウンロード
+  command: 'wget -q -O /usr/src/jdk1.8.0_111.tar.gz --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz creates=/usr/src/jdk1.8.0_111.tar.gz'
+
+- name: JDKのアーカイブを解凍
+  command: "tar -xzf /usr/src/jdk1.8.0_111.tar.gz -C /usr/src creates=/usr/src/jdk1.8.0_111"
+
+- name: JDKのオーナーをroot/rootに変更 
+  file: "state=directory path=/usr/src/jdk1.8.0_111 owner=root group=root recurse=yes"
+
+- name: JDKを /opt に配備
+  command: "mv /usr/src/jdk1.8.0_111 /opt creates=/opt/jdk1.8.0_111"
+
+- name: /opt/jdk1.8.0_111 に /opt/jdk のシンボリックリンクを作成
+  file: "state=link src=/opt/jdk1.8.0_111 dest=/opt/jdk"
+
+- name: /root/.bashrc に JAVAのEXPORTを追加
+  copy: src=./resource/common/etc/bashrc dest=/etc/bashrc owner=root group=root mode=0644
+

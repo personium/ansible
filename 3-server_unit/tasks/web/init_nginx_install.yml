@@ -1,0 +1,84 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: pcre-devel をインストール
+  yum: name=pcre-devel state=latest
+
+- name: zlib-devel をインストール
+  yum: name=zlib-devel state=latest
+
+- name: openssl-devel をインストール
+  yum: name=openssl-devel state=latest
+
+- name: lsof をインストール
+  yum: name=lsof state=latest
+
+- name: gcc をインストール
+  yum: name=gcc state=latest
+
+- name: gcc-c++ をインストール
+  yum: name=gcc-c++ state=latest
+
+- name: bison をインストール
+  yum: name=bison state=latest
+
+- name: perl をインストール
+  yum: name=perl state=latest
+
+- name: patch をインストール
+  yum: name=patch state=latest
+
+
+- name: nginx-{{ nginx_version }}.tar.gz をダウンロード
+  get_url: url=http://nginx.org/download/nginx-{{ nginx_version }}.tar.gz dest=/usr/local/src/nginx-{{ nginx_version }}.tar.gz
+
+- name: nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz をダウンロード
+  get_url: url=https://github.com/agentzh/headers-more-nginx-module/archive/v{{ nginx_hm_version }}.tar.gz dest=/usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz
+
+- name: nginx-{{ nginx_version }}.tar.gz を展開
+  unarchive: src=/usr/local/src/nginx-{{ nginx_version }}.tar.gz dest=/usr/local/src copy=no
+
+- name: nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz を展開
+  unarchive: src=/usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz dest=/usr/local/src copy=no
+             creates=/usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
+
+- name: headers-more-nginx-module-{{ nginx_hm_version }} を nginx-headers-more-nginx-module-v{{ nginx_hm_version }} に変更
+  command: mv headers-more-nginx-module-{{ nginx_hm_version }} nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
+
+- name: nginx-{{ nginx_version }}.diff を配備
+  copy: src=./resource/diff/nginx-{{ nginx_version }}.diff dest=/usr/local/src/nginx-{{ nginx_version }}.diff owner=root group=root mode=0644
+
+- name: nginx-{{ nginx_version }} に ETag 対処パッチを適用
+  shell: patch -p0 < nginx-{{ nginx_version }}.diff && touch nginx-{{ nginx_version }}/step1
+  args:
+    chdir: /usr/local/src
+    creates: /usr/local/src/nginx-{{ nginx_version }}/step1
+
+- name: nginx を configure
+  command: >
+    ./configure
+    --prefix=/opt/nginx-{{ nginx_version }}
+    --user=nginx
+    --group=nginx
+    --with-http_ssl_module
+    --with-http_realip_module
+    --with-http_dav_module
+    --with-http_stub_status_module
+    --add-module=/usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
+  args:
+    chdir: /usr/local/src/nginx-{{ nginx_version }}
+    creates: /usr/local/src/nginx-{{ nginx_version }}/Makefile
+
+- name: nginx をコンパイル
+  command: make
+  args:
+    chdir: /usr/local/src/nginx-{{ nginx_version }}
+    creates: /usr/local/src/nginx-{{ nginx_version }}/objs/nginx
+
+- name: nginx をインストール
+  command: make install
+  args:
+    chdir: /usr/local/src/nginx-{{ nginx_version }}
+    creates: /opt/nginx-{{ nginx_version }}

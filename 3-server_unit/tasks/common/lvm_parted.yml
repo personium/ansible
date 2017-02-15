@@ -1,0 +1,27 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: LVM 用 のパーティションを確認する
+  command: /sbin/parted -s /dev/{{ diskname }} print
+  register: lvm_parted_print
+  failed_when: lvm_parted_print.rc is not defined
+  changed_when: '"lvm" in lvm_parted_print.stdout'
+
+- name: LVM 用 のパーティションを確保する
+  command: /sbin/parted -s /dev/{{ diskname }} mklabel msdos
+  when: '"lvm" not in lvm_parted_print.stdout'
+
+- command: /sbin/parted -s /dev/{{ diskname }} 'mkpart primary ext3 0 -1'
+  when: '"lvm" not in lvm_parted_print.stdout'
+
+- command: /sbin/parted -s /dev/{{ diskname }} set 1 lvm on
+  when: '"lvm" not in lvm_parted_print.stdout'
+  register: lvm_result
+  ignore_errors: True
+
+- name: LVM 用 のパーティションを確認する
+  command: /sbin/parted -s /dev/{{ diskname }} print
+  register: check_lvm_result
+
+- name: LVM 用 のパーティションの確保ができているかチェックする
+  fail: msg="LVM 用 のパーティションの確保に失敗"
+  when: "'lvm' not in check_lvm_result.stdout"

@@ -1,0 +1,38 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: group の作成
+  group: name=memcached gid=2040 state=present
+
+- name: user の作成
+  user: name=memcached uid=2040 shell=/sbin/nologin group=memcached home=/opt/var/lib/memcached comment="Memcached Administrator" createhome=no
+
+- name: /opt/var/lib のディレクトリを作成
+  file: "state=directory path=/opt/var/lib owner=root group=root"
+
+- name: ホームディレクトリを作成
+  file: "state=directory path=/opt/var/lib/memcached owner=memcached group=memcached recurse=yes"
+
+
+#- name: /opt/nfs_piolog/memcached を作成
+#  file: state=directory path=/opt/nfs_piolog/memcached owner=root group=root mode=0755
+
+#- name: /opt/nfs_piolog/memcached/log を作成
+#  file: state=directory path=/opt/nfs_piolog/memcached/log owner=memcached group=memcached mode=0755
+
+- name: /personium/memcached を作成
+  file: state=directory path=/personium/memcached owner=memcached group=memcached mode=0755
+
+- name: /personium/memcached/log を作成
+  file: state=directory path=/personium/memcached/log owner=memcached group=memcached mode=0755
+
+#- name: /personium/memcached に /opt/nfs_piolog/memcached/log の symlink を作成
+#  file: state=link src=/opt/nfs_piolog/memcached/log dest=/personium/memcached/log owner=memcached group=memcached mode=0777
+
+
+- name: /var/run/memcached を作成
+  file: state=directory path=/var/run/memcached owner=memcached group=memcached mode=0755
+
+- name: /etc/sysconfig/iptables (memcached版) を配備
+  template: src=./resource/{{ tag_ServerType }}/etc/sysconfig/iptables-with-memcached.j2 dest=/etc/sysconfig/iptables owner=root group=root mode=0644
+  notify:
+  - restart iptables

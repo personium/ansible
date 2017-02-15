@@ -1,0 +1,27 @@
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [7:1324]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type any -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+########################################################################################
+# SSH from any
+-A INPUT  -m tcp -p tcp --dport 22 -j ACCEPT
+
+########################################################################################
+# HTTPS from any
+-A INPUT  -m tcp -p tcp --dport 443 -j ACCEPT
+
+########################################################################################
+# HTTP from any
+-A INPUT  -m tcp -p tcp --dport 80 -j ACCEPT
+
+########################################################################################
+# SSH from bastion
+#-A INPUT -s {{ bastion_network_sep }} -m tcp -p tcp --dport 22 -j ACCEPT
+
+########################################################################################
+-A INPUT -j DROP
+COMMIT

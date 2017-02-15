@@ -1,0 +1,10 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: git install
+  yum: name=git state=latest
+
+- name: git clone core repo
+  git: repo=https://github.com/personium/personium-core.git dest=/tmp/personium-core
+
+- name: git clone engine repo
+  git: repo=https://github.com/personium/personium-engine.git dest=/tmp/personium-engine

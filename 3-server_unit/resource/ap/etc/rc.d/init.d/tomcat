@@ -1,0 +1,87 @@
+#!/bin/sh
+#
+# tomcat      This shell script takes care of starting and stopping Tomcat
+#
+# chkconfig: - 80 20
+# description: Apache Tomcat
+
+# Source function library.
+. /etc/init.d/functions
+
+RETVAL=0
+
+INSTANCE=tomcat
+JAVA_HOME=/opt/jdk
+JRE_HOME=/opt/jdk/jre
+CATALINA_BASE=/opt/${INSTANCE}
+CATALINA_HOME=/opt/tomcat
+DAEMON=${CATALINA_HOME}/bin/daemon.sh
+TOMCAT_USER=personium
+SCRIPT_NAME=${0##*/}
+LOCK_FILE=/var/lock/subsys/${SCRIPT_NAME}
+PID_FILE=/var/run/tomcat/${SCRIPT_NAME}
+
+start() {
+    echo -n $"Starting tomcat: "
+    ulimit -n 65536
+    ${DAEMON} --java-home ${JAVA_HOME} \
+              --catalina-home ${CATALINA_HOME} \
+              --catalina-base ${CATALINA_BASE} \
+              --catalina-pid ${PID_FILE} \
+              --tomcat-user ${TOMCAT_USER} \
+              start
+    RETVAL=$?
+    if [ ${RETVAL} -eq 0 ]; then
+        echo_success
+        touch ${LOCK_FILE}
+    else
+        echo_failure
+    fi
+    echo
+    return ${RETVAL}
+}
+
+stop() {
+    echo -n $"Shutting down tomcat: "
+    local PID=`cat ${PID_FILE}`
+    if [ -z "${PID}" ] ; then
+        echo "tomcat (pid ${PID}) is not running "
+        return 0
+    fi
+    ${DAEMON} --java-home ${JAVA_HOME} \
+              --catalina-home ${CATALINA_HOME} \
+              --catalina-base ${CATALINA_BASE} \
+              --catalina-pid ${PID_FILE} \
+              stop
+    RETVAL=$?
+    if [ ${RETVAL} -eq 0 ]; then
+        echo_success
+        rm -f ${LOCK_FILE}
+    else
+        echo_failure
+    fi
+    echo
+    return ${RETVAL}
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    status)
+        status -p ${PID_FILE} jsvc
+        ;;
+    reopen)
+        kill -USR1 `cat ${PID_FILE}`  > /dev/null 2>&1 || true
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart|status|reopen}"
+        exit 3
+esac

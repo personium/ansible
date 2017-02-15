@@ -1,0 +1,12 @@
+upstream backend_18888 {
+  server {{ ap_private_ip }}:18888 fail_timeout=1800s;
+}
+upstream backend_28888 {
+  server {{ ap_private_ip }}:28888 fail_timeout=1800s;
+}
+upstream backend_38888 {
+  server {{ ap_private_ip }}:38888 fail_timeout=1800s;
+}
+upstream backend_48888 {
+  server {{ ap_private_ip }}:48888 fail_timeout=1800s;
+}

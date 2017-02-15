@@ -1,0 +1,167 @@
+############ BastionサーバーのPrivate IP Address ############
+[tag_ServerType_bastion]
+#BastionサーバのプライベートIPを記入
+{Bastion_Private_IP}
+
+
+############ WebサーバーのPrivate IP Address ############
+[tag_ServerType_web]
+#WebサーバのプライベートIPを記入
+{Web_Private_IP}
+
+
+############ APサーバーのPrivate IP Address ############
+[tag_ServerType_ap]
+#APサーバのプライベートIPを記入
+{AP_Private_IP}
+
+
+############ ESサーバーのPrivate IP Address ############
+[tag_ServerType_es]
+#ESサーバのプライベートIPを記入
+{ES_Private_IP}
+
+
+############ nfsサーバーのPrivate IP Address ############
+[tag_ServerType_nfs]
+#nfsサーバのプライベートIPを記入
+{NFS_Private_IP}
+
+
+############ Webサーバーの設定項目 ############
+[tag_ServerType_web:vars]
+
+## サーバーのホスト名
+tag_Name={Web_Tag_Name}
+
+## /etc/hosts に設定するnfsサーバのプライベートIP
+personium_nfs={NFS_Private_IP}
+
+## ansibleを実行するユーザー
+ansible_ssh_user={Ansible_Execution_User}
+
+## ansible実行ユーザーがssh公開鍵認証に用いる秘密鍵（絶対パス指定）
+ansible_ssh_private_key_file={SSH_PrivateKey}
+
+## WebサーバーのGlobal IP Address
+web_global_ip={Web_Global_IP}
+
+## ApサーバーのPrivate IP Address
+ap_private_ip={AP_Private_IP}
+
+#### for iptables setting ####
+## ssh接続を許可するbastionサーバーのネットワーク部を記載
+bastion_network_sep={Bastion_Network_Separation}
+#### for iptables setting ####
+
+
+############ APサーバーの設定項目 ############
+[tag_ServerType_ap:vars]
+
+## サーバーのホスト名
+tag_Name={AP_Tag_Name}
+
+## PIOログ用のディスク名
+pio_logvol={PIO_LOGVOL}
+
+## /etc/hosts に設定するnfsサーバのプライベートIP
+personium_nfs={NFS_Private_IP}
+
+## ansibleを実行するユーザー
+ansible_ssh_user={Ansible_Execution_User}
+
+## ansibleを実行するための秘密鍵
+ansible_ssh_private_key_file={SSH_PrivateKey}
+
+# Personiumのマスタートークン
+master_token={Master_Token}
+
+## WebサーバーのFQDN
+base_url={Web_FQDN}
+
+## ElastciSearchサーバのDNS
+es_elb={ES_Private_IP}
+
+#### for iptables setting ####
+## ssh接続を許可するbastionサーバーのネットワーク部を記載
+bastion_network_sep={Bastion_Network_Separation}
+
+## elasticsearchにアクセスするapサーバーのアクセスのネットワーク部を記載
+ap_network_sep={AP_Network_Separation}
+
+############ ESサーバーの設定項目 ############
+[tag_ServerType_es:vars]
+
+## サーバーのホスト名
+tag_Name={ES_Tag_Name}
+
+## ES Data Logのディスク名
+es_data_vol={ES_DATA_VOL}
+
+## /etc/hosts に設定するnfsサーバのプライベートIP
+personium_nfs={NFS_Private_IP}
+
+## ESサーバーのPrivate IP Address
+es_private_ip={ES_Private_IP}
+
+## ansibleを実行するユーザー
+ansible_ssh_user={Ansible_Execution_User}
+
+## ansibleを実行するための秘密鍵
+ansible_ssh_private_key_file={SSH_PrivateKey}
+
+#### for iptables setting ####
+## ssh接続を許可するbastionサーバーのネットワーク部を記載
+bastion_network_sep={Bastion_Network_Separation}
+
+## elasticsearchにアクセスするapサーバーのアクセスのネットワーク部を記載
+ap_network_sep={AP_Network_Separation}
+
+############ nfsサーバーの設定項目 ############
+[tag_ServerType_nfs:vars]
+
+## サーバーのホスト名
+tag_Name={nfs_Tag_Name}
+
+## NFS_WEBDAV用のディスク名
+nfs_webdav_vol={NFS_WEBDAV_VOL}
+
+## /etc/hosts に設定するnfsサーバのプライベートIP
+personium_nfs={NFS_Private_IP}
+
+## ansibleを実行するユーザー
+ansible_ssh_user={Ansible_Execution_User}
+
+## ansibleを実行するための秘密鍵
+ansible_ssh_private_key_file={SSH_PrivateKey}
+
+#### for iptables setting ####
+## ssh接続を許可するbastionサーバーのネットワーク部を記載
+bastion_network_sep={Bastion_Network_Separation}
+
+## nfsにアクセスするapサーバーのネットワーク部を記載
+ap_network_sep={AP_Network_Separation}
+
+#### for iptables setting ####
+
+
+############ bastionサーバーの設定項目 ############
+[tag_ServerType_bastion:vars]
+
+## サーバーのホスト名
+tag_Name={Bastion_Tag_Name}
+
+## /etc/hosts に設定するnfsサーバのプライベートIP
+personium_nfs={NFS_Private_IP}
+
+## ansibleを実行するユーザー
+ansible_ssh_user={Ansible_Execution_User}
+
+## ansibleを実行するための秘密鍵
+ansible_ssh_private_key_file={SSH_PrivateKey}
+
+# Personiumのマスタートークン
+master_token={Master_Token}
+
+## WebサーバーのFQDN
+base_url={Web_FQDN}

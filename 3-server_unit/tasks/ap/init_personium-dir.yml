@@ -1,0 +1,132 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: /personium を作成
+  file: state=directory path=/personium owner=personium group=personium mode=0755
+
+- name: /opt/ap_piolog/personium-core を作成
+  file: state=directory path=/opt/ap_piolog/personium-core owner=root group=root mode=0755
+
+- name: /opt/ap_piolog/personium-core/log を作成
+  file: state=directory path=/opt/ap_piolog/personium-core/log owner=personium group=personium mode=0755
+
+- name: /personium/personium-core を作成
+  file: state=directory path=/personium/personium-core owner=personium group=personium mode=0755
+
+- name: /personium/personium-core に /opt/ap_piolog/personium-core/log の symlink を作成
+  file: state=link src=/opt/ap_piolog/personium-core/log dest=/personium/personium-core/log owner=personium group=personium mode=0777
+
+- name: /personium/personium-core/conf を作成
+  file: state=directory path=/personium/personium-core/conf owner=root group=root mode=0755
+
+- name: /personium/personium-core/conf/18888 を作成
+  file: state=directory path=/personium/personium-core/conf/18888 owner=root group=root mode=0755
+
+- name: /personium/personium-core/conf/28888 を作成
+  file: state=directory path=/personium/personium-core/conf/28888 owner=root group=root mode=0755
+
+- name: /personium/personium-core/conf/38888 を作成
+  file: state=directory path=/personium/personium-core/conf/38888 owner=root group=root mode=0755
+
+- name: /personium/personium-core/conf/48888 を作成
+  file: state=directory path=/personium/personium-core/conf/48888 owner=root group=root mode=0755
+
+- name: /opt/ap_piolog/personium-core/ads を作成
+  file: state=directory path=/opt/ap_piolog/personium-core/ads owner=personium group=personium mode=0755
+
+- name: /personium/personium-core に /opt/ap_piolog/personium-core/ads の symlink を作成
+  file: state=link src=/opt/ap_piolog/personium-core/ads dest=/personium/personium-core/ads owner=personium group=personium mode=0777
+
+
+- name: /opt/ap_piolog/personium-engine を作成
+  file: state=directory path=/opt/ap_piolog/personium-engine owner=root group=root mode=0755
+
+- name: /opt/ap_piolog/personium-engine/log を作成
+  file: state=directory path=/opt/ap_piolog/personium-engine/log owner=personium group=personium mode=0755
+
+- name: /personium/personium-engine を作成
+  file: state=directory path=/personium/personium-engine owner=personium group=personium mode=0755
+
+- name: /personium/personium-engine に /opt/ap_piolog/personium-engine/log の symlink を作成
+  file: state=link src=/opt/ap_piolog/personium-engine/log dest=/personium/personium-engine/log owner=personium group=personium mode=0777
+
+- name: /personium/personium-engine/extensions を作成
+  file: state=directory path=/personium/personium-engine/extensions owner=personium group=personium mode=0755
+
+
+- name: /opt/ap_piolog/personium を作成
+  file: state=directory path=/opt/ap_piolog/personium owner=personium group=personium mode=0755
+
+- name: /opt/ap_piolog/personium/log を作成
+  file: state=directory path=/opt/ap_piolog/personium/log owner=personium group=personium mode=0755
+
+- name: /personium/personium を作成
+  file: state=directory path=/personium/personium owner=personium group=personium mode=0755
+
+- name: /personium/personium に /opt/ap_piolog/personium/log の symlink を作成
+  file: state=link src=/opt/ap_piolog/personium/log dest=/personium/personium/log owner=personium group=personium mode=0777
+
+
+- name: /personium/18888 を作成
+  file: state=directory path=/personium/18888 owner=personium group=personium mode=0755
+
+- name: /personium/18888/personium-engine を作成
+  file: state=directory path=/personium/18888/personium-engine owner=personium group=personium mode=0755
+
+- name: /personium/18888/personium-engine/extensions を作成
+  file: state=directory path=/personium/18888/personium-engine/extensions owner=personium group=personium mode=0755
+
+- name: /personium/28888 を作成
+  file: state=directory path=/personium/28888 owner=personium group=personium mode=0755
+
+- name: /personium/28888/personium-engine を作成
+  file: state=directory path=/personium/28888/personium-engine owner=personium group=personium mode=0755
+
+- name: /personium/28888/personium-engine/extensions を作成
+  file: state=directory path=/personium/28888/personium-engine/extensions owner=personium group=personium mode=0755
+
+- name: /personium/38888 を作成
+  file: state=directory path=/personium/38888 owner=personium group=personium mode=0755
+
+- name: /personium/38888/personium-engine を作成
+  file: state=directory path=/personium/38888/personium-engine owner=personium group=personium mode=0755
+
+- name: /personium/38888/personium-engine/extensions を作成
+  file: state=directory path=/personium/38888/personium-engine/extensions owner=personium group=personium mode=0755
+
+- name: /personium/48888 を作成
+  file: state=directory path=/personium/48888 owner=personium group=personium mode=0755
+
+- name: /personium/48888/personium-engine を作成
+  file: state=directory path=/personium/48888/personium-engine owner=personium group=personium mode=0755
+
+- name: /personium/48888/personium-engine/extensions を作成
+  file: state=directory path=/personium/48888/personium-engine/extensions owner=personium group=personium mode=0755
+
+
+- name: /personium_nfs を作成
+  file: state=directory path=/personium_nfs owner=root group=root mode=0755
+
+
+- name: /opt/nfs1/personium-core を作成
+  file: state=directory path=/opt/nfs1/personium-core owner=root group=root mode=0755
+
+- name: /personium_nfs/personium-core を作成
+  file: state=directory path=/personium_nfs/personium-core owner=personium group=personium mode=0755
+
+- name: Creates directory
+  file: path=/opt/nfs1/personium-core/dav state=directory owner=personium group=personium mode=0777
+
+- name: /personium_nfs/personium-core に /opt/nfs1/personium-core/dav の symlink を作成
+  file: state=link src=/opt/nfs1/personium-core/dav dest=/personium_nfs/personium-core/dav owner=personium group=personium mode=0777
+
+- name: Creates directory
+  file: path=/opt/nfs1/personium-core/eventlog state=directory owner=personium group=personium mode=0777
+
+- name: /personium_nfs/personium-core に /opt/nfs1/personium-core/eventlog の symlink を作成
+  file: state=link src=/opt/nfs1/personium-core/eventlog dest=/personium_nfs/personium-core/eventlog owner=personium group=personium mode=0777
+
+- name: Creates directory
+  file: path=/opt/nfs1/personium-core/barInstall state=directory owner=personium group=personium mode=0777
+
+- name: /personium_nfs/personium-core に /opt/nfs1/personium-core/dav の symlink を作成
+  file: state=link src=/opt/nfs1/personium-core/barInstall dest=/personium_nfs/personium-core/barInstall owner=personium group=personium mode=0777

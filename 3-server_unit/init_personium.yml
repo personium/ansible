@@ -1,0 +1,74 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- hosts: tag_ServerType_bastion
+  connection: local
+  sudo: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/bastion.yml
+  tasks:
+    - include: ./common.yml
+    - include: ./bastion.yml
+  handlers:
+    - include: ./handlers/common/restart_iptables.yml
+
+#- hosts: ads_group
+#  sudo: yes
+#  vars_files:
+#    - ./group_vars/common.yml
+#    - ./group_vars/mysql.yml
+#    - ./group_vars/{{vars_file}}
+#  tasks:
+#    - include: ./mysql.yml
+#  handlers:
+#    - include: ./handlers/common/restart_iptables.yml
+
+- hosts: tag_ServerType_es
+  sudo: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/es.yml
+  tasks:
+    - include: ./es.yml
+  handlers:
+    - include: ./handlers/common/restart_iptables.yml
+
+- hosts: tag_ServerType_nfs
+  sudo: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/nfs.yml
+  tasks:
+    - include: ./nfs.yml
+  handlers:
+    - include: ./handlers/common/restart_iptables.yml
+
+- hosts: tag_ServerType_ap
+  sudo: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/ap.yml
+  tasks:
+    - include: ./ap.yml
+  handlers:
+    - include: ./handlers/common/restart_iptables.yml
+
+- hosts: tag_ServerType_web
+  sudo: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/web.yml
+  tasks:
+    - include: ./web.yml
+  handlers:
+    - include: ./handlers/common/restart_iptables.yml
+    - include: ./handlers/web/reload_nginx.yml
+
+- hosts: tag_ServerType_bastion
+  connection: local
+  sudo: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/bastion.yml
+  tasks:
+    - include: ./tasks/bastion/init_servicemanager.yml

@@ -1,0 +1,12 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: backup /opt/nginx/conf/nginx.conf
+  fetch: src=/opt/nginx/conf/nginx.conf dest={{ backupdir }}{{ backupdir_suffix }}
+
+- name: deploy /opt/nginx/conf/nginx.conf
+  copy: src={{ filesdir }}/web/opt/nginx/conf/nginx.conf dest=/opt/nginx/conf/nginx.conf owner=root group=root mode=0644
+  register: nginx_conf_result
+
+- name: reload nginx
+  service: name=nginx state=reloaded
+  when: nginx_conf_result.changed == true

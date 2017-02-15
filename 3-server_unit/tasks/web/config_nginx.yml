@@ -1,0 +1,12 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: /opt/nginx/conf/personium_version.d を削除する
+  file: state=absent path=/opt/nginx/conf/personium_version.d
+
+- name: /opt/nginx/conf を配備
+  copy: src=./resource/web/opt/nginx/conf dest=/opt/nginx owner=root group=root
+
+- name: /opt/nginx/conf/backend.conf を配備
+  template: src=./resource/web/opt/nginx/conf/backend.conf.j2 dest=/opt/nginx/conf/backend.conf owner=root group=root
+  notify:
+  - reload nginx

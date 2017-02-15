@@ -1,0 +1,21 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+tag_ServerType: ap
+
+# appserver setting
+tomcat_xms: 1024m
+tomcat_xmx: 1024m
+tomcat_metaspace_size: 256m
+tomcat_max_metaspace_size: 256m
+
+# lock / cache instance
+lock_host: personium-nfs
+lock_port: 11211
+cache_host: personium-nfs
+cache_port: 11212
+# Type of cache manager. Either "memcached" or "none".
+cache_manager: memcached
+
+
+tomcat_version: 8.0.41
+commons_daemon_version : 1.0.15

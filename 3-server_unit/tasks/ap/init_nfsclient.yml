@@ -1,0 +1,30 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: nfs-utils インストール
+  action: yum pkg=nfs-utils state=present
+
+- name: rpcbind インストール
+  action: yum pkg=rpcbind state=present
+
+- name: rpcbind 起動
+  service: name=rpcbind state=started
+
+- name: rpcbind 自動起動ON
+  service: name=rpcbind enabled=on
+
+- name: nfslock 起動
+  service: name=nfslock state=started
+
+- name: nfslock 自動起動ON
+  service: name=nfslock enabled=on
+
+
+- name: /opt/nfs1 に /opt/nfs_webdav の symlink を作成
+  file: state=link src=/opt/nfs_webdav dest=/opt/nfs1 owner=personium group=personium mode=0777
+
+#- name: /opt/nfs1 ディレクトリを作成する
+#  file: "state=directory path=/opt/nfs1 owner=root group=root"
+
+#- name: personium-nfs:/opt/nfs_webdav へ /opt/nfs1 を マウントする
+#  mount: name=/opt/nfs1 src=personium-nfs:/opt/nfs_webdav fstype=nfs state=mounted opts=nfsvers=3,tcp,hard,intr,sync,noac,lookupcache=none,bg
+

@@ -1,0 +1,130 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: pcre-devel をインストール
+  yum: name=pcre-devel state=latest
+
+- name: zlib-devel をインストール
+  yum: name=zlib-devel state=latest
+
+- name: openssl-devel をインストール
+  yum: name=openssl-devel state=latest
+
+- name: lsof をインストール
+  yum: name=lsof state=latest
+
+- name: gcc をインストール
+  yum: name=gcc state=latest
+
+- name: gcc-c++ をインストール
+  yum: name=gcc-c++ state=latest
+
+- name: bison をインストール
+  yum: name=bison state=latest
+
+- name: perl をインストール
+  yum: name=perl state=latest
+
+- name: patch をインストール
+  yum: name=patch state=latest
+
+- name: ダウンロードディレクトリを作成
+  file: "state=directory path=/usr/local/src/tomcat owner=root group=root"
+
+- name: apache_tomcat_{{ tomcat_version }}.tar.gz ダウンロード
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz dest=/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}.tar.gz
+
+- name: apache_tomcat_{{ tomcat_version }}.tar.gz の解凍
+  unarchive: src=/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}.tar.gz dest=/usr/local/src/tomcat copy=no
+
+- name: commons_daemon の解凍
+  file: "state=directory path=/usr/local/src/tomcat owner=root group=root"
+
+- name: commons_daemon_native.tar.gz の解凍
+  unarchive: src=/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}/bin/commons-daemon-native.tar.gz dest=/usr/local/src/tomcat copy=no
+
+- name: commons_daemon を configure
+  command: >
+    ./configure
+  environment:
+    JAVA_HOME: "/opt/jdk"
+  args:
+    chdir: /usr/local/src/tomcat/commons-daemon-{{ commons_daemon_version }}-native-src/unix
+    creates: /usr/local/src/tomcat/commons-daemon-{{ commons_daemon_version }}-native-src/unix/Makefile
+
+- name: commons_daemon をコンパイル
+  command: make
+  args:
+    chdir: /usr/local/src/tomcat/commons-daemon-{{ commons_daemon_version }}-native-src/unix
+    creates: /usr/local/src/tomcat/commons-daemon-{{ commons_daemon_version }}-native-src/unix/jsvc
+
+- name: jsvc の配備
+  command: cp /usr/local/src/tomcat/commons-daemon-{{ commons_daemon_version }}-native-src/unix/jsvc /usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}/bin/ creates="/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}/bin/jsvc"
+
+- name: tomcat を /opt 配下に配備
+  command: mv /usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }} /opt/apache-tomcat-{{ tomcat_version }} creates="/opt/apache-tomcat-{{ tomcat_version }}"
+
+- name: /opt/apache-tomcat-{{ tomcat_version }} に /opt/tomcat の symlink を作成
+  file: state=link src=/opt/apache-tomcat-{{ tomcat_version }} dest=/opt/tomcat owner=root group=root mode=0777
+
+- name: 既存の /opt/tomcat/logs を削除する
+  file: state=absent path=/opt/tomcat/logs
+
+- name: /personium/tomcat ディレクトリを作成
+  file: "state=directory path=/personium/tomcat owner=personium group=personium"
+
+- name: /opt/ap_piolog/tomcat ディレクトリを作成
+  file: "state=directory path=/opt/ap_piolog/tomcat owner=root group=root"
+
+- name: /opt/ap_piolog/tomcat/logs ディレクトリを作成
+  file: "state=directory path=/opt/ap_piolog/tomcat/logs owner=personium group=personium"
+
+- name: /opt/ap_piolog/tomcat/logs に /personium/tomcat/logs の symlink を作成
+  file: state=link src=/opt/ap_piolog/tomcat/logs dest=/personium/tomcat/logs owner=root group=root mode=0777
+
+- name: /personium/tomcat/logs に /opt/tomcat/logs の symlink を作成
+  file: state=link src=/personium/tomcat/logs dest=/opt/tomcat/logs owner=root group=root mode=0777
+
+- name: /opt/tomcat/conf の所有者をpersoniumに変更
+  file: path=/opt/tomcat/conf owner=personium group=personium recurse=yes
+
+- name: /opt/tomcat/webapps の所有者をpersoniumに変更
+  file: path=/opt/tomcat/webapps owner=personium group=personium recurse=yes
+
+- name: /opt/tomcat/work の所有者をpersoniumに変更
+  file: path=/opt/tomcat/work owner=personium group=personium recurse=yes
+
+- name: /opt/tomcat/temp の所有者をpersoniumに変更
+  file: path=/opt/tomcat/temp owner=personium group=personium recurse=yes
+
+- name: 起動スクリプトの配備
+  copy: src=./resource/ap/etc/rc.d/init.d/tomcat dest=/etc/rc.d/init.d/tomcat owner=root group=root mode=755
+
+- name: 環境設定スクリプト setenv.sh の配備
+  template: src=./resource/ap/opt/tomcat/bin/setenv.sh.j2 dest=/opt/tomcat/bin/setenv.sh owner=personium group=personium mode=755
+
+- name: 環境設定スクリプト daemon.sh の配備
+  copy: src=./resource/ap/opt/tomcat/bin/daemon.sh dest=/opt/tomcat/bin/daemon.sh owner=personium group=personium mode=755
+
+
+- name: 設定ファイル /opt/tomcat/conf/catalina.policy の配備
+  copy: src=./resource/ap/opt/tomcat/conf/catalina.policy dest=/opt/tomcat/conf/catalina.policy owner=personium group=personium mode=600
+
+- name: 設定ファイル /opt/tomcat/conf/logging.properties の配備
+  copy: src=./resource/ap/opt/tomcat/conf/logging.properties dest=/opt/tomcat/conf/logging.properties owner=personium group=personium mode=600
+
+- name: 設定ファイル /opt/tomcat/conf/server.xml の配備
+  copy: src=./resource/ap/opt/tomcat/conf/server.xml dest=/opt/tomcat/conf/server.xml owner=personium group=personium mode=600
+
+- name: 設定ファイル /opt/tomcat/conf/tomcat-users.xml の配備
+  copy: src=./resource/ap/opt/tomcat/conf/tomcat-users.xml dest=/opt/tomcat/conf/tomcat-users.xml owner=personium group=personium mode=600
+
+- name: tomcat サービスへの登録
+  service: name=tomcat enabled=yes
+
+- name: tomcat サービスの起動
+  service: name=tomcat state=started
+
+- name: logrotate 設定ファイル /etc/logrotate.d/tomcat の配備
+  copy: src=./resource/ap/etc/logrotate.d/tomcat dest=/etc/logrotate.d/tomcat owner=root group=root mode=644
+
+

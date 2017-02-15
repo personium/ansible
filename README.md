@@ -53,7 +53,7 @@ If interested, you may try to construct Personium unit on your local machine (vi
   * Server-2 elements : AP,NFS
   * Server-3 elements : ES
 * Setup time :  2 hours
-* Setup tool: [setup-ansible/3-server_unit](https://github.com/fujitsu-pio/ansible/tree/master/3-server_unit "3-server_unit")
+* Setup tool: [ansible/3server_unit](https://github.com/personium/ansible/tree/master/3-server_unit "3-server_unit")
 * Note  
   If you are devoted to Personium and want to release some marvelous applications with it, you should try this pattern! You will get Personium unit with 3 servers, which will meet practical performance.
 

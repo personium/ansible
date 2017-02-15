@@ -1,0 +1,18 @@
+# Copyright FUJITSU LIMITED 2015.
+
+tag_ServerType: nfs
+
+memcached_version: 1.4.21
+memcached_lock_maxconn: 1024
+memcached_cache_maxconn: 1024
+
+# lock / cache instance
+cache_in_nfs: true
+lock_port: 11211
+cache_port: 11212
+
+
+# memcached cachesize
+memcached_lock_cachesize: 512
+memcached_cache_cachesize: 512
+

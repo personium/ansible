@@ -1,0 +1,10 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: personium アカウントの作成
+  include: init_process_account_common.yml
+  vars:
+    username: personium
+    groupname: personium
+    uid: 2070
+    gid: 2070
+    comment: personium.io Administrator

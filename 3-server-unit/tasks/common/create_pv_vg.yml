@@ -1,0 +1,7 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: 物理ボリューム（PV PhysicalVolum）を作成する
+  command: /sbin/pvcreate /dev/{{ diskname }}1
+
+- name: ボリュームグループ（VG Volume Group）を作成する。
+  lvg: vg={{ vgname }} pvs=/dev/{{ diskname }}1

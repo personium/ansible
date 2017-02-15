@@ -1,0 +1,76 @@
+#!/bin/sh
+#
+# personium
+# Copyright 2014-2017 FUJITSU LIMITED
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Service Managerセルの初期設定スクリプト
+
+# 環境の設定
+DOMAIN={{ base_url }}
+MASTER_TOKEN={{ master_token }}
+CELL_NAME=unitadmin
+CELL_OWNER={{ base_url }}/#unitadmin
+UNITADMIN_ACCOUNT_FILE=/root/ansible/unitadmin_account
+
+# 作成するアカウントとパスワード
+UU_NAME=(unitadmin personium-rt)
+UU_PASS=()
+CELL_URL=$DOMAIN/$CELL_NAME
+
+
+function check_response() {
+  STATUS=${1}
+  OPERATION=${2}
+  RESPONSE_CODE=`echo "${CURL_RESULT}" | /bin/grep 'status:'`
+  if [ "${RESPONSE_CODE}" != "status:${STATUS}" ]; then
+    echo "${OPERATION}に失敗."
+    exit 2
+  fi
+}
+
+#Cellの新規作成
+echo "######  UNIT ADMINセルの作成  ######"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $DOMAIN/__ctl/Cell -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Unit-User: $CELL_OWNER" -d "{\"Name\":\"$CELL_NAME\"}" -k -i -s`
+echo "$CURL_RESULT"
+
+echo "-- 作成確認"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$DOMAIN/__ctl/Cell(%27$CELL_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
+echo "$CURL_RESULT"
+check_response 200 "UNIT ADMINセルの作成確認"
+
+# アカウントの作成
+echo "######  アカウント作成  ######"
+for i in `seq 0 1 $UU_MAX_IDX`; do
+  UU_PASS+=(`perl -le 'print map { ("a".."z","A".."Z", 0..9)[rand 36] } 1..16'`)
+
+  echo "   creating account ["${UU_NAME[$i]}"]"
+  echo "            passwd  ["${UU_PASS[$i]}"]"
+  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Account -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Credential: ${UU_PASS[$i]}" -d "{\"Name\":\"${UU_NAME[$i]}\"}" -k -i -s`
+  echo "$CURL_RESULT"
+  check_response 201 "アカウント作成"
+
+  echo "   -- 確認"
+  echo "checking account["${UU_NAME[$i]}"]"
+  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__auth -X POST -d "grant_type=password&username=${UU_NAME[$i]}&password=${UU_PASS[$i]}" -k -i -s`
+  echo "$CURL_RESULT"
+  check_response 200 "アカウント作成確認"
+
+done
+
+# パスワードの確認まで問題なく完了したら、作成した情報をファイルに落とし込む
+for i in `seq 0 1 $UU_MAX_IDX`; do
+  echo "${UU_NAME[$i]}" "${UU_PASS[$i]}" >> ${UNITADMIN_ACCOUNT_FILE}
+done

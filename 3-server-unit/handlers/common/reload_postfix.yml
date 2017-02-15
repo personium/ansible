@@ -1,0 +1,4 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: reload postfix
+  service: name=postfix state=reloaded

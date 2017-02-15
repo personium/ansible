@@ -1,0 +1,8 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: download apache-maven-3.2.5-bin.zip
+  get_url: url=http://ftp.yz.yamagata-u.ac.jp/pub/network/apache/maven/maven-3/3.2.5/binaries/apache-maven-3.2.5-bin.zip dest=/tmp mode=0440
+
+- name: expand apache-maven-3.2.5-bin.zip
+  unarchive: src=/tmp/apache-maven-3.2.5-bin.zip dest=/opt copy=no
+

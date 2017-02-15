@@ -1,0 +1,14 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: build module
+  command: /opt/apache-maven-3.2.5/bin/mvn package -Dmaven.test.skip=true
+  args:
+    chdir: /tmp/personium-{{ build_mod }}/
+    creates: /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ build_mod }}.war
+  environment:
+    JAVA_HOME: /opt/jdk
+
+- name: move module
+  command: mv /tmp/personium-{{ build_mod }}/target/personium-{{ build_mod }}.war /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ build_mod }}.war
+  args:
+    creates: /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ build_mod }}.war

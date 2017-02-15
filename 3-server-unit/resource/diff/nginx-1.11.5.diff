@@ -1,0 +1,17 @@
+diff -crN ./nginx-1.11.5.orig/src/http/ngx_http_core_module.h ./nginx-1.11.5/src/http/ngx_http_core_module
+.h
+*** ./nginx-1.11.5.orig/src/http/ngx_http_core_module.h 2016-12-16 16:45:29.464289522 +0900
+--- ./nginx-1.11.5/src/http/ngx_http_core_module.h      2016-12-16 16:48:38.940720781 +0900
+***************
+*** 572,581 ****
+
+  #define ngx_http_clear_etag(r)                                                \
+                                                                                \
+-     if (r->headers_out.etag) {                                                \
+-         r->headers_out.etag->hash = 0;                                        \
+-         r->headers_out.etag = NULL;                                           \
+-     }
+-
+
+  #endif /* _NGX_HTTP_CORE_H_INCLUDED_ */
+--- 572,576 ----

@@ -1,0 +1,1 @@
+30 21 * * * root find -L /personium/elasticsearch/log -name '*.log*' -mtime +31 -exec /bin/rm -f {} \; > /dev/null 2>&1

@@ -1,0 +1,30 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: ローカルで /personium/personium-core/conf/token.key を作成 (サーバ共通ファイルのため）
+  local_action: shell perl -le 'print map { ("a".."z", 0..9)[rand 36] } 1..16' > ./resource/ap/personium/personium-core/conf/token.key creates="./resource/ap/personium/personium-core/conf/token.key"
+  run_once: true
+
+- name: /personium/personium-core/conf/token.key の配備
+  copy: src=./resource/ap/personium/personium-core/conf/token.key dest=/personium/personium-core/conf/token.key owner=root group=root mode=0400
+
+- name: ローカルで /personium/personium-core/conf/salt.key を作成 (サーバ共通ファイルのため）
+  local_action: shell perl -le 'print map { ("a".."z","A".."Z", 0..9)[rand 36] } 1..8' > ./resource/ap/personium/personium-core/conf/salt.key creates="./resource/ap/personium/personium-core/conf/salt.key"
+  run_once: true
+
+- name: /personium/personium-core/conf/salt.key の配備
+  copy: src=./resource/ap/personium/personium-core/conf/salt.key dest=/personium/personium-core/conf/salt.key owner=root group=root mode=0400
+
+#- name: create invocation flag file
+#  file: state=touch path=/personium/personium-core/invokeRepair owner=personium group=personium mode=0644
+
+- name: /opt/x509 ディレクトリを作成
+  file: "state=directory path=/opt/x509 owner=personium group=personium mode=550"
+
+- name: x509証明書 unit-self-sign.crt の配備
+  copy: src=./resource/ap/opt/x509/unit-self-sign.crt dest=/opt/x509/unit-self-sign.crt owner=personium group=personium mode=440
+
+- name: x509証明書 unit.key の配備
+  copy: src=./resource/ap/opt/x509/unit.key dest=/opt/x509/unit.key owner=personium group=personium mode=440
+
+- name: /opt/logback ディレクトリの作成
+  file: "state=directory path=/opt/logback owner=personium group=personium"

@@ -1,0 +1,7 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: /etc/ssh/sshd_config を変更
+  copy: src=./resource/common/etc/ssh/sshd_config dest=/etc/ssh/sshd_config owner=root group=root mode=0644
+
+- name: sshd 再読み込み
+  service: name=sshd state=reloaded

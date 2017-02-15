@@ -1,0 +1,44 @@
+#!/bin/sh
+
+#stdout (defaults to $CATALINA_BASE/logs/catalina-daemon.out)
+#Use the value '&2' to simulate '1>&2'
+export CATALINA_OUT=${CATALINA_BASE}/logs/catalina.log
+
+#stderr (defaults to $CATALINA_BASE/logs/catalina-daemon.out)
+#Use the value '&1' to simulate '2>&1'
+export CATALINA_ERR=${CATALINA_BASE}/logs/catalina.log
+
+#java.io.tmpdir (defaults to $CATALINA_BASE/temp)
+export CATALINA_TMP=
+
+#wait waittime seconds for the service to start
+#waittime should multiple of 10 (min=10)
+export SERVICE_START_WAIT_TIME=120
+
+#jsvc options
+export JSVC_OPTS=
+
+#jsvc verbosely print debugging information
+#export JSVC_OPTS="$JSVC_OPTS -debug"
+
+# jsvc working directory
+export JSVC_OPTS="$JSVC_OPTS -cwd $CATALINA_BASE"
+
+# jvm options
+export JAVA_OPTS=" \
+           -server \
+           -DTOMCATID=tomcat \
+           -verbose:gc \
+           -Xms{{ tomcat_xms }} -Xmx{{ tomcat_xmx }} \
+           -XX:MetaspaceSize={{ tomcat_metaspace_size }} -XX:MaxMetaspaceSize={{ tomcat_max_metaspace_size }} \
+           -XX:+HeapDumpOnOutOfMemoryError \
+           -XX:+PrintGCDetails \
+           -XX:+PrintGCTimeStamps \
+           -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true \
+           -Dlogback.configurationFile=/opt/logback/logback.xml \
+           -Dio.personium.configurationFile=/personium/personium-core/conf/18888/personium-unit-config.properties \
+           -Dio.personium.environment=/personium/18888 \
+           -Dfile.encoding=UTF-8"
+
+export CLASSPATH=
+export CATALINA_OPTS=

@@ -1,0 +1,5 @@
+/var/log/ntpd.log {
+       copytruncate
+       missingok
+}
+

@@ -1,0 +1,27 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- include: ./common.yml
+- include: ./tasks/common/config_cron.yml
+
+#- include: ./tasks/common/init_ebs_volume.yml
+#  vars:
+#    diskname: sdb
+#    mountpoint: /opt/nfs_piolog
+
+- include: ./tasks/common/init_ebs_volume.yml
+  vars:
+    diskname: "{{ nfs_webdav_vol }}"
+#    diskname: sdc
+    mountpoint: /opt/nfs_webdav
+
+- include: ./tasks/common/init_process_account_personium.yml
+- include: ./tasks/nfs/init_personium-dir.yml
+- include: ./tasks/nfs/init_nfs-server.yml
+- include: ./tasks/nfs/init_logback.yml
+
+- include: ./tasks/nfs/init_memcached_env_os.yml
+  when: cache_in_nfs
+- include: ./tasks/nfs/init_memcached_install.yml
+  when: cache_in_nfs
+- include: ./tasks/nfs/init_memcached_setup.yml
+  when: cache_in_nfs

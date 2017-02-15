@@ -1,0 +1,8 @@
+/personium/tomcat/logs/*.log {
+    daily
+    dateext
+    compress
+    missingok
+    notifempty
+    copytruncate
+}

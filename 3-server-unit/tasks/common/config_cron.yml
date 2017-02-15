@@ -1,0 +1,4 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: /etc/cron.d/log-delete-cron を配備
+  copy: src=./resource/{{ tag_ServerType }}/etc/cron.d/log-delete-cron dest=/etc/cron.d/log-delete-cron owner=root group=root mode=0644

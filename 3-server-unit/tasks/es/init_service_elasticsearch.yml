@@ -1,0 +1,16 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: elasticsearch 起動
+  service: name=elasticsearch state=started
+
+- name: elasticsearch 自動起動ON
+  command: "chkconfig elasticsearch on"
+# 下記ではchkconfigはOFFになるが、rc3.d配下にSXXスクリプトが残り自動起動してしまう
+# service: name=elasticsearch enabled=no
+
+- name: 起動スクリプトにバージョン名を付与
+  command: "mv /etc/init.d/elasticsearch /etc/init.d/elasticsearch-{{ version }} creates=/etc/init.d/elasticsearch-{{ version }}"
+
+- name: 起動スクリプト のシンボリックリンクを作成
+  file: "state=link src=/etc/init.d/elasticsearch-{{ version }} dest=/etc/init.d/elasticsearch owner=root group=root force=yes"
+

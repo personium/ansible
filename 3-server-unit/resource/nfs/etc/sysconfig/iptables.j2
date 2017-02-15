@@ -1,0 +1,30 @@
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [7:1324]
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type any -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+########################################################################################
+# SSH from bastion
+-A INPUT -s {{ bastion_network_sep }} -m tcp -p tcp --dport 22 -j ACCEPT
+-A INPUT -s {{ bastion_network_sep }} -m tcp -p tcp --dport 80 -j ACCEPT
+-A INPUT -s {{ bastion_network_sep }} -m tcp -p tcp --dport 18888 -j ACCEPT
+-A INPUT -s {{ bastion_network_sep }} -m tcp -p tcp --dport 28888 -j ACCEPT
+-A INPUT -s {{ bastion_network_sep }} -m tcp -p tcp --dport 38888 -j ACCEPT
+-A INPUT -s {{ bastion_network_sep }} -m tcp -p tcp --dport 48888 -j ACCEPT
+
+########################################################################################
+# nfs from ap
+#-A INPUT -s {{ ap_network_sep }} -m tcp -p tcp --dport 111 -j ACCEPT
+#-A INPUT -s {{ ap_network_sep }} -m tcp -p tcp --dport 2049 -j ACCEPT
+#-A INPUT -s {{ ap_network_sep }} -m tcp -p tcp --dport 6000 -j ACCEPT
+#-A INPUT -s {{ ap_network_sep }} -m tcp -p tcp --dport 13111:13115 -j ACCEPT
+#-A INPUT -s {{ ap_network_sep }} -m udp -p udp --dport 111 -j ACCEPT
+#-A INPUT -s {{ ap_network_sep }} -m udp -p udp --dport 2049 -j ACCEPT
+#-A INPUT -s {{ ap_network_sep }} -m udp -p udp --dport 13111:13115 -j ACCEPT
+
+########################################################################################
+-A INPUT -j DROP
+COMMIT

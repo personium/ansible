@@ -1,0 +1,40 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: ダウンロードディレクトリを作成
+  file: "state=directory path=/usr/local/src/elasticsearch-{{ version }} owner=root group=root recurse=yes"
+
+- name: elasticsearch-{{ version }}.tar.gz ダウンロード
+  get_url: url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{{ version }}.tar.gz dest=/usr/local/src/elasticsearch-{{ version }}/elasticsearch-{{ version }}.tar.gz
+
+#- name: elasticsearch-servicewrapperzip ダウンロード
+#  get_url: url=https://github.com/elasticsearch/elasticsearch-servicewrapper/archive/master.zip dest=/usr/local/src/elasticsearch-{{ version }}/master.zip
+
+- name: elasticsearch の配備
+  unarchive: src=/usr/local/src/elasticsearch-{{ version }}/elasticsearch-{{ version }}.tar.gz dest=/opt copy=no
+
+#- name: master.zip の解凍
+#  unarchive: src=/usr/local/src/elasticsearch-{{ version }}/master.zip dest=/usr/local/src/elasticsearch-{{ version }} copy=no
+
+#- name: serviceディレクトリの配備
+#  command: mv /usr/local/src/elasticsearch-{{ version }}/elasticsearch-servicewrapper-master/service /opt/elasticsearch-{{ version }}/bin creates="/opt/elasticsearch-{{ version }}/bin/service"
+
+- name: elasticsearch.yml の配置
+  template: src=./resource/es/opt/elasticsearch-{{ version }}/config/elasticsearch.yml.j2 dest=/opt/elasticsearch-{{ version }}/config/elasticsearch.yml owner=elasticsearch group=elasticsearch mode=0644
+
+#- name: elasticsearch.conf の配置
+#  template: src=./resource/es/opt/elasticsearch-{{ version }}/bin/service/elasticsearch.conf.j2 dest=/opt/elasticsearch-{{ version }}/bin/service/elasticsearch.conf owner=elasticsearch group=elasticsearch mode=0644
+
+- name: /opt/elasticsearch-{{ version }} ディレクトリ の所有者を変更
+  file: "path=/opt/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: tmpディレクトリの権限変更
+  file: "path=/tmp mode=0777 recurse=yes state=directory"
+
+#- name: service インストール
+#  command: "/opt/elasticsearch-{{ version }}/bin/service/elasticsearch install creates=/etc/init.d/elasticsearch"
+
+- name: 起動スクリプト の配備
+  copy: src=./resource/es/etc/rc.d/init.d/elasticsearch dest=/etc/rc.d/init.d/elasticsearch owner=elasticsearch group=elasticsearch mode=0755
+
+- name: /etc/logrotate.d/es-service の配備
+  copy: src=./resource/es/etc/logrotate.d/es-service dest=/etc/logrotate.d/es-service owner=root group=root mode=0644

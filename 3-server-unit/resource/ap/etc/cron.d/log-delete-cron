@@ -1,0 +1,2 @@
+30 21 * * * root find -L /personium/personium-core/log -name '*.log*' -mtime +31 -exec /bin/rm -f {} \; > /dev/null 2>&1
+30 21 * * * root find -L /personium/personium-engine/log -name '*.log*' -mtime +31 -exec /bin/rm -f {} \; > /dev/null 2>&1

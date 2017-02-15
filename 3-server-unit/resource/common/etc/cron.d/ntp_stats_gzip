@@ -1,0 +1,2 @@
+2 2 * * * root find /var/lib/ntp -name '*stats.[0-9]???????' -links 1 | xargs gzip -9
+

@@ -1,0 +1,1 @@
+*/5 * * * * root find /personium/nginx/lib/client_body_temp -type f -mmin +10 | xargs rm -f > /dev/null 2>&1

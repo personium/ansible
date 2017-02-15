@@ -1,0 +1,19 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- include: ./common.yml
+- include: ./tasks/common/config_cron.yml
+
+- include: ./tasks/common/init_process_account_common.yml
+  vars:
+    username: Nginx
+    groupname: Nginx
+    uid: 2060
+    gid: 2060
+    comment: Nginx Administrator
+
+- include: ./tasks/web/init_nginx_env_os.yml
+- include: ./tasks/web/init_nginx_install.yml
+- include: ./tasks/web/init_nginx_setup.yml
+- include: ./tasks/web/config_nginx.yml
+
+- include: ./tasks/web/init_nginx.yml

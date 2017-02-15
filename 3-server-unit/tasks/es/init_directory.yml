@@ -1,0 +1,36 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: ログ用ディレクトリを作成
+  file: "state=directory path=/opt/es_data-log/elasticsearch-{{ version }}/log owner=elasticsearch group=elasticsearch recurse=yes"
+
+#- name: ログ用ディレクトリを作成
+#  file: "state=directory path=/opt/es_log/elasticsearch-{{ version }}/log owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: データ用ディレクトリを作成
+  file: "state=directory path=/opt/es_data-log/elasticsearch-{{ version }}/data owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: ワーク用ディレクトリを作成
+  file: "state=directory path=/opt/es_data-log/elasticsearch-{{ version }}/work owner=elasticsearch group=elasticsearch recurse=yes"
+
+#- name: /personium のディレクトリを作成
+#  file: "state=directory path=/personium owner=root group=root"
+
+- name: /personium/elasticsearch-{{ version }}のディレクトリを作成
+  file: "state=directory path=/personium/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: log ディレクトリのシンボリックリンクを作成
+  file: "state=link src=/opt/es_data-log/elasticsearch-{{ version }}/log dest=/personium/elasticsearch-{{ version }}/log owner=elasticsearch group=elasticsearch"
+
+#- name: log ディレクトリのシンボリックリンクを作成
+#  file: "state=link src=/opt/es_log/elasticsearch-{{ version }}/log dest=/personium/elasticsearch-{{ version }}/log owner=elasticsearch group=elasticsearch"
+
+- name: data ディレクトリのシンボリックリンクを作成
+  file: "state=link src=/opt/es_data-log/elasticsearch-{{ version }}/data dest=/personium/elasticsearch-{{ version }}/data owner=elasticsearch group=elasticsearch"
+
+- name: work ディレクトリ のシンボリックリンクを作成
+  file: "state=link src=/opt/es_data-log/elasticsearch-{{ version }}/work dest=/personium/elasticsearch-{{ version }}/work owner=elasticsearch group=elasticsearch"
+
+- name: /personium/elasticsearch のシンボリックリンクを作成
+  file: "state=link src=/personium/elasticsearch-{{ version }} dest=/personium/elasticsearch owner=elasticsearch group=elasticsearch"
+
+

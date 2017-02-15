@@ -32,7 +32,8 @@ There are different patterns of setup tools to construct the Personium unit. Ple
 
 If interested, you may try to construct Personium unit on your local machine (virtualbox) as a separate project using the setup tool.
 
-* Please refer to setup-vagrant: https://github.com/personium/setup-vagrant/ <span style="color:red">Sorry, this pattern does not work now. Please use 3 server version ansible. </span>
+* Please refer to setup-vagrant: https://github.com/personium/setup-vagrant/ ```html
+<span style="color:red">Sorry, this pattern does not work now. Please use 3 server version ansible. </span>```
 
 #### Pattern-2 : Development, Verification
 
@@ -40,7 +41,7 @@ If interested, you may try to construct Personium unit on your local machine (vi
 * The number of Personium unit servers : **1 Server**
   * Server-1 elements : Bastion, Web, AP, ES
 * Setup time : 1 hour
-* Setup tool: [setup-ansible/1-server_unit](https://github.com/personium/setup-ansible/tree/master/1-server_unit "1-server_unit") <span style="color:red">Sorry, this pattern does not work now. Please use 3 server version ansible. </span>
+* Setup tool: [setup-ansible/1-server_unit](https://github.com/personium/setup-ansible/tree/master/1-server_unit "1-server_unit") ```html<span style="color:red">Sorry, this pattern does not work now. Please use 3 server version ansible. </span>```
 * Note  
   If you are more curious about Personium and want to develop some simple applications or to test this system, you can select this pattern. You will get Personium unit on a single server.
 

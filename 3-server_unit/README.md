@@ -312,7 +312,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 * Execute Ansible
 
 ```console
-    # date; Ansible-playbook init_personium.yml ; date
+    # date; ansible-playbook init_personium.yml ; date
 ```
 
   \* After few minutes-hours (varies on case by case) Ansible process will be done. (\* Don't kill the process in between) Personium Unit will be created with the configured FQDN. Also will be accessible from web (ex: https://FQDN)
@@ -320,7 +320,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 * Confirm if Ansible executed properly
 
 ```console
-  # egrep -B 3 -A 3 'failed:|error' /root/Ansible.log
+  # egrep -B 3 -A 3 'failed:|error' /root/ansible.log
 ```
 
   Check the Ansible log file, if it shows any error

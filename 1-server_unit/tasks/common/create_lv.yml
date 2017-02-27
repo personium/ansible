@@ -1,0 +1,13 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: 論理ボリューム（LV LogicalVolume）を作成する
+  lvol: vg={{ vgname }} lv={{ lvolname }} size={{ size }}
+
+- name: LV に ファイルシステムを作成する
+  filesystem: fstype=ext3 dev=/dev/{{ vgname }}/{{ lvolname }} opts="-c"
+
+- name: マウント用のラベルを作成する
+  command: /sbin/e2label /dev/{{ vgname }}/{{ lvolname }} {{ mountpoint }}
+
+- name: マウントする
+  mount: name={{ mountpoint }} src='LABEL={{ mountpoint }}' fstype=ext3 state=mounted

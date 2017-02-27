@@ -1,0 +1,22 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: パーティションを確認する
+  command: /sbin/parted -s /dev/{{ diskname }} print
+  register: parted_print
+  failed_when: parted_print.rc is not defined
+
+- name: パーティションを確保する
+  command: /sbin/parted -s /dev/{{ diskname }} mklabel msdos
+  when: '"unrecognised disk label" in parted_print.stdout'
+
+- command: /sbin/parted -s /dev/{{ diskname }} 'mkpart primary ext3 0 -1'
+  when: '"unrecognised disk label" in parted_print.stdout'
+
+- name: /dev/{{ diskname }} ファイルシステムを作成する
+  filesystem: fstype=ext3 dev=/dev/{{ diskname }} opts="-c"
+
+- name: マウント用のラベルを作成する
+  command: /sbin/e2label /dev/{{ diskname }} {{ mountpoint }}
+
+- name: マウントする
+  mount: name={{ mountpoint }} src='LABEL={{ mountpoint }}' fstype=ext3 state=mounted

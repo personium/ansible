@@ -1,0 +1,14 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- include: ./tasks/common/init_process_account_common.yml
+  vars:
+    username: elasticsearch
+    groupname: elasticsearch
+    uid: 2060
+    gid: 2060
+    comment: Elasticsearch Administrator
+- include: ./tasks/es/init_directory.yml
+- include: ./tasks/es/install_elasticsearch.yml
+- include: ./tasks/es/init_service_elasticsearch.yml
+- include: ./tasks/es/init_esgclog.yml
+- include: ./tasks/es/init_elasticsearch_elb.yml

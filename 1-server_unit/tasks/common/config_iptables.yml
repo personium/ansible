@@ -1,0 +1,7 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: /etc/sysconfig/iptables を配備
+  template: src=./resource/{{ tag_ServerType }}/etc/sysconfig/iptables.j2 dest=/etc/sysconfig/iptables owner=root group=root mode=0644
+  notify:
+  - restart iptables
+

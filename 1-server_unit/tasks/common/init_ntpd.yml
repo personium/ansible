@@ -1,0 +1,13 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: ntp.confの配備
+  copy: src=./resource/common/etc/ntp.conf dest=/etc/ntp.conf owner=root group=root mode=0644
+
+- name: ntpdの配備
+  copy: src=./resource/common/etc/logrotate.d/ntpd dest=/etc/logrotate.d/ntpd owner=root group=root mode=0644
+
+- name: ntp_stats_gzipの配備
+  copy: src=./resource/common/etc/cron.d/ntp_stats_gzip dest=/etc/cron.d/ntp_stats_gzip owner=root group=root mode=0644
+
+- name: ntpd 再起動
+  service: name=ntpd state=restarted

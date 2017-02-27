@@ -1,0 +1,249 @@
+#
+# Personium
+# Copyright 2015-2017 FUJITSU LIMITED
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#################################################
+#personium-core configurations
+#################################################
+
+##### Major Settings Items #####
+# Unit Master Token.
+# Blank string should be configured in production use to disable it.
+io.personium.core.masterToken={{ master_token }}
+#
+io.personium.core.unitScheme=https
+#
+
+io.personium.core.unitUser.issuers={{ base_url}}/UnitUserCell/ {{ base_url}}/unitadmin/
+
+# Duration in seconds of account lock after the authentication failure.
+io.personium.core.lock.accountlock.time=1
+
+# plugin
+io.personium.core.plugin.path=/personium/personium-core/plugins
+
+###### X509 ######
+# File path to the X509 root certificate file.
+#
+# If you do not specify anything, the certificate of Personium's offical
+# CA will automatically be trusted.
+io.personium.core.x509.root=/opt/x509/unit-self-sign.crt /opt/x509/cacert.crt
+
+# File path to the X509 certificate file.
+io.personium.core.x509.crt=/opt/x509/unit-self-sign.crt
+
+# File path to the X509 secret key file.
+io.personium.core.x509.key=/opt/x509/unit.key
+
+
+##### Encryption keys ######
+# Encryption key for generating local token.
+# Unique value MUST be configured for each unit.
+#  Specify as random 16 digit hex string.
+io.personium.core.security.secret16={{ secret16.stdout }}
+
+# Account password hash salt.
+# Unique value SHOULD be configured for each unit.
+# Specify as random 16 digit hex string.
+io.personium.core.security.auth.password.salt={{ salt.stdout }}
+
+
+
+##### OpenID Connent Google Client IDs ######
+# Open ID Connect requiring client IDs issued from Google, which this PIO server trusts.
+# You can get client IDs by registering your apps to Google Developer Console:
+# https://console.developers.google.com/home
+#io.personium.core.oidc.google.trustedClientIds=759264921632-4vjc77s78h6sj09prfab22g88tm2pp01.apps.googleusercontent.com
+
+
+#################################################
+# Fundamental Settings
+#################################################
+
+# Enable or disable to record the timestamp into Account data when the password
+# authentication is succeeded.
+io.personium.core.account.lastauthenticated.enabled=false
+
+##### Lock configurations #####
+# Host name where memcached for lock is running.
+io.personium.core.lock.memcached.host={{ lock_host }}
+
+# Port number that the memcached for lock is listening.
+io.personium.core.lock.memcached.port={{ lock_port }}
+
+# Time in milliseconds for operation timeout of memcached.
+io.personium.core.lock.memcached.opTimeout=12000
+
+
+##### Cache configuration #####
+# Type of cache manager. Either "memcached" or "none".
+#
+# When specifying "none", the load of the Elasticsearch server will increase
+# as every request accesses to Elasticsearch.
+io.personium.core.cache.type={{ cache_manager }}
+
+# Hostname where memcached for cache is running.
+io.personium.core.cache.memcached.host={{ cache_host }}
+
+# Port number that the memcached for cache is listening.
+io.personium.core.cache.memcached.port={{ cache_port }}
+
+# Enable cell cacche or not.
+io.personium.core.cache.cell.enabled=true
+
+# Enable box cache or not.
+io.personium.core.cache.box.enabled=true
+
+# Enable schema cache or not.
+io.personium.core.cache.schema.enabled=true
+
+# Time in milliseconds for operation timeout of memcached.
+io.personium.core.cache.memcached.opTimeout=12000
+
+# Time in seconds to expire the cache content.
+io.personium.core.cache.memcached.expiresin=86400
+
+
+#################################################
+# Backend Elasticsearch
+#################################################
+##### Elasticsearch configuration #####
+# List of hosrt:port of the elasticsearch nodes, separted by comma.
+#
+# It is recommended to specify all the Elasticsearch nodes. However
+# it may work at least one active Elasticsearch node is specified.
+io.personium.core.es.hosts=127.0.0.1:9300
+
+# Elasticsearch cluster name.
+io.personium.core.es.cluster.name=personium
+
+
+#################################################
+# AuthenticDataStore
+#################################################
+# Type of AuthenticDataStore. "none" or "jdbc".
+#
+# By specifying "none", Personium does not store data into
+# AutenticDataStore, but only Elasticsearch. In this case, there is no way
+# to backup the data and restore it into Elasticsearch.
+#io.personium.core.es.ads.type=jdbc
+io.personium.core.es.ads.type=none
+
+
+#################################################
+# Engine module integration
+#################################################
+# Enable or disable engine module.
+io.personium.core.engine.enabled=true
+
+# Hostname where engine module is running.
+io.personium.core.engine.host=localhost
+
+# Port number that the Engine module is listening.
+io.personium.core.engine.port=18888
+
+# Context path for engine web module.
+io.personium.core.engine.path=personium-engine
+
+
+#################################################
+# WebDAV file entity store
+#################################################
+# Boolean flag to delete WebDAV file physically or logically. Set "true" to
+# delete physically, "false" to delete logically.
+#
+# Using logical deletion will cause disk space shortage. Setting "true" for
+# physical deletion is recommended.
+io.personium.core.binaryData.physical.delete.mode=true
+
+# Boolean flag to enable fsync to ensure file write operation.
+# Set "true" to enable.
+#
+# Selecting "true" will have a slight performance penalty due to syncing the
+# contnent into filesystem. However when filesystem snapshot is used to backup
+# the data, this flag should be set to "true" to ensure to gat a reliable
+# snapshot.
+io.personium.core.binaryData.fsync.enabled=true
+
+# Directory path or URL to store WebDav data.
+io.personium.core.blobStore.root=/personium_nfs/personium-core/dav
+
+
+#################################################
+# Setting Items for WebDAV file entity store.
+#################################################
+# Directory path for saving latest event log file.
+io.personium.core.event.log.current.dir=/personium_nfs/personium-core/eventlog
+
+# Maximum allowed size of bar file in MBytes.
+io.personium.core.bar.file.maxSize=100
+
+# Maximum size in MBytes for each entry in bar file.
+io.personium.core.bar.entry.maxSize=10
+
+# Working directory path for bar file installation.
+io.personium.core.bar.installfile.dir=/personium_nfs/personium-core/barInstall
+
+# Expiration time in seconds of the bar installation progress log
+# in memcached.
+io.personium.core.bar.progress.expireInSec=259200
+
+
+#################################################
+# Engine Module
+#################################################
+
+# Base URL to access to engine module.
+io.personium.core.defaultBaseUrl={{ base_url}}
+
+# Unit Master Token.
+# Blank string should be configured in production use to disable it.
+io.personium.engine.masterToken={{ master_token }}
+
+# List of host:port of the elasticsearch nodes, separated by comma.
+# Will be consolidated to io.personium.core.elasticsearch.hosts
+io.personium.engine.elasticsearch.hosts=127.0.0.1:9300
+
+# Elasticsearch cluster name.
+# Will be consolidated to io.personium.core.elasticsearch.cluster
+io.personium.engine.elasticsearch.cluster=personium
+
+# Boolean flag to enable fsync to ensure file write operation. Set "true" to enable.
+# Will be consolidated to io.personium.core.binaryData.fsync.enabled
+io.personium.engine.binaryData.fsync.enabled=true
+
+# Directory path or URL to store WebDav data.
+# Will be consolidated to io.personium.core.blobStore.root
+io.personium.engine.blobStore.root=/personium_nfs/personium-core/dav
+
+# File path to the X509 root certificate file.
+# Will be consolidated to io.personium.core.x509.root
+io.personium.engine.x509.root=/opt/x509/unit-self-sign.crt
+
+# File path to the X509 secret key file.
+# Will be consolidated to io.personium.core.x509.key
+io.personium.engine.x509.key=/opt/x509/unit.key
+
+# File path to the X509 certificate file.
+# Will be consolidated to io.personium.core.x509.crt
+io.personium.engine.x509.crt=/opt/x509/unit-self-sign.crt
+
+# Encryption key for generating local token
+# Will be consolidated to io.personium.core.security.secret16
+io.personium.engine.security.secret16={{ secret16.stdout }}
+
+# Davlimit configrations
+io.personium.core.dav.childresource.maxnum=1000000

@@ -1,0 +1,23 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: /personium/logback を作成
+  file: state=directory path=/personium/logback owner=personium group=personium mode=0755
+
+- name: /personium/logback/log を作成
+  file: state=directory path=/personium/logback/log owner=personium group=personium mode=0755
+
+- name: /personium_nfs を作成
+  file: state=directory path=/personium_nfs owner=root group=root mode=0755
+
+- name: /personium_nfs/personium-core を作成
+  file: state=directory path=/personium_nfs/personium-core owner=personium group=personium mode=0755
+
+- name: /personium_nfs/personium-core/dav を作成
+  file: state=directory path=/personium_nfs/personium-core/dav owner=personium group=personium mode=0755
+
+- name: /personium_nfs/personium-core/eventlog を作成
+  file: state=directory path=/personium_nfs/personium-core/eventlog owner=personium group=personium mode=0755
+
+- name: /personium_nfs/personium-core/barInstall を作成
+  file: state=directory path=/personium_nfs/personium-core/barInstall owner=personium group=personium mode=0755
+  

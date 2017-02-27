@@ -1,0 +1,6 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: /etc/postfix を配備
+  copy: src=./resource/common/etc/postfix dest=/etc owner=root group=root
+  notify:
+  - reload postfix

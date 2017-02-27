@@ -1,0 +1,21 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: /tmp/personium-init-svcmgr.sh の配備
+  template: src=./resource/bastion/tmp/personium-init-svcmgr.sh.j2 dest=/tmp/personium-init-svcmgr.sh mode=744
+
+- name: /tmp/personium-init-svcmgr.sh の実行
+  shell: /bin/sh /tmp/personium-init-svcmgr.sh > /tmp/personium-init-svcmgr.log
+  register: init_svcmgr_result
+  failed_when: "init_svcmgr_result.rc != 0"
+
+- name: servicemanagerセルのアカウント情報を取得
+  fetch: src=/tmp/servicemanager_account dest=~/servicemanager_account flat=yes
+
+- name: /tmp/personium-init-svcmgr.sh の削除
+  file: path=/tmp/personium-init-svcmgr.sh state=absent
+
+- name: personium-init-svcmgr.sh の実行ログ削除
+  file: path=/tmp/personium-init-svcmgr.log state=absent
+
+- name: セルのアカウント情報の削除
+  file: path=/tmp/servicemanager_account state=absent

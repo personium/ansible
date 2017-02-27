@@ -1,0 +1,7 @@
+/personium/elasticsearch/log/fullGC.log {
+    daily
+    dateext
+    compress
+    missingok
+    copytruncate
+}

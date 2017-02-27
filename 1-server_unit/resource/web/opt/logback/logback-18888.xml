@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE logback:configuration>
+<configuration>
+
+    <contextName>${HOSTNAME}</contextName>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] %logger{0} %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="socket" class="ch.qos.logback.classic.net.SocketAppender">
+        <remoteHost>127.0.0.1</remoteHost>
+        <port>6000</port>
+        <reconnectionDelay>10000</reconnectionDelay>
+        <!-- <includeCallerData>${includeCallerData}</includeCallerData> -->
+    </appender>
+
+    <appender name="FILE_CORE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/personium/personium-core/log/personium-core-18888.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>/personium/personium-core/log/personium-core-18888.log.%d{yyyyMMdd}.gz</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] %logger{0} %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE_ENGINE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/personium/personium-engine/log/personium-engine-18888.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>/personium/personium-engine/log/personium-engine-18888.log.%d{yyyyMMdd}.gz</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] %logger{0} %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger  name="io.personium.core">
+        <level value="INFO" />
+        <appender-ref ref="socket" />
+        <appender-ref ref="FILE_CORE" />
+    </logger>
+
+    <logger  name="io.personium.common">
+        <level value="INFO" />
+        <appender-ref ref="socket" />
+        <appender-ref ref="FILE_CORE" />
+    </logger>
+
+    <logger  name="io.personium.engine">
+        <level value="INFO" />
+        <appender-ref ref="socket" />
+        <appender-ref ref="FILE_ENGINE" />
+    </logger>
+
+    <logger  name="io.personium.client">
+        <level value="INFO" />
+        <appender-ref ref="socket" />
+        <appender-ref ref="FILE_ENGINE" />
+    </logger>
+
+    <logger name="io.personium.core.eventbus" additivity="false">
+        <level value="INFO" />
+        <appender-ref ref="socket" />
+    </logger>
+</configuration>

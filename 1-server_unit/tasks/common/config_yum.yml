@@ -1,0 +1,5 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: deploy yum.conf
+  copy: src=./resource/common/etc/yum.conf dest=/etc/yum.conf owner=root group=root mode=0644
+

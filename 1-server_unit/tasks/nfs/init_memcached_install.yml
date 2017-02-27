@@ -1,0 +1,53 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: wget をインストール
+  yum: name=wget state=latest
+
+- name: finger をインストール
+  yum: name=finger state=latest
+
+- name: make をインストール
+  yum: name=make state=latest
+
+- name: libevent をインストール
+  yum: name=libevent state=latest
+
+- name: libevent-devel をインストール
+  yum: name=libevent-devel state=latest
+
+- name: gcc をインストール
+  yum: name=gcc state=latest
+
+- name: memcached-{{ memcached_version }}.tar.gz をダウンロード
+#  1.4.15 <=
+#  get_url: url=http://memcached.googlecode.com/files/memcached-{{ memcached_version }}.tar.gz dest=/usr/local/src/memcached-{{ memcached_version }}.tar.gz
+#  1.4.16 >=
+  get_url: url=http://www.memcached.org/files/memcached-{{ memcached_version }}.tar.gz dest=/usr/local/src/memcached-{{ memcached_version }}.tar.gz
+
+
+- name: memcached-{{ memcached_version }}.tar.gz を展開
+  unarchive: src=/usr/local/src/memcached-{{ memcached_version }}.tar.gz dest=/usr/local/src copy=no
+
+- name: memcached を configure
+  command: >
+    ./configure
+    --prefix=/opt/memcached-{{ memcached_version }}
+    --enable-64bit
+  args:
+    chdir: /usr/local/src/memcached-{{ memcached_version }}
+    creates: /usr/local/src/memcached-{{ memcached_version }}/Makefile
+
+- name: memcached をコンパイル
+  command: make
+  args:
+    chdir: /usr/local/src/memcached-{{ memcached_version }}
+    creates: /usr/local/src/memcached-{{ memcached_version }}/memcached
+
+- name: memcached をインストール
+  command: make install
+  args:
+    chdir: /usr/local/src/memcached-{{ memcached_version }}
+    creates: /opt/memcached-{{ memcached_version }}
+
+- name: /opt/memcached-{{ memcached_version }} の所有者を memcached に変更
+  file: path=/opt/memcached-{{ memcached_version }} owner=memcached group=memcached recurse=yes

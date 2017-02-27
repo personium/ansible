@@ -1,0 +1,10 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: logrotate.confの配備
+  copy: src=./resource/common/etc/logrotate.conf dest=/etc/logrotate.conf owner=root group=root mode=0644
+
+- name: noanacron のインストール
+  yum: name=cronie-noanacron state=present
+
+- name: anacron のアンインストール
+  yum: name=cronie-anacron state=absent

@@ -1,0 +1,15 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+#- name: elasticsearch の起動スクリプトを配備
+#  copy: src=./resource/es/opt/elasticsearch-{{ version }}/bin/service/elasticsearch dest=/opt/elasticsearch-{{ version }}/bin/service/elasticsearch owner=elasticsearch group=elasticsearch mode=0755
+#  copy: src=./resource/es/rc.d/init.d/elasticsearch-{{ version }} dest=/etc/rc.d/init.d/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch mode=0755
+
+
+#- name: elasticsearch-nopelb の起動スクリプトを配備
+#  copy: src=./resource/es/opt/elasticsearch-{{ version }}/bin/service/elasticsearch-nopelb dest=/opt/elasticsearch-{{ version }}/bin/service/elasticsearch-nopelb owner=elasticsearch group=elasticsearch mode=0755
+
+#- name: nopelb 側起動スクリプトのシンボリックリンクを作成 (1)
+#  file: "state=link src=/opt/elasticsearch-{{ version }}/bin/service/elasticsearch-nopelb dest=/etc/init.d/elasticsearch-{{ version }}-nopelb owner=root group=root force=yes"
+
+#- name: nopelb 側起動スクリプトのシンボリックリンクを作成 (2)
+#  file: "state=link src=/etc/init.d/elasticsearch-{{ version }}-nopelb dest=/etc/init.d/elasticsearch-nopelb owner=root group=root force=yes"

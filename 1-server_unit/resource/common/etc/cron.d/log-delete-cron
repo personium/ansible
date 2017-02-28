@@ -1,0 +1,5 @@
+30 21 * * * root find -L /personium/personium-core/log -name '*.log*' -mtime +31 -exec /bin/rm -f {} \; > /dev/null 2>&1
+30 21 * * * root find -L /personium/personium-engine/log -name '*.log*' -mtime +31 -exec /bin/rm -f {} \; > /dev/null 2>&1
+30 21 * * * root find -L /personium/elasticsearch/log -name '*.log*' -mtime +31 -exec /bin/rm -f {} \; > /dev/null 2>&1
+30 21 * * * root find -L /personium/logback/log -name '*.log*' -mtime +31 -exec /bin/rm -f {} \; > /dev/null 2>&1
+*/5 * * * * root find /personium/nginx/lib/client_body_temp -type f -mmin +10 | xargs rm -f > /dev/null 2>&1

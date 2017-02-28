@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# chkconfig: 345 98 98
+
+JAVA_HOME=/opt/jdk
+export JAVA_HOME  
+PATH=$JAVA_HOME/bin:$PATH  
+export PATH  
+LOGBACK_USER=personium
+
+mode=$1 
+case "$mode" in
+  'start')
+    if [ -f /var/run/logback/logback.pid ]; then
+    echo "logback already started"
+    else
+    /bin/su $LOGBACK_USER -c "sh /opt/logback/logback.sh"
+    fi 
+    ;;
+
+  'stop')
+    /bin/kill `cat /var/run/logback/logback.pid`
+    /bin/rm /var/run/logback/logback.pid
+    ;;
+
+esac
+
+exit 0

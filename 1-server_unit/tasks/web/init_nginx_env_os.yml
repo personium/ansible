@@ -1,0 +1,63 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: group の作成
+  group: name=nginx gid=2010 state=present
+
+- name: user の作成
+  user: name=nginx uid=2010 shell=/sbin/nologin group=nginx home=/personium/nginx/lib comment="Nginx Administrator" createhome=no
+
+- name: /personium のディレクトリを作成
+  file: "state=directory path=/personium owner=root group=root"
+
+- name: /opt/disk1/nginx を作成
+  file: state=directory path=/opt/disk1/nginx owner=root group=root mode=0755
+
+- name: /opt/disk1/nginx/lib を作成
+  file: state=directory path=/opt/disk1/nginx/lib owner=nginx group=root mode=0755
+
+- name: /opt/disk1/nginx/log を作成
+  file: state=directory path=/opt/disk1/nginx/log owner=root group=root mode=0755
+
+- name: /opt/disk1/nginx/log/main を作成
+  file: state=directory path=/opt/disk1/nginx/log/main owner=root group=root mode=0755
+
+- name: /opt/disk1/nginx/log/accesslog_443 を作成
+  file: state=directory path=/opt/disk1/nginx/log/accesslog_443 owner=root group=root mode=0755
+
+- name: /opt/disk1/nginx/log/accesslog_80 を作成
+  file: state=directory path=/opt/disk1/nginx/log/accesslog_80 owner=root group=root mode=0755
+
+- name: /personium に /opt/disk1/nginx の symlink を作成
+  file: state=link src=/opt/disk1/nginx dest=/personium/nginx owner=root group=root mode=0777
+
+
+- name: /opt/disk1/var を作成 (互換用)
+  file: state=directory path=/opt/disk1/var owner=root group=root mode=0755
+
+- name: /opt/disk1/var/lib を作成 (互換用)
+  file: state=directory path=/opt/disk1/var/lib owner=root group=root mode=0755
+
+- name: /opt/disk1/var/log を作成 (互換用)
+  file: state=directory path=/opt/disk1/var/log owner=root group=root mode=0755
+
+- name: /opt/disk1/var/lib/nginx を /personium/nginx/lib への symlink として作成 (互換用)
+  file: state=link src=/personium/nginx/lib dest=/opt/disk1/var/lib/nginx owner=root group=root mode=0777
+
+- name: /opt/disk1/var/log/nginx を /personium/nginx/log への symlink として作成 (互換用)
+  file: state=link src=/personium/nginx/log dest=/opt/disk1/var/log/nginx owner=root group=root mode=0777
+
+
+- name: /opt/var を作成 (互換用)
+  file: state=directory path=/opt/var owner=root group=root mode=0755
+
+- name: /opt/var/lib を作成 (互換用)
+  file: state=directory path=/opt/var/lib owner=root group=root mode=0755
+
+- name: /opt/var/log を作成 (互換用)
+  file: state=directory path=/opt/var/log owner=root group=root mode=0755
+
+- name: /opt/var/lib/nginx を /personium/nginx/lib への symlink として作成 (互換用)
+  file: state=link src=/personium/nginx/lib dest=/opt/var/lib/nginx owner=root group=root mode=0777
+
+- name: /opt/var/log/nginx を /personium/nginx/log への symlink として作成 (互換用)
+  file: state=link src=/personium/nginx/log dest=/opt/var/log/nginx owner=root group=root mode=0777

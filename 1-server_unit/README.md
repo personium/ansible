@@ -1,8 +1,8 @@
-# 3-server unit setup with Ansible
+# 1-server unit setup with Ansible
 ---------------------------------------
 
 ## Overview
-The purpose of this document is to explain explecitely how to construct Personium unit on 3 servers using Ansible.
+The purpose of this document is to explain explecitely how to construct Personium unit on 4 servers using Ansible.
 
 ## Server setup :white_check_mark:
 
@@ -11,18 +11,12 @@ The purpose of this document is to explain explecitely how to construct Personiu
 
 |**Servers**      |   **Role**      |   **MW**                           |  **default memory size** (※1) |   **AWS EC2 specs** (※2)|  
 |:----------------|:----------------|:-----------------------------------|:------------------------------|:-------------------------|
-| Server 1        |  Bastion,Web    | nginx                              |                               |      t2.micro            |
-| Server 2        |  AP,NFS         | tomcat(1280MB),memcached(1024MB*2) |  3328MB                       |      m3.medium           |
-| Server 3        |  ES             | Elasticsearch(3328MB)              |  3328MB                       |     m3.medium            |
-
+| Server 1        |  Bastion,Web,AP,ES    | nginx,tomcat(768MB),memcached(256MB*2),Elasticsearch(1875MB)                     |3155MB                         |      m3.medium            |
 (※1) : Required default memory size. Memory size of each MW configuration file could be modified
 
 (※2) : Tested AWS EC2 instance specs  
 
-Alternatively, you can use HeatTemplate to create the infrastructure.  
-[Heat Template Sample](https://github.com/personium/openstack-heat/3-server_heat)
-
-<img src="3-server_unit.jpg" title="3-server_unit" style="width:70%;height:auto;">
+<img src="1-server_unit.jpg" title="1-server_unit" style="width:70%;height:auto;">
 
 #### File structure
 
@@ -30,7 +24,7 @@ Alternatively, you can use HeatTemplate to create the infrastructure.
 |---|---|
 | `/init_personium.yml`  |		yml file which should be executed by Ansible-playbook|
 | `/[group name].yml`	   |		yml file to retrieve the variable of each group and execute its related tasks|
-| `/ansible.cfg`         |		Describes the required Settings for Ansible execution. (\*Modification is not required)|
+| `/Ansible.cfg`         |		Describes the required Settings for Ansible execution. (\*Modification is not required)|
 | `/static_inventory/`   |		This folder contains all the essential information of different environments|
 | `/static_inventory/hosts\*#`	          |        Describes information of hosts (IP address, FQDN, group, User name, Private Key, etc.)|
 | `/group_vars/`	       |		Folder to organize files in order to perform various customization or tuning on servers|
@@ -45,16 +39,16 @@ Alternatively, you can use HeatTemplate to create the infrastructure.
 
   \*# : Files required to modify according to the environment.
 
-  \*[group name] : web, ap, nfs, es, mysql, bastion and common. All in all 7 groups.
+  \*[group name] : web, ap, nfs, es, bastion and common. All in all 6 groups.
   （Here `common` is not the server role. Common group is used to set some general functionalities on all the servers.）
 
 #### File (key) handling Caution: :zap:
 
 The following key file will be generated automatically during the Ansible execution. Please handle these keys carefully.
 
-`/personium/personium/conf/salt.key`
+`/personium/Personium-core/conf/salt.key`
 
-`/personium/personium/conf/token.key`
+`/personium/Personium-core/conf/token.key`
 
 ## Initial setup for Ansible :white_check_mark:
 
@@ -144,19 +138,7 @@ Following is the self-signed ssl certificate creation procedure.
 
 \* In the case of Self-signed SSL certificate, the above process is not required to follow.
 
-#### 7: Add DISK
-
-* Add the external disk to the servers below (\*Following disk sizes are recommended).
-Note: It is required to add the external disk on the following path
-
-| Server | Storage | Path | Mount Point | Usage |
-|---|---|---|---|---|
-| ES  | 200GB | /dev/xvdb | /opt/es_data-log | ES data |
-| AP + NFS server  | 50GB | /dev/xvdb | /opt/ap_piolog | PIO log |
-| AP + NFS server  | 100GB | /dev/xvdc | /opt/nfs_webdav | WebDav, event log |
-
-
-#### 8: Generate SSH key
+#### 7: Generate SSH key
 
 * Setup the ssh keys (RSA key pair) to access other servers from bastion server as “root” user. Follow the steps below:
 
@@ -299,7 +281,6 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
       # cat /root/ansible/group_vars/bastion.yml
       # cat /root/ansible/group_vars/common.yml
       # cat /root/ansible/group_vars/es.yml
-      # cat /root/ansible/group_vars/mysql.yml
       # cat /root/ansible/group_vars/nfs.yml
       # cat /root/ansible/group_vars/web.yml
 ```
@@ -334,7 +315,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 
 ```
     # /bin/sh personium_regression.sh https://{{ FQDN of Web server }}
-    [personium Version(default) RT OK]
+    [PCS Version(default) RT OK]
 ```
 
 \* reachability testing is done, if it shows the same

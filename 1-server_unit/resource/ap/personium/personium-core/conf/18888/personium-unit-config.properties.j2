@@ -125,7 +125,7 @@ io.personium.core.cache.memcached.expiresin=86400
 #
 # It is recommended to specify all the Elasticsearch nodes. However
 # it may work at least one active Elasticsearch node is specified.
-io.personium.core.es.hosts={{ es_elb }}:9300
+io.personium.core.es.hosts=127.0.0.1:9300
 
 # Elasticsearch cluster name.
 io.personium.core.es.cluster.name=personium
@@ -215,7 +215,7 @@ io.personium.engine.masterToken={{ master_token }}
 
 # List of host:port of the elasticsearch nodes, separated by comma.
 # Will be consolidated to io.personium.core.elasticsearch.hosts
-io.personium.engine.elasticsearch.hosts={{ es_elb }}:9300
+io.personium.engine.elasticsearch.hosts=127.0.0.1:9300
 
 # Elasticsearch cluster name.
 # Will be consolidated to io.personium.core.elasticsearch.cluster

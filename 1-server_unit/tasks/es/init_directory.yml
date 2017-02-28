@@ -1,0 +1,19 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: /personium を作成
+  file: state=directory path=/personium owner=root group=root mode=0755
+
+- name: /personium/elasticsearch-{{ version }}のディレクトリを作成
+  file: "state=directory path=/personium/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: ログ用ディレクトリを作成
+  file: "state=directory path=/personium/elasticsearch-{{ version }}/log owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: データ用ディレクトリを作成
+  file: "state=directory path=/personium/elasticsearch-{{ version }}/data owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: ワーク用ディレクトリを作成
+  file: "state=directory path=/personium/elasticsearch-{{ version }}/work owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: /personium/elasticsearch のシンボリックリンクを作成
+  file: "state=link src=/personium/elasticsearch-{{ version }} dest=/personium/elasticsearch owner=elasticsearch group=elasticsearch"

@@ -1,0 +1,19 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+#- name: sendmail 停止
+#  service: name=sendmail state=stopped
+
+#- name: postfix のインストール
+#  yum: name=postfix state=present
+
+#- name: alternatives コマンドで MTA を postfix に 切り替える
+#  command: "alternatives --set mta /usr/sbin/sendmail.postfix"
+
+- name: master.cfの配備
+  copy: src=./resource/common/etc/postfix/master.cf dest=/etc/postfix/master.cf owner=root group=root mode=0644
+
+- name: main.cfの配備
+  copy: src=./resource/common/etc/postfix/main.cf dest=/etc/postfix/main.cf owner=root group=root mode=0644
+
+#- name: postfix 起動
+#  service: name=postfix state=started

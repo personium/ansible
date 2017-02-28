@@ -1,0 +1,8 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- include: ./tasks/web/init_nginx_env_os.yml
+- include: ./tasks/web/init_nginx_install.yml
+- include: ./tasks/web/init_nginx_setup.yml
+- include: ./tasks/web/config_nginx.yml
+
+- include: ./tasks/web/init_nginx.yml

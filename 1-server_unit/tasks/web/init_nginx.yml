@@ -1,0 +1,7 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: /etc/rc.d/init.d/nginx を配備
+  copy: src=./resource/web/etc/rc.d/init.d/nginx dest=/etc/rc.d/init.d/nginx owner=root group=root mode=0755
+
+- name: /etc/sysconfig/nginx を配備
+  copy: src=./resource/web/etc/sysconfig/nginx dest=/etc/sysconfig/nginx owner=root group=root mode=0644

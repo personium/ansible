@@ -1,0 +1,4 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: reload nginx
+  service: name=nginx state=reloaded

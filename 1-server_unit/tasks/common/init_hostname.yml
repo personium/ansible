@@ -1,0 +1,7 @@
+# Copyright FUJITSU LIMITED 2015.
+
+- name: ホスト名設定
+  hostname: name={{ tag_Name }}
+
+- name: /etc/hosts の修正
+  template: src=./resource/common/etc/hosts.j2 dest=/etc/hosts owner=root group=root mode=0644

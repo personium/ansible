@@ -1,0 +1,39 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: 標準の conf を orig.conf にコピー
+  command: cp -pr conf orig.conf
+  args:
+    chdir: /opt/nginx-{{ nginx_version }}
+    creates: /opt/nginx-{{ nginx_version }}/orig.conf
+
+- name: バージョン非依存化のためのシンボリックリンクを作成
+  file: state=link src=/opt/nginx-{{ nginx_version }} dest=/opt/nginx
+
+
+- name: /etc/rc.d/init.d/nginx を配備
+  copy: src=./resource/web/etc/rc.d/init.d/nginx dest=/etc/rc.d/init.d/nginx owner=root group=root mode=0755
+
+- name: /etc/sysconfig/nginx を配備
+  copy: src=./resource/web/etc/sysconfig/nginx dest=/etc/sysconfig/nginx owner=root group=root mode=0644
+
+- name: /opt/nginx/conf を配備
+  copy: src=./resource/web/opt/nginx/conf dest=/opt/nginx owner=root group=root
+
+- name: /opt/nginx/conf/backend.conf を配備
+  template: src=./resource/web/opt/nginx/conf/backend.conf.j2 dest=/opt/nginx/conf/backend.conf owner=root group=root
+
+- name: /etc/logrotate.d/nginx を配備
+  copy: src=./resource/web/etc/logrotate.d/nginx dest=/etc/logrotate.d/nginx owner=root group=root mode=0644
+
+
+- name: nginx をサービスに登録
+  command: chkconfig --add nginx
+
+- name: nginx の自動起動を有効にする
+  command: chkconfig nginx on
+
+- name: nginx を起動
+  command: service nginx start
+  args:
+    chdir: /personium/nginx/lib
+    creates: /var/run/nginx.pid

@@ -82,7 +82,7 @@ The following key file will be generated automatically during the Ansible execut
 #### 4: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
-  * Deploy the **self-signed unit certificate** and **private key** under `Ansible/resource/ap/opt/x509/` folder with the following file names.
+  * Deploy the **self-signed unit certificate** and **private key** under `ansible/resource/ap/opt/x509/` folder with the following file names.
     - unit-self-sign.crt（self-signed unit certificate）
     - unit.key（private key）  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md "").
@@ -256,7 +256,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 * Install Ansible
 
 ```console
-    # yum install Ansible
+    # yum install ansible
     this ok [y/N]:  (\* type [y] and press enter)
 ```
 

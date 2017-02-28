@@ -20,7 +20,7 @@ The purpose of this document is to explain explecitely how to construct Personiu
 (※2) : Tested AWS EC2 instance specs  
 
 Alternatively, you can use HeatTemplate to create the infrastructure.  
-[Heat Template Sample](https://github.com/personium/openstack-heat/3-server_heat)
+[Heat Template Sample](https://github.com/personium/openstack-heat/)
 
 <img src="3-server_unit.jpg" title="3-server_unit" style="width:70%;height:auto;">
 

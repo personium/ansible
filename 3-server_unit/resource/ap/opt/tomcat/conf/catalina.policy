@@ -261,6 +261,6 @@ grant codeBase "file:${catalina.home}/webapps/personium-engine/-" {
 };
 
 // for personium-engine extensions
-grant codeBase "file:/personium/18888/personium-engine/extensions/-" {
+grant codeBase "file:/personium/personium-engine/extensions/-" {
     permission java.security.AllPermission;
 };

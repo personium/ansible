@@ -42,42 +42,6 @@
 - name: /personium/personium/log を作成
   file: state=directory path=/opt/ap_piolog/personium/log owner=personium group=personium mode=0755
 
-- name: /personium/18888 を作成
-  file: state=directory path=/personium/18888 owner=personium group=personium mode=0755
-
-- name: /personium/18888/personium-engine を作成
-  file: state=directory path=/personium/18888/personium-engine owner=personium group=personium mode=0755
-
-- name: /personium/18888/personium-engine/extensions を作成
-  file: state=directory path=/personium/18888/personium-engine/extensions owner=personium group=personium mode=0755
-
-- name: /personium/28888 を作成
-  file: state=directory path=/personium/28888 owner=personium group=personium mode=0755
-
-- name: /personium/28888/personium-engine を作成
-  file: state=directory path=/personium/28888/personium-engine owner=personium group=personium mode=0755
-
-- name: /personium/28888/personium-engine/extensions を作成
-  file: state=directory path=/personium/28888/personium-engine/extensions owner=personium group=personium mode=0755
-
-- name: /personium/38888 を作成
-  file: state=directory path=/personium/38888 owner=personium group=personium mode=0755
-
-- name: /personium/38888/personium-engine を作成
-  file: state=directory path=/personium/38888/personium-engine owner=personium group=personium mode=0755
-
-- name: /personium/38888/personium-engine/extensions を作成
-  file: state=directory path=/personium/38888/personium-engine/extensions owner=personium group=personium mode=0755
-
-- name: /personium/48888 を作成
-  file: state=directory path=/personium/48888 owner=personium group=personium mode=0755
-
-- name: /personium/48888/personium-engine を作成
-  file: state=directory path=/personium/48888/personium-engine owner=personium group=personium mode=0755
-
-- name: /personium/48888/personium-engine/extensions を作成
-  file: state=directory path=/personium/48888/personium-engine/extensions owner=personium group=personium mode=0755
-
 - name: /personium_nfs を作成
   file: state=directory path=/personium_nfs owner=root group=root mode=0755
 

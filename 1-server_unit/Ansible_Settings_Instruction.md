@@ -119,7 +119,7 @@ Below are the files where modification is required.
 
   es_heapsize: 1875
 
-  version: 1.3.4
+  version: 2.4.1
 ```
 
 #### NFS server (file destination : /group_vars/nfs.yml)
@@ -150,6 +150,10 @@ Below are the files where modification is required.
 
 ```yaml
   tag_ServerType: bastion
+
+  personium_core_version : 1.4.5
+
+  personium_engine_version : 1.4.5
 ```
 
 ## Summary

@@ -47,15 +47,6 @@
     chdir: /usr/local/src
     creates: /usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
 
-- name: nginx-{{ nginx_version }}.diff を配備
-  copy: src=./resource/diff/nginx-{{ nginx_version }}.diff dest=/usr/local/src/nginx-{{ nginx_version }}.diff owner=root group=root mode=0644
-
-- name: nginx-{{ nginx_version }} に ETag 対処パッチを適用
-  shell: patch -p0 < nginx-{{ nginx_version }}.diff && touch nginx-{{ nginx_version }}/step1
-  args:
-    chdir: /usr/local/src
-    creates: /usr/local/src/nginx-{{ nginx_version }}/step1
-
 - name: nginx を configure
   command: >
     ./configure

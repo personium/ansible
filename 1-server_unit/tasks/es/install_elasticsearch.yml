@@ -15,6 +15,14 @@
 - name: /opt/elasticsearch-{{ version }} ディレクトリ の所有者を変更
   file: "path=/opt/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch recurse=yes"
 
+- name: プラグインのインストール確認
+  stat: path=/opt/elasticsearch-{{ version }}/plugins/delete-by-query
+  register: fm
+
+- name: delete-by-queryプラグインのインストール
+  command: "/opt/elasticsearch-{{ version }}/bin/plugin install delete-by-query"
+  when: not fm.stat.exists
+
 - name: 起動スクリプト の配備
   copy: src=./resource/es/etc/rc.d/init.d/elasticsearch dest=/etc/rc.d/init.d/elasticsearch owner=elasticsearch group=elasticsearch mode=0755
 

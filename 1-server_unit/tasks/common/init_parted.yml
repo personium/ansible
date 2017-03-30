@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2017.
 
 - name: install parted
   yum: name=parted state=present

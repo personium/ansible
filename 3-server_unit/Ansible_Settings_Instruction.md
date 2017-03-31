@@ -199,9 +199,9 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: bastion
 
-  personium_core_version : 1.4.5
+  personium_core_version : 1.4.6
 
-  personium_engine_version : 1.4.5
+  personium_engine_version : 1.4.6
 
 ```
 

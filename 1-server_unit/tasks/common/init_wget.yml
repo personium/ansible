@@ -1,0 +1,4 @@
+# Copyright FUJITSU LIMITED 2017.
+
+- name: install wget
+  yum: name=wget state=present

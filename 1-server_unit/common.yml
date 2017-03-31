@@ -1,5 +1,7 @@
 # Copyright FUJITSU LIMITED 2015-2017.
-
+- include: ./tasks/common/init_unzip.yml
+- include: ./tasks/common/init_wget.yml
+- include: ./tasks/common/init_parted.yml
 - include: ./tasks/common/init_hostname.yml
 - include: ./tasks/common/init_jdk.yml
 - include: ./tasks/common/init_logrotated.yml

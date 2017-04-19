@@ -64,7 +64,7 @@ for i in `seq 0 1 $UU_MAX_IDX`; do
 
   echo "   -- 確認"
   echo "checking account["${UU_NAME[$i]}"]"
-  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__auth -X POST -d "grant_type=password&username=${UU_NAME[$i]}&password=${UU_PASS[$i]}" -k -i -s`
+  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__token -X POST -d "grant_type=password&username=${UU_NAME[$i]}&password=${UU_PASS[$i]}" -k -i -s`
   echo "$CURL_RESULT"
   check_response 200 "アカウント作成確認"
 

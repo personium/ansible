@@ -5,6 +5,7 @@
 The purpose of this document is to explain explecitely how to construct Personium unit on 3 servers using Ansible.
 This ansible is checking the operation with Personium version 1.5.0.
 
+
 ## Server setup :white_check_mark:
 
 #### server configuration sample

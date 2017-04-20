@@ -202,7 +202,6 @@ Below are the files where modification is required.
   personium_core_version : 1.5.0
 
   personium_engine_version : 1.5.0
-
 ```
 
 ## Summary

@@ -1,4 +1,7 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2017.
 
-- name: IPv6の無効化
-  copy: src=./resource/common/etc/modprobe.d/disable-ipv6.conf dest=/etc/modprobe.d/disable-ipv6.conf owner=root group=root mode=0644
+- name: disable IPv6
+  copy: src=./resource/common/etc/sysctl.d/disable_ipv6.conf dest=/etc/sysctl.d/disable_ipv6.conf owner=root group=root mode=0644
+
+- name: Reflect setting
+  command: sysctl -p/etc/sysctl.d/disable_ipv6.conf

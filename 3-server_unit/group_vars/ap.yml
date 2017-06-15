@@ -17,5 +17,5 @@ cache_port: 11212
 cache_manager: memcached
 
 
-tomcat_version: 8.0.41
+tomcat_version: 8.0.44
 commons_daemon_version : 1.0.15

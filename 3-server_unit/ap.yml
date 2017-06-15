@@ -2,22 +2,15 @@
 
 - include: ./common.yml
 - include: ./tasks/common/config_cron.yml
-
 - include: ./tasks/common/init_ebs_volume.yml
   vars:
     diskname: "{{ pio_logvol }}"
-#    diskname: sdb
     mountpoint: /opt/ap_piolog
-
-#- name: MySQL-Clientインストール
-#  yum: name=mysql state=latest
+    disklabel: ap_piolog
 
 - include: ./tasks/ap/init_nfsclient.yml
-
 - include: ./tasks/common/init_process_account_personium.yml
-
 - include: ./tasks/ap/init_personium-dir.yml
-
 - include: ./tasks/ap/init_tomcat_install.yml
 - include: ./tasks/ap/init_personium_setup.yml
 - include: ./tasks/ap/personium_deploy.yml

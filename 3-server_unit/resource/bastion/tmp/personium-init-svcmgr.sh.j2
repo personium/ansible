@@ -16,16 +16,16 @@
 # limitations under the License.
 #
 
-# Service Managerセルの初期設定スクリプト
+# Initial setup script of Unitadmin cell
 
-# 環境の設定
+# Environmental setting
 DOMAIN={{ base_url }}
 MASTER_TOKEN={{ master_token }}
 CELL_NAME=unitadmin
 CELL_OWNER={{ base_url }}/#unitadmin
 UNITADMIN_ACCOUNT_FILE=/root/ansible/unitadmin_account
 
-# 作成するアカウントとパスワード
+# Account and password to create
 UU_NAME=(unitadmin personium-rt)
 UU_PASS=()
 CELL_URL=$DOMAIN/$CELL_NAME
@@ -36,23 +36,23 @@ function check_response() {
   OPERATION=${2}
   RESPONSE_CODE=`echo "${CURL_RESULT}" | /bin/grep 'status:'`
   if [ "${RESPONSE_CODE}" != "status:${STATUS}" ]; then
-    echo "${OPERATION}に失敗."
+    echo "${OPERATION}faild."
     exit 2
   fi
 }
 
-#Cellの新規作成
-echo "######  UNIT ADMINセルの作成  ######"
+#Create Cell
+echo "######  Create UNIT ADMIN Cell  ######"
 CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $DOMAIN/__ctl/Cell -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Unit-User: $CELL_OWNER" -d "{\"Name\":\"$CELL_NAME\"}" -k -i -s`
 echo "$CURL_RESULT"
 
-echo "-- 作成確認"
+echo "-- Cell check"
 CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$DOMAIN/__ctl/Cell(%27$CELL_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
 echo "$CURL_RESULT"
-check_response 200 "UNIT ADMINセルの作成確認"
+check_response 200 "UNIT ADMIN Cell created"
 
-# アカウントの作成
-echo "######  アカウント作成  ######"
+# Create account
+echo "######  Create account  ######"
 for i in `seq 0 1 $UU_MAX_IDX`; do
   UU_PASS+=(`perl -le 'print map { ("a".."z","A".."Z", 0..9)[rand 36] } 1..16'`)
 
@@ -60,17 +60,17 @@ for i in `seq 0 1 $UU_MAX_IDX`; do
   echo "            passwd  ["${UU_PASS[$i]}"]"
   CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Account -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Credential: ${UU_PASS[$i]}" -d "{\"Name\":\"${UU_NAME[$i]}\"}" -k -i -s`
   echo "$CURL_RESULT"
-  check_response 201 "アカウント作成"
+  check_response 201 "Account created"
 
-  echo "   -- 確認"
+  echo "   -- Account check"
   echo "checking account["${UU_NAME[$i]}"]"
-  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__auth -X POST -d "grant_type=password&username=${UU_NAME[$i]}&password=${UU_PASS[$i]}" -k -i -s`
+  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__token -X POST -d "grant_type=password&username=${UU_NAME[$i]}&password=${UU_PASS[$i]}" -k -i -s`
   echo "$CURL_RESULT"
-  check_response 200 "アカウント作成確認"
+  check_response 200 "Check Account Created"
 
 done
 
-# パスワードの確認まで問題なく完了したら、作成した情報をファイルに落とし込む
+# Upon confirming the password without trouble, drop the created information into a file
 for i in `seq 0 1 $UU_MAX_IDX`; do
   echo "${UU_NAME[$i]}" "${UU_PASS[$i]}" >> ${UNITADMIN_ACCOUNT_FILE}
 done

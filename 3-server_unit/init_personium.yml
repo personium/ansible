@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
 - hosts: tag_ServerType_bastion
   connection: local
@@ -11,17 +11,6 @@
     - include: ./bastion.yml
   handlers:
     - include: ./handlers/common/restart_iptables.yml
-
-#- hosts: ads_group
-#  sudo: yes
-#  vars_files:
-#    - ./group_vars/common.yml
-#    - ./group_vars/mysql.yml
-#    - ./group_vars/{{vars_file}}
-#  tasks:
-#    - include: ./mysql.yml
-#  handlers:
-#    - include: ./handlers/common/restart_iptables.yml
 
 - hosts: tag_ServerType_es
   sudo: yes

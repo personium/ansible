@@ -1,30 +1,25 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: /personium/personium-esgclog のディレクトリを作成
+- name: Create /personium/personium-esgclog directory
   file: "state=directory path=/personium/personium-esgclog owner=root group=root"
 
-- name: /etc/init/esgclog.conf の配備
-  copy: src=./resource/es/etc/init/esgclog.conf dest=/etc/init/esgclog.conf owner=root group=root mode=644
+- name: Deploy /etc/systemd/system/esgclog.service
+  copy: src=./resource/es/etc/systemd/system/esgclog.service dest=/etc/systemd/system/esgclog.service owner=root group=root mode=644
 
-- name: /personium/personium-esgclog/printFullGC.awk の配備
+- name: Deploy /personium/personium-esgclog/printFullGC.awk
   copy: src=./resource/es/personium/personium-esgclog/printFullGC.awk dest=/personium/personium-esgclog/printFullGC.awk owner=root group=root mode=744
 
-- name: /personium/personium-esgclog/esGCLog.sh の配備
+- name: Deploy /personium/personium-esgclog/esGCLog.sh
   copy: src=./resource/es/personium/personium-esgclog/esGCLog.sh dest=/personium/personium-esgclog/esGCLog.sh owner=root group=root mode=744
 
-- name: /etc/logrotate.d/es-fullgc の配備
+- name: Deploy /etc/logrotate.d/es-fullgc
   copy: src=./resource/es/etc/logrotate.d/es-fullgc dest=/etc/logrotate.d/es-fullgc owner=root group=root mode=0644
 
-- name: initctl configuration 起動状態確認
-  shell: "/sbin/initctl list | grep esgclog"
-  register: esgclog_initctl_list
+- name: systemd reload
+  command: systemctl daemon-reload
 
-- name: initctl esgclog 停止
-  command: "/sbin/initctl stop esgclog"
-  when: '"esgclog start/running" in esgclog_initctl_list.stdout'
-
-- name: initctl configuration 再読み込み
-  command: "/sbin/initctl reload-configuration"
-
-- name: initctl esgclog 起動
-  command: "/sbin/initctl start esgclog"
+- name: Start esgclog
+  systemd:
+    name: esgclog
+    state: started
+    enabled: yes

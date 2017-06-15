@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: パッケージアップデート
+- name: Package update
   yum: name=* state=latest

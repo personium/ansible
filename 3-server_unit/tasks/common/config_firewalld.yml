@@ -1,0 +1,19 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: install firewalld
+  yum: name=firewalld state=present
+
+- name: Deploy /etc/firewalld/zones/personium-zone.xml
+  template: src=./resource/{{ tag_ServerType }}/etc/firewalld/zones/personium-zone.xml.j2 dest=/etc/firewalld/zones/personium-zone.xml owner=root group=root mode=0644
+
+- name: Start firewalld
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Setting default zone
+  command: firewall-cmd --set-default-zone=personium-zone
+
+- name: Restart firewalld
+  systemd: name=firewalld state=restarted

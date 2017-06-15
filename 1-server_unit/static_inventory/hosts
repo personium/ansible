@@ -1,46 +1,45 @@
-############ BastionサーバーのPrivate IP Address ############
+############ Private IP Address of Bastion server ############
 [tag_ServerType_bastion]
-#BastionサーバのプライベートIPを記入
+#Fill in the Private IP Address of Bastion server
 {Bastion_Private_IP}
 
-############ Personium構築のPrivate IP Address ############
+############ Private IP Address of Personium server ############
 [tag_ServerType_personium]
-#nfsサーバのプライベートIPを記入
+#Fill in the Private IP Address of Personium server
 {Personium_Private_IP}
 
-
-############ bastionサーバーの設定項目 ############
+############ Setting items of bastion server ############
 [tag_ServerType_bastion:vars]
 
-## サーバーのホスト名
+## Hostname
 tag_Name={Bastion_Tag_Name}
 
-## ansibleを実行するユーザー
+## User who runs ansible
 ansible_ssh_user={Ansible_Execution_User}
 
-## ansibleを実行するための秘密鍵
+## Secret key for executing ansible(Absolute path)
 ansible_ssh_private_key_file={SSH_PrivateKey}
 
-# Personiumのマスタートークン
+# Master Token of Personium
 master_token={Master_Token}
 
-## WebサーバーのFQDN
+## Web server FQDN
 base_url={Personium_FQDN}
 
-############ Personiumサーバの設定項目 ############
+############ Setting items of Personium server ############
 [tag_ServerType_personium:vars]
 
-## サーバーのホスト名
+## Hostname
 tag_Name={Personium_Tag_Name}
 
-## ansibleを実行するユーザー
+## User who runs ansible
 ansible_ssh_user={Ansible_Execution_User}
 
-## ansible実行ユーザーがssh公開鍵認証に用いる秘密鍵（絶対パス指定）
+## Secret key for executing ansible(Absolute path)
 ansible_ssh_private_key_file={SSH_PrivateKey}
 
-# Personiumのマスタートークン
+# Master Token of Personium
 master_token={Master_Token}
 
-## WebサーバーのFQDN
+## Web server FQDN
 base_url={Personium_FQDN}

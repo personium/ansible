@@ -11,4 +11,4 @@
 - include: ./tasks/es/install_elasticsearch.yml
 - include: ./tasks/es/init_service_elasticsearch.yml
 - include: ./tasks/es/init_esgclog.yml
-- include: ./tasks/es/init_elasticsearch_elb.yml
+- include: ./tasks/common/config_firewalld.yml

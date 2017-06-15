@@ -1,34 +1,30 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: wget をインストール
+- name: Install wget
   yum: name=wget state=latest
 
-- name: finger をインストール
+- name: Install finger
   yum: name=finger state=latest
 
-- name: make をインストール
+- name: Install make
   yum: name=make state=latest
 
-- name: libevent をインストール
+- name: Install libevent
   yum: name=libevent state=latest
 
-- name: libevent-devel をインストール
+- name: Install libevent-devel
   yum: name=libevent-devel state=latest
 
-- name: gcc をインストール
+- name: Install gcc
   yum: name=gcc state=latest
 
-- name: memcached-{{ memcached_version }}.tar.gz をダウンロード
-#  1.4.15 <=
-#  get_url: url=http://memcached.googlecode.com/files/memcached-{{ memcached_version }}.tar.gz dest=/usr/local/src/memcached-{{ memcached_version }}.tar.gz
-#  1.4.16 >=
+- name: Download memcached-{{ memcached_version }}.tar.gz
   get_url: url=http://www.memcached.org/files/memcached-{{ memcached_version }}.tar.gz dest=/usr/local/src/memcached-{{ memcached_version }}.tar.gz
 
-
-- name: memcached-{{ memcached_version }}.tar.gz を展開
+- name: Expand memcached-{{ memcached_version }}.tar.gz
   unarchive: src=/usr/local/src/memcached-{{ memcached_version }}.tar.gz dest=/usr/local/src copy=no
 
-- name: memcached を configure
+- name: Configure memcached
   command: >
     ./configure
     --prefix=/opt/memcached-{{ memcached_version }}
@@ -37,17 +33,17 @@
     chdir: /usr/local/src/memcached-{{ memcached_version }}
     creates: /usr/local/src/memcached-{{ memcached_version }}/Makefile
 
-- name: memcached をコンパイル
+- name: Compile memcached
   command: make
   args:
     chdir: /usr/local/src/memcached-{{ memcached_version }}
     creates: /usr/local/src/memcached-{{ memcached_version }}/memcached
 
-- name: memcached をインストール
+- name: Install memcached
   command: make install
   args:
     chdir: /usr/local/src/memcached-{{ memcached_version }}
     creates: /opt/memcached-{{ memcached_version }}
 
-- name: /opt/memcached-{{ memcached_version }} の所有者を memcached に変更
+- name: Change owner /opt/memcached-{{ memcached_version }}
   file: path=/opt/memcached-{{ memcached_version }} owner=memcached group=memcached recurse=yes

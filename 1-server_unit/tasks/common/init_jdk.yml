@@ -1,19 +1,19 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
-- name: JDKのダウンロード
-  command: 'wget -q -O /usr/src/jdk1.8.0_121.tar.gz --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jdk-8u121-linux-x64.tar.gz creates=/usr/src/jdk1.8.0_121.tar.gz'
+- name: Download JDK
+  command: 'wget -q -O /usr/src/jdk1.8.0_131.tar.gz --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz creates=/usr/src/jdk1.8.0_131.tar.gz'
 
-- name: JDKのアーカイブを解凍
-  command: "tar -xzf /usr/src/jdk1.8.0_121.tar.gz -C /usr/src creates=/usr/src/jdk1.8.0_121"
+- name: Expand JDK
+  command: "tar -xzf /usr/src/jdk1.8.0_131.tar.gz -C /usr/src creates=/usr/src/jdk1.8.0_131"
 
-- name: JDKのオーナーをroot/rootに変更
-  file: "state=directory path=/usr/src/jdk1.8.0_121 owner=root group=root recurse=yes"
+- name: Change owner JDK
+  file: "state=directory path=/usr/src/jdk1.8.0_131 owner=root group=root recurse=yes"
 
-- name: JDKを /opt に配備
-  command: "mv /usr/src/jdk1.8.0_121 /opt creates=/opt/jdk1.8.0_121"
+- name: Deploy JDK
+  command: "mv /usr/src/jdk1.8.0_131 /opt creates=/opt/jdk1.8.0_131"
 
-- name: /opt/jdk1.8.0_121 に /opt/jdk のシンボリックリンクを作成
-  file: "state=link src=/opt/jdk1.8.0_121 dest=/opt/jdk"
+- name: Create smlink /opt/jdk
+  file: "state=link src=/opt/jdk1.8.0_131 dest=/opt/jdk"
 
-- name: /root/.bashrc に JAVAのEXPORTを追加
+- name: Add JDK to environment variable
   copy: src=./resource/common/etc/bashrc dest=/etc/bashrc owner=root group=root mode=0644

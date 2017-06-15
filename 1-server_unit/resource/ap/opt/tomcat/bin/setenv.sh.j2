@@ -38,6 +38,7 @@ export JAVA_OPTS=" \
            -Dlogback.configurationFile=/opt/logback/logback.xml \
            -Dio.personium.configurationFile=/personium/personium-core/conf/18888/personium-unit-config.properties \
            -Dio.personium.environment=/personium \
+           -Djava.security.egd=file:/dev/./urandom \
            -Dfile.encoding=UTF-8"
 
 export CLASSPATH=

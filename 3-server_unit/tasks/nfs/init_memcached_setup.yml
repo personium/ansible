@@ -1,41 +1,31 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
-- name: /etc/logrotate.d/memcached を配備
+- name: Deploy /etc/logrotate.d/memcached
   template: src=./resource/nfs/etc/logrotate.d/memcached dest=/etc/logrotate.d/memcached owner=root group=root mode=0644
 
-- name: /etc/sysconfig/memcached_lock を配備
+- name: Deploy /etc/sysconfig/memcached_lock
   template: src=./resource/nfs/etc/sysconfig/memcached_lock.j2 dest=/etc/sysconfig/memcached_lock owner=root group=root mode=0644
 
-- name: /etc/sysconfig/memcached_cache を配備
+- name: Deploy /etc/sysconfig/memcached_cache
   template: src=./resource/nfs/etc/sysconfig/memcached_cache.j2 dest=/etc/sysconfig/memcached_cache owner=root group=root mode=0644
 
-- name: /etc/rc.d/init.d/memcached_lock を配備
-  template: src=./resource/nfs/etc/rc.d/init.d/memcached_lock.j2 dest=/etc/rc.d/init.d/memcached_lock owner=root group=root mode=0755
+- name: Deploy /etc/systemd/system/memcached_lock.service
+  template: src=./resource/nfs/etc/systemd/system/memcached_lock.service dest=/etc/systemd/system/memcached_lock.service owner=root group=root mode=0755
 
-- name: /etc/rc.d/init.d/memcached_cache を配備
-  template: src=./resource/nfs/etc/rc.d/init.d/memcached_cache.j2 dest=/etc/rc.d/init.d/memcached_cache owner=root group=root mode=0755
+- name: Deploy /etc/systemd/system/memcached_cache.service
+  template: src=./resource/nfs/etc/systemd/system/memcached_cache.service dest=/etc/systemd/system/memcached_cache.service owner=root group=root mode=0755
 
+- name: systemd reload
+  command: systemctl daemon-reload
 
-- name: memcached_lock をサービスに登録
-  command: chkconfig --add memcached_lock
+- name: Start memcached_lock
+  systemd:
+    name: memcached_lock
+    state: started
+    enabled: yes
 
-- name: memcached_cache をサービスに登録
-  command: chkconfig --add memcached_cache
-
-- name: memcached_lock の自動起動を有効にする
-  command: chkconfig memcached_lock on
-
-- name: memcached_cache の自動起動を有効にする
-  command: chkconfig memcached_cache on
-
-- name: memcached_lock を起動
-  command: service memcached_lock start
-  args:
-    chdir: /opt/var/lib/memcached
-    creates: /var/run/memcached/memcached_lock.pid
-
-- name: memcached_cache を起動
-  command: service memcached_cache start
-  args:
-    chdir: /opt/var/lib/memcached
-    creates: /var/run/memcached/memcached_cache.pid
+- name: Start memcached_cache
+  systemd:
+    name: memcached_cache
+    state: started
+    enabled: yes

@@ -1,19 +1,13 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
-#- include: ./common.yml
 - include: ./common.yml
 - include: ./tasks/common/config_cron.yml
-
-#- include: ./tasks/common/init_ebs_volume.yml
-#  vars:
-#    diskname: xvdb
-#    mountpoint: /opt/es_log
 
 - include: ./tasks/common/init_ebs_volume.yml
   vars:
     diskname: "{{ es_data_vol }}"
-    #diskname: sdb
     mountpoint: /opt/es_data-log
+    disklabel: es_data-log
 
 - include: ./tasks/common/init_process_account_common.yml
   vars:
@@ -26,4 +20,3 @@
 - include: ./tasks/es/install_elasticsearch.yml
 - include: ./tasks/es/init_service_elasticsearch.yml
 - include: ./tasks/es/init_esgclog.yml
-- include: ./tasks/es/init_elasticsearch_elb.yml

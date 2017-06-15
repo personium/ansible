@@ -1,0 +1,18 @@
+[Unit]
+Description=Apache Tomcat 8
+After=network.target
+
+[Service]
+User=root
+Group=root
+Type=forking
+PIDFile=/opt/tomcat/tomcat.pid
+Environment=JAVA_HOME=/opt/jdk
+Environment=JRE_HOME=/opt/jre
+Environment=CATALINA_BASE=/opt/tomcat
+Environment=TOMCAT_USER=personium
+
+ExecStart=/opt/tomcat/bin/daemon.sh --java-home /opt/jdk --catalina-home /opt/tomcat --catalina-base /opt/tomcat --catalina-pid /opt/tomcat/tomcat.pid --tomcat-user personium start
+ExecStop=/opt/tomcat/bin/daemon.sh --java-home /opt/jdk --catalina-home /opt/tomcat --catalina-base /opt/tomcat --catalina-pid /opt/tomcat/tomcat.pid stop
+[Install]
+WantedBy=multi-user.target

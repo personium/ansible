@@ -1,6 +1,6 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: personium アカウントの作成
+- name: Create personium account
   include: init_process_account_common.yml
   vars:
     username: personium

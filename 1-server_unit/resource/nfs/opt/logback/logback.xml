@@ -31,7 +31,7 @@
 		</encoder>
 	</appender>
 
-	<!-- EventAPIの出力先を別ファイルに分けるための暫定対応 -->
+	<!-- Provisional response to separate EventAPI output destinations into separate files -->
 	<appender name="FILE_USER" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>/personium/personium-core/log/personium-user.log</file>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -100,7 +100,7 @@
 	</appender>
 
 	<logger  name="io.personium.core.event"  additivity="false">
-		<!-- 本番でもユーザスクリプトのDEBUGレベルログを出力するために、「DEBUG」とする -->
+		<!-- To output the DEBUG level log of user script even in production, "DEBUG" is set -->
 		<level value="DEBUG" />
 		<appender-ref ref="FILE_USER" />
 		<appender-ref ref="stdout" />

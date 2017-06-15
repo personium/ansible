@@ -1,7 +1,7 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
 - name: build module
-  command: /opt/apache-maven-3.2.5/bin/mvn package -Dmaven.test.skip=true
+  command: /opt/apache-maven-3.3.9/bin/mvn package -Dmaven.test.skip=true
   args:
     chdir: /tmp/personium-{{ build_mod }}
     creates: /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ release_mod }}.war

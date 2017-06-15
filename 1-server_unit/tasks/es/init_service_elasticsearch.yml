@@ -1,13 +1,13 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
-- name: elasticsearch 起動
-  service: name=elasticsearch state=started
+- name: Deploy /etc/systemd/system/elasticsearch.service
+  template: src=./resource/es/etc/systemd/system/elasticsearch.service dest=/etc/systemd/system/elasticsearch.service owner=root group=root mode=0755
 
-- name: elasticsearch 自動起動ON
-  command: "chkconfig elasticsearch on"
+- name: systemd reload
+  command: systemctl daemon-reload
 
-- name: 起動スクリプトにバージョン名を付与
-  command: "mv /etc/init.d/elasticsearch /etc/init.d/elasticsearch-{{ version }} creates=/etc/init.d/elasticsearch-{{ version }}"
-
-- name: 起動スクリプト のシンボリックリンクを作成
-  file: "state=link src=/etc/init.d/elasticsearch-{{ version }} dest=/etc/init.d/elasticsearch owner=root group=root force=yes"
+- name: Start elasticsearch
+  systemd:
+    name: elasticsearch
+    state: started
+    enabled: yes

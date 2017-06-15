@@ -1,13 +1,13 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: group の作成
+- name: Create group
   group: name={{ groupname }} gid={{ gid }} state=present
 
-- name: user の作成
+- name: Create user
   user: name={{ username }} uid={{ uid }} shell=/bin/bash group={{ groupname }} home=/opt/var/lib/{{ username }} comment="{{ comment }}" createhome=no
 
-- name: /opt/var/lib のディレクトリを作成
+- name: Create /opt/var/lib directory
   file: "state=directory path=/opt/var/lib owner=root group=root"
 
-- name: ホームディレクトリを作成
+- name: Create Home directory
   file: "state=directory path=/opt/var/lib/{{ username }} owner={{ username }} group={{ groupname }} recurse=yes"

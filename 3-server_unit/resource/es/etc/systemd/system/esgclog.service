@@ -1,0 +1,10 @@
+[Unit]
+Description = esGCLog
+
+[Service]
+ExecStart = /personium/personium-esgclog/esGCLog.sh
+Restart = always
+Type = simple
+
+[Install]
+WantedBy = multi-user.target

@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: /etc/cron.d/log-delete-cron を配備
+- name: Deploy /etc/cron.d/log-delete-cron
   copy: src=./resource/common/etc/cron.d/log-delete-cron dest=/etc/cron.d/log-delete-cron owner=root group=root mode=0644

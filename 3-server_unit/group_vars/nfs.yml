@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
 tag_ServerType: nfs
 
@@ -15,4 +15,3 @@ cache_port: 11212
 # memcached cachesize
 memcached_lock_cachesize: 512
 memcached_cache_cachesize: 512
-

@@ -1,30 +1,33 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
-- name: ダウンロードディレクトリを作成
+- name: Create Download directory
   file: "state=directory path=/usr/local/src/elasticsearch-{{ version }} owner=root group=root recurse=yes"
 
-- name: elasticsearch-{{ version }}.tar.gz ダウンロード
+- name: Download elasticsearch-{{ version }}.tar.gz
   get_url: url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{{ version }}.tar.gz dest=/usr/local/src/elasticsearch-{{ version }}/elasticsearch-{{ version }}.tar.gz
 
-- name: elasticsearch の配備
+- name: Deploy elasticsearch
   unarchive: src=/usr/local/src/elasticsearch-{{ version }}/elasticsearch-{{ version }}.tar.gz dest=/opt copy=no
 
-- name: elasticsearch.yml の配置
+- name: Deploy elasticsearch.yml
   template: src=./resource/es/opt/elasticsearch-{{ version }}/config/elasticsearch.yml.j2 dest=/opt/elasticsearch-{{ version }}/config/elasticsearch.yml owner=elasticsearch group=elasticsearch mode=0644
 
-- name: /opt/elasticsearch-{{ version }} ディレクトリ の所有者を変更
+- name: Change owner /opt/elasticsearch-{{ version }} directory
   file: "path=/opt/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch recurse=yes"
 
-- name: プラグインのインストール確認
+- name: Plugin install check
   stat: path=/opt/elasticsearch-{{ version }}/plugins/delete-by-query
   register: fm
 
-- name: delete-by-queryプラグインのインストール
+- name: Install delete-by-query plugin
   command: "/opt/elasticsearch-{{ version }}/bin/plugin install delete-by-query"
   when: not fm.stat.exists
 
-- name: 起動スクリプト の配備
-  copy: src=./resource/es/etc/rc.d/init.d/elasticsearch dest=/etc/rc.d/init.d/elasticsearch owner=elasticsearch group=elasticsearch mode=0755
-
-- name: /etc/logrotate.d/es-service の配備
+- name: Deploy /etc/logrotate.d/es-service
   copy: src=./resource/es/etc/logrotate.d/es-service dest=/etc/logrotate.d/es-service owner=root group=root mode=0644
+
+- name: Create /var/run/elasticsearch directory
+  file: "state=directory path=/var/run/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch recurse=yes"
+
+- name: Deploy /etc/tmpfiles.d/es-conf.conf
+  template: src=./resource/es/etc/tmpfiles.d/es-conf.conf.j2 dest=/etc/tmpfiles.d/es-conf.conf owner=root group=root mode=0644

@@ -1,4 +1,0 @@
-# Copyright FUJITSU LIMITED 2015.
-
-- name: restart iptables
-  service: name=iptables state=restarted

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+<rule family="ipv4">
+  <source address="{{ bastion_network_sep }}"/>
+  <port protocol="tcp" port="22"/>
+  <accept/>
+</rule>
+<rule family="ipv4">
+  <source address="{{ ap_network_sep }}"/>
+  <port protocol="tcp" port="9200"/>
+  <accept/>
+</rule>
+<rule family="ipv4">
+  <source address="{{ ap_network_sep }}"/>
+  <port protocol="tcp" port="9300"/>
+  <accept/>
+</rule>
+</zone>

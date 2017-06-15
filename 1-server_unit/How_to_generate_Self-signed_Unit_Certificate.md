@@ -1,4 +1,4 @@
-# How to generate Self-signed Unit Certificate 
+# How to generate Self-signed Unit Certificate
 
 -------------------------------------------------
 
@@ -54,7 +54,7 @@ Confirm that the unit.key is created
     # ls
     total 4
     -rw-r--r--. 1 root root 1675 Sep  1 20:27 unit.key
-```	
+```
 
 ### Part 2. Create self-signed unit certificate
 
@@ -62,8 +62,8 @@ Confirm that the unit.key is created
 
 ```console
   # openssl req -new -key unit.key -out unit.csr
-    → enter the required information interactively.
-      ※ Common Name value should be the unit domain name (required)
+    > enter the required information interactively.
+      * Common Name value should be the unit domain name (required)
 ```
 
 **Example:)**
@@ -83,7 +83,7 @@ Confirm that the unit.key is created
     Locality Name (eg, city) [Default City]:
     Organization Name (eg, company) [Default Company Ltd]:
     Organizational Unit Name (eg, section) []:
-    Common Name (eg, your name or your server's hostname) []:example.com            ←★ Enter the unit domain name (required)
+    Common Name (eg, your name or your server's hostname) []:example.com            <* Enter the unit domain name (required)
     Email Address []:
     Please enter the following 'extra' attributes
     to be sent with your certificate request

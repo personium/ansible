@@ -1,0 +1,7 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: Deploy chrony.conf
+  copy: src=./resource/common/etc/chrony.conf dest=/etc/chrony.conf owner=root group=root mode=0644
+
+- name: Restart chrony
+  systemd: name=chronyd.service state=restarted

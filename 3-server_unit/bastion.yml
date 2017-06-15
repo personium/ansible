@@ -2,7 +2,6 @@
 
 - include: ./tasks/bastion/git_clone.yml
 - include: ./tasks/bastion/init_maven.yml
-
 - include: ./tasks/bastion/mvn_pachage.yml
   vars:
     build_mod: core-{{ personium_core_version }}

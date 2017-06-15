@@ -1,22 +1,27 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: パーティションを確認する
+- name: check partition
   command: /sbin/parted -s /dev/{{ diskname }} print
   register: parted_print
   failed_when: parted_print.rc is not defined
 
-- name: パーティションを確保する
-  command: /sbin/parted -s /dev/{{ diskname }} mklabel msdos
-  when: '"unrecognised disk label" in parted_print.stdout'
+- name: Secure partitions
+  command: /sbin/parted -s /dev/{{ diskname }} mklabel gpt
+  when: '"unknown" in parted_print.stdout'
 
-- command: /sbin/parted -s /dev/{{ diskname }} 'mkpart primary ext3 0 -1'
-  when: '"unrecognised disk label" in parted_print.stdout'
+- command: /sbin/parted -s /dev/{{ diskname }} 'mkpart primary xfs 1mb -1'
+  when: '"unknown" in parted_print.stdout'
 
-- name: /dev/{{ diskname }} ファイルシステムを作成する
-  filesystem: fstype=ext3 dev=/dev/{{ diskname }} opts="-c"
+- name: Create /dev/{{ diskname }} filesystem
+  filesystem: fstype=xfs dev=/dev/{{ diskname }}
 
-- name: マウント用のラベルを作成する
-  command: /sbin/e2label /dev/{{ diskname }} {{ mountpoint }}
+- name: Check disk label
+  command: xfs_admin -l /dev/{{ diskname }}
+  register: disk_label
 
-- name: マウントする
-  mount: name={{ mountpoint }} src='LABEL={{ mountpoint }}' fstype=ext3 state=mounted
+- name: Create label
+  command: xfs_admin -L "{{ disklabel }}" /dev/{{ diskname }}
+  when: '"{{ disklabel }}" not in disk_label.stdout'
+
+- name: Mount disk
+  mount: name={{ mountpoint }} src='LABEL={{ disklabel }}' fstype=xfs state=mounted

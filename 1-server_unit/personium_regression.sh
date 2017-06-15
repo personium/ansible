@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# 疎通確認用シェルスクリプト
-# ・引数
-#     $1: URLドメイン
-#     $2: ユニットマスタートークン
+# Shell script for checking communication
+# - argument
+#     $1: Unit URL
+#     $2: Unit Master Token
 #
 #
 
@@ -32,13 +32,13 @@ function check_response() {
   STATUS=${1}
   OPERATION=${2}
   if [ "`/bin/grep 'status:' ${CURL_LOG}`" != "status:${STATUS}" ]; then
-    echo "${OPERATION}に失敗."
+    echo "${OPERATION} failed."
     exit 2
   fi
   if [ "default" != "${XDCVERSION}" ]; then
     RES_VERSION=`/bin/grep 'X-Personium-Version' ${CURL_LOG} | awk '{print $2}' | sed -e 's/\r//'`
     if [ `echo "${XDCVERSION}" | egrep "^${RES_VERSION}[a-z|-]+|$" | wc -l` -ne 1 ]; then
-      echo "${OPERATION}に失敗."
+      echo "${OPERATION} failed."
       exit 2
     fi
   fi
@@ -51,99 +51,95 @@ else
   XDCVERSION_HEADER="-H X-Personium-Version:$XDCVERSION"
 fi
 
-# アクセストークンが指定された場合はそのトークンを使用する
-# 指定されなかった場合は取得は最新のバージョンを使用する
+# If an access token is specified, use that token
+# If not specified, use the latest version for acquisition
 if [ "" != "${SPECIFIED_ACCESS_TOKEN}" ]; then
   ACCESSTOKEN=$SPECIFIED_ACCESS_TOKEN
 else
-  echo "アクセストークンを指定してください"
+  echo "Please specify access token"
 fi
 
 echo ${ACCESSTOKEN} >> ${RT_LOG}
 
 
-echo "Cell作成" >> ${RT_LOG}
+echo "Ceate Cell" >> ${RT_LOG}
 curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell" -X POST  -d "{\"Name\":\"startuptest\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
-check_response 201 "セル作成"
+check_response 201 "Ceate Cell"
 
-echo "Cell取得" >> ${RT_LOG}
+
+echo "Get Cell" >> ${RT_LOG}
 curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X GET  $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
-check_response 200 "セル取得"
+check_response 200 "Get Cell"
 
 
-echo "Box作成" >> ${RT_LOG}
+echo "Create Box" >> ${RT_LOG}
 curl -X POST -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__ctl/Box" -d "{\"Name\":\"box\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 201 "ボックス作成"
+check_response 201 "Create Box"
 
 
-
-echo "Serviceコレクション作成" >> ${RT_LOG}
+echo "Create Service Collection" >> ${RT_LOG}
 curl -X MKCOL -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col" -d "<?xml version=\"1.0\" encoding=\"utf-8\"?><D:mkcol xmlns:D=\"DAV:\" xmlns:p=\"urn:x-personium:xmlns\"><D:set><D:prop><D:resourcetype><D:collection/><p:service/></D:resourcetype></D:prop></D:set></D:mkcol>" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 201 "Serviceコレクション作成"
+check_response 201 "Create Service Collection"
 
 
-
-echo "サービスソース登録" >> ${RT_LOG}
+echo "Register Service Source" >> ${RT_LOG}
 curl -X PUT -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col/__src/test.js" -d "function(request){return {status: 200,headers: {\"Content-Type\":\"text/html\"},body: [\"hello world\"]};}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Content-Type: text/javascript" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 201 "サービスソース作成"
+check_response 201 "Register Service Source"
 
 
-echo "サービス登録" >> ${RT_LOG}
+echo "Register Service" >> ${RT_LOG}
 curl -X PROPPATCH -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col" -d "<?xml version=\"1.0\" encoding=\"utf-8\" ?><D:propertyupdate xmlns:D=\"DAV:\" xmlns:p=\"urn:x-personium:xmlns\" xmlns:Z=\"http:/www.w3.com/standards/z39.50/\"><D:set><D:prop><p:service language=\"JavaScript\"><p:path name=\"test\" src=\"test.js\"/></p:service></D:prop></D:set></D:propertyupdate>" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 207 "サービス登録"
+check_response 207 "Register service"
 if [ "`/bin/grep '<status>' ${CURL_LOG} | awk '{print $2}'`" != "200" ];then
-  echo "サービス登録に失敗した."
+  echo "Register Service faild."
   exit 2
 fi
 
-echo "サービス実行" >> ${RT_LOG}
+echo "Service execution" >> ${RT_LOG}
 for i in `seq 1 4`
 do
   curl -X GET -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col/test" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-  check_response 200 "サービス実行"
+  check_response 200 "Service execution"
   if [ "`/bin/grep 'hello world' ${CURL_LOG}`" != "hello world" ];then
-    echo "別のスクリプトを実行した."
+    echo "Ran another script."
     exit 2
   fi
 done
 
-echo "サービスソース削除" >> ${RT_LOG}
+
+echo "Delete Service Source" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col/__src/test.js" $XDCVERSION_HEADER -H "Accept:application/json" -H "Content-Type: text/javascript" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 204 "サービスソース削除"
+check_response 204 "Delete Service Source"
 
 
-echo "コレクション削除" >> ${RT_LOG}
+echo "Delete Collection" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 204 "コレクション削除"
+check_response 204 "Delete Collection"
 
 
-
-echo "イベント受付" >> ${RT_LOG}
+echo "Event receptionist" >> ${RT_LOG}
 curl -X POST -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__event" -d "{\"level\":\"INFO\",\"action\":\"action_value\",\"object\":\"object_value\",\"result\":\"result_value\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 200 "イベント受付"
+check_response 200 "Event receptionist"
 
 
-echo "ログファイル取得" >> ${RT_LOG}
+echo "Get Logfile" >> ${RT_LOG}
 curl -X GET -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__log/current/default.log" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 200 "ログファイル取得"
-#echo "---- 以下のログ出力が正しいことを確認してください ここから ----"
-#/bin/grep 'Content-Type' ${CURL_LOG}
-#echo "---- 以下のログ出力が正しいことを確認してください ここまで ----"
+check_response 200 "Get Logfile"
 
 
-echo "Box削除" >> ${RT_LOG}
+echo "Delete Box" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__ctl/Box('box')" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -H "If-Match: *" -i -k -s > ${CURL_LOG}
-check_response 204 "ボックス削除"
+check_response 204 "Delete Box"
 
 
-echo "Cell削除" >> ${RT_LOG}
+echo "Delete Cell" >> ${RT_LOG}
 curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X DELETE $XDCVERSION_HEADER -H "Accept:application/json" -H "If-Match: *" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
-check_response 204 "セル削除"
+check_response 204 "Delete Cell"
 
 
-echo "Cell削除確認" >> ${RT_LOG}
+echo "Check Delete Cell" >> ${RT_LOG}
 curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X GET $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
-check_response 404 "セル削除確認"
+check_response 404 "Check Delete Cell"
 
 
 echo "personium Version(${XDCVERSION}) RT OK"

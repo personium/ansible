@@ -24,7 +24,8 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%-5level] %logger{0} %msg%n</pattern>
                </encoder>
     </appender>
-    <!-- EventAPIの出力先を別ファイルに分けるための暫定対応 -->
+    <!--
+Provisional response to separate EventAPI output destinations into separate files -->
     <appender name="FILE_USER" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>/personium/personium-core/log/personium-user.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">

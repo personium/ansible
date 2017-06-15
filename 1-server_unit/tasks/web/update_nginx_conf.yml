@@ -8,5 +8,5 @@
   register: nginx_conf_result
 
 - name: reload nginx
-  service: name=nginx state=reloaded
+  systemd: name=nginx state=reloaded
   when: nginx_conf_result.changed == true

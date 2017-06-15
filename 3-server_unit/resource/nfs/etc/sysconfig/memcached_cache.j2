@@ -3,4 +3,4 @@ PORT={{ cache_port }}
 USER=memcached
 MAXCONN={{ memcached_cache_maxconn }}
 CACHESIZE={{ memcached_cache_cachesize }}
-OPTIONS="-v"
+OPTIONS="-v -l 0.0.0.0"

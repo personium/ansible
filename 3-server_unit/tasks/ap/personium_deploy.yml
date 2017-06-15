@@ -1,36 +1,40 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: secret16の採取
+- name: Get secret16
   command: cat /personium/personium-core/conf/token.key
   register: secret16
 
-- name: saltの採取
+- name: Get salt
   command: cat /personium/personium-core/conf/salt.key
   register: salt
 
-- name: personium-config.properties の配備
+- name: Deploy personium-config.properties
   template: src=./resource/ap/personium/personium-core/conf/18888/personium-unit-config.properties.j2 dest=/personium/personium-core/conf/18888/personium-unit-config.properties owner=root group=root mode=0644
 
-- name: logback.xml の配備
+- name: Deploy logback.xml
   copy: src=./resource/ap/opt/logback/logback.xml dest=/opt/logback/logback.xml owner=personium group=personium mode=0644
 
-- name: tomcat サービスの停止
-  service: name=tomcat state=stopped
+- name: Stop tomcat
+  systemd:
+    name: tomcat
+    state: stopped
 
-- name: /opt/tomcat/webapps/personium-core を削除する
+- name: Delete /opt/tomcat/webapps/personium-core
   file: state=absent path=/opt/tomcat/webapps/personium-core
 
-- name: /opt/tomcat/webapps/personium-engine を削除する
+- name: Delete /opt/tomcat/webapps/personium-engine
   file: state=absent path=/opt/tomcat/webapps/personium-engine
 
-- name: personium-core.war の配備
+- name: Deploy personium-core.war
   copy: src=./resource/ap/opt/tomcat/webapps/personium-core.war dest=/opt/tomcat/webapps/personium-core.war owner=personium group=personium mode=644
 
-- name: personium-engine.war の配備
+- name: Deploy personium-engine.war
   copy: src=./resource/ap/opt/tomcat/webapps/personium-engine.war dest=/opt/tomcat/webapps/personium-engine.war owner=personium group=personium mode=644
 
-- name: personium-custom-errorpage.jar の配備
+- name: Deploy personium-custom-errorpage.jar
   copy: src=./resource/ap/opt/tomcat/lib/personium-custom-errorpage.jar dest=/opt/tomcat/lib/personium-custom-errorpage.jar owner=root group=root mode=644
 
-- name: tomcat サービスの起動
-  service: name=tomcat state=started
+- name: Start tomcat
+  systemd:
+    name: tomcat
+    state: started

@@ -3,20 +3,19 @@
 
 ## Overview
 The purpose of this document is to explain explecitely how to construct Personium unit on 4 servers using Ansible.
-
-This ansible is checking the operation with Personium version 1.5.0.
+This ansible is checking the operation with Personium version 1.5.1 and CentOS 7.2.
 
 ## Server setup :white_check_mark:
 
 #### server configuration sample
   Below are the server structure that we configured.
 
-|**Servers**      |   **Role**      |   **MW**                           |  **default memory size** (※1) |   **AWS EC2 specs** (※2)|  
+|**Servers**      |   **Role**      |   **MW**                           |  **default memory size** (*1) |   **AWS EC2 specs** (*2)|  
 |:----------------|:----------------|:-----------------------------------|:------------------------------|:-------------------------|
 | Server 1        |  Bastion,Web,AP,ES    | nginx,tomcat(768MB),memcached(256MB*2),Elasticsearch(1875MB)                     |3155MB                         |      m3.medium            |
-(※1) : Required default memory size. Memory size of each MW configuration file could be modified
+(*1) : Required default memory size. Memory size of each MW configuration file could be modified
 
-(※2) : Tested AWS EC2 instance specs  
+(*2) : Tested AWS EC2 instance specs  
 
 <img src="1-server_unit.jpg" title="1-server_unit" style="width:70%;height:auto;">
 
@@ -42,7 +41,7 @@ This ansible is checking the operation with Personium version 1.5.0.
   \*# : Files required to modify according to the environment.
 
   \*[group name] : web, ap, nfs, es, bastion and common. All in all 6 groups.
-  （Here `common` is not the server role. Common group is used to set some general functionalities on all the servers.）
+  (Here `common` is not the server role. Common group is used to set some general functionalities on all the servers.)
 
 #### File (key) handling Caution: :zap:
 
@@ -69,7 +68,7 @@ The following key file will be generated automatically during the Ansible execut
   * Check `/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
 \* Please refer to [Ansible Settings Instruction](Ansible_Settings_Instruction.md "") file, for more details about each parameter.
 
-#### 2: Deploy Ansible （server destination : Bastion server）
+#### 2: Deploy Ansible (server destination : Bastion server)
 
 * Connect to the Bastion server using WinSCP or other related tools  
 \* WinSCP : http://win-scp.joydownload.jp/?c=5&gclid=CK7L0pvWpcACFVYHvAodOF0AgQ
@@ -85,8 +84,8 @@ The following key file will be generated automatically during the Ansible execut
 
 * Arrange certificate
   * Deploy the **self-signed unit certificate** and **private key** under `ansible/resource/ap/opt/x509/` folder with the following file names.
-    - unit-self-sign.crt（self-signed unit certificate）
-    - unit.key（private key）  
+    - unit-self-sign.crt(self-signed unit certificate)
+    - unit.key(private key)  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md "").
 
 #### 5: Prepare SSL certificate / private key
@@ -134,15 +133,15 @@ Following is the self-signed ssl certificate creation procedure.
    * Deploy the certificate under `/root/ansible/resource/web/opt/nginx/conf/` folder
 ```
     /root/ansible/resource/web/opt/nginx/conf/
-       - server.crt（SSL certificate）
-       - server.key（private key）
+       - server.crt(SSL certificate)
+       - server.key(private key)
 ```
 
 \* In the case of Self-signed SSL certificate, the above process is not required to follow.
 
 #### 7: Generate SSH key
 
-* Setup the ssh keys (RSA key pair) to access other servers from bastion server as “root” user. Follow the steps below:
+* Setup the ssh keys (RSA key pair) to access other servers from bastion server as "root" user. Follow the steps below:
 
 ##### **Step 1:** Create the RSA Key Pair on the client machine (Bastion server)
 
@@ -246,7 +245,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 ## Ansible configuration :white_check_mark:
 
 
-#### 1: Install Ansible（Client server : Bastion server）
+#### 1: Install Ansible(Client server : Bastion server)
 
 * Add epel repository to Bastion server
 
@@ -266,7 +265,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 
 * Access to Bastion server and check the following Ansible setup files, if those are configured properly
 
-  1．/hosts file   (\* Static inventory file)
+  1) /hosts file   (\* Static inventory file)
   \* Check the hosts file if anything is missing
 
 ```console
@@ -275,7 +274,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 
   - If nothing shows, meaning all are configured
 
-  2．/group_vars/[group name].yml file    (\* Group Variable files)
+  2) /group_vars/[group name].yml file    (\* Group Variable files)
   \* Check if all the yml files under group_vars are modified as required
 
 ```console

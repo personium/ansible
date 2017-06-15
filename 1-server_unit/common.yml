@@ -5,6 +5,6 @@
 - include: ./tasks/common/init_hostname.yml
 - include: ./tasks/common/init_jdk.yml
 - include: ./tasks/common/init_logrotated.yml
-- include: ./tasks/common/init_ntpd.yml
+- include: ./tasks/common/init_chrony.yml
 - include: ./tasks/common/disable_ipv6.yml
 - include: ./tasks/common/update_library.yml

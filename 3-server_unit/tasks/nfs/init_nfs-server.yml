@@ -1,41 +1,44 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: nfs サーバの rpm をインストール
+- name: Install NFS Server
   yum: pkg={{ item }}
-       state=present 
+       state=present
   with_items:
     - nfs-utils
 
-- name: エクスポートするディレクトリを作成
+- name: Create directory
   file: path=/opt/nfs_webdav/
         mode=0755
         state=directory
 
-- name: /etc/exports を更新
+- name: Update /etc/exports
   template: src=./resource/nfs/etc/exports dest=/etc/exports owner=root group=root mode=0644
 
-- name: /etc/sysconfig/nfs を更新
+- name: Update /etc/sysconfig/nfs
   template: src=./resource/nfs/etc/sysconfig/nfs dest=/etc/sysconfig/nfs owner=root group=root mode=0644
 
-- name: /etc/fstab の最終行にマウント先のサーバ、ディレクトリやクライアント側のマウントポイントを記載する。
+- name: In the /etc/fstab last line, list the mount destination server, directory and client side mount point.
   lineinfile: >
     dest=/etc/fstab
     line='personium-nfs:/opt/nfs_webdav /opt/nfs1 nfs nfsvers=3,tcp,hard,intr,sync,noac,lookupcache=none,bg'
 
-- name: exportsの設定反映
+- name: Update exports
   shell: exportfs -a
 
 - name: start rpcbind
-  service: name=rpcbind
-           state=running
-           enabled=yes
+  systemd:
+    name: rpcbind
+    state: started
+    enabled: yes
 
 - name: start nfs
-  service: name=nfs
-           state=running
-           enabled=yes
+  systemd:
+    name: nfs
+    state: started
+    enabled: yes
 
 - name: start nfslock
-  service: name=nfslock
-           state=running
-           enabled=yes
+  systemd:
+    name: nfslock
+    state: started
+    enabled: yes

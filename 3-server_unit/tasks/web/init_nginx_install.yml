@@ -1,53 +1,52 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
-- name: pcre-devel をインストール
+- name: Install pcre-devel
   yum: name=pcre-devel state=latest
 
-- name: zlib-devel をインストール
+- name: Install zlib-devel
   yum: name=zlib-devel state=latest
 
-- name: openssl-devel をインストール
+- name: Install openssl-devel
   yum: name=openssl-devel state=latest
 
-- name: lsof をインストール
+- name: Install lsof
   yum: name=lsof state=latest
 
-- name: gcc をインストール
+- name: Install gcc
   yum: name=gcc state=latest
 
-- name: gcc-c++ をインストール
+- name: Install gcc-c++
   yum: name=gcc-c++ state=latest
 
-- name: bison をインストール
+- name: Install bison
   yum: name=bison state=latest
 
-- name: perl をインストール
+- name: Install perl
   yum: name=perl state=latest
 
-- name: patch をインストール
+- name: Install patch
   yum: name=patch state=latest
 
-
-- name: nginx-{{ nginx_version }}.tar.gz をダウンロード
+- name: Download nginx-{{ nginx_version }}.tar.gz
   get_url: url=http://nginx.org/download/nginx-{{ nginx_version }}.tar.gz dest=/usr/local/src/nginx-{{ nginx_version }}.tar.gz
 
-- name: nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz をダウンロード
+- name: Download nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz
   get_url: url=https://github.com/agentzh/headers-more-nginx-module/archive/v{{ nginx_hm_version }}.tar.gz dest=/usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz
 
-- name: nginx-{{ nginx_version }}.tar.gz を展開
+- name: Expand nginx-{{ nginx_version }}.tar.gz
   unarchive: src=/usr/local/src/nginx-{{ nginx_version }}.tar.gz dest=/usr/local/src copy=no
 
-- name: nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz を展開
+- name: Expand nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz
   unarchive: src=/usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}.tar.gz dest=/usr/local/src copy=no
              creates=/usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
 
-- name: headers-more-nginx-module-{{ nginx_hm_version }} を nginx-headers-more-nginx-module-v{{ nginx_hm_version }} に変更
+- name: Rename nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
   command: mv headers-more-nginx-module-{{ nginx_hm_version }} nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
   args:
     chdir: /usr/local/src
     creates: /usr/local/src/nginx-headers-more-nginx-module-v{{ nginx_hm_version }}
 
-- name: nginx を configure
+- name: Configure nginx
   command: >
     ./configure
     --prefix=/opt/nginx-{{ nginx_version }}
@@ -62,13 +61,13 @@
     chdir: /usr/local/src/nginx-{{ nginx_version }}
     creates: /usr/local/src/nginx-{{ nginx_version }}/Makefile
 
-- name: nginx をコンパイル
+- name: Compile nginx
   command: make
   args:
     chdir: /usr/local/src/nginx-{{ nginx_version }}
     creates: /usr/local/src/nginx-{{ nginx_version }}/objs/nginx
 
-- name: nginx をインストール
+- name: Install nginx
   command: make install
   args:
     chdir: /usr/local/src/nginx-{{ nginx_version }}

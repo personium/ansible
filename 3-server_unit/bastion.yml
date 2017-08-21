@@ -4,10 +4,8 @@
 - include: ./tasks/bastion/init_maven.yml
 - include: ./tasks/bastion/mvn_pachage.yml
   vars:
-    build_mod: core-{{ personium_core_version }}
-    release_mod: core
+    build_mod: core
 
 - include: ./tasks/bastion/mvn_pachage.yml
   vars:
-    build_mod: engine-{{ personium_engine_version }}
-    release_mod: engine
+    build_mod: engine

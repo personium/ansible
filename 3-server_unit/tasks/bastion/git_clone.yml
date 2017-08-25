@@ -4,19 +4,15 @@
   yum: name=git state=latest
 
 - name: git clone core repo
-  command: wget -q -O personium-core-{{ personium_core_version }}.zip --no-check-certificate https://github.com/personium/personium-core/archive/{{ personium_core_version }}.zip
-  args:
-    chdir: /tmp
-    creates: /tmp/personium-core-{{ personium_core_version }}.zip
-
-- name: unarchive core
-  unarchive: src=/tmp/personium-core-{{ personium_core_version }}.zip dest=/tmp
+  git:
+    repo: https://github.com/personium/personium-core.git
+    dest: /tmp/personium-core
+    version: "{{ personium_core_version }}"
+    depth: 1
 
 - name: git clone engine repo
-  command: wget -q -O personium-engine-{{ personium_engine_version }}.zip --no-check-certificate https://github.com/personium/personium-engine/archive/{{ personium_engine_version }}.zip
-  args:
-    chdir: /tmp
-    creates: /tmp/personium-engine-{{ personium_engine_version }}.zip
-
-- name: unarchive engine
-  unarchive: src=/tmp/personium-engine-{{ personium_engine_version }}.zip dest=/tmp
+  git:
+    repo: https://github.com/personium/personium-engine.git
+    dest: /tmp/personium-engine
+    version: "{{ personium_engine_version }}"
+    depth: 1

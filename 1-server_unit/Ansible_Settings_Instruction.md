@@ -73,15 +73,16 @@ Below are the files where modification is required.
 
 * **Item to be set upon ansible execution(File destination : /group_vars/[group name].yml)**
 * As an option, changing the recorded values of all .yml files under group_vars directory is possible. But basically, no modification is required unless server tuning is necessary.
+* By specifying the git branch name of personium_core and personium_engine in /group_vars/bastion.yml, you can build by specifying the version of Personium.(Default is master)
 
 #### Web server (file destination : /group_vars/web.yml)
 
 ```yaml
   tag_ServerType: web
 
-  nginx_version: 1.7.6
+  nginx_version: 1.13.3
 
-  nginx_hm_version: 0.25
+  nginx_hm_version: 0.31
 ```
 
 #### AP server (file destination : /group_vars/ap.yml)
@@ -89,7 +90,7 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: ap
 
-  tomcat_version: 8.0.14
+  tomcat_version: 8.0.44
 
   tomcat_xms: 512m
 
@@ -151,9 +152,9 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: bastion
 
-  personium_core_version : 1.5.0
+  personium_core_version : master
 
-  personium_engine_version : 1.5.0
+  personium_engine_version : master
 
 ```
 

@@ -11,6 +11,7 @@ Environment=DATA_DIR=/personium/elasticsearch-2.4.1/data
 Environment=LOG_DIR=/personium/elasticsearch-2.4.1/log
 Environment=PID_DIR=/var/run/elasticsearch-2.4.1
 EnvironmentFile=-/opt/elasticsearch-2.4.1/config
+Environment=ES_HEAP_SIZE={{ es_heapsize }}m
 Environment=JAVA_HOME=/opt/jdk
 
 WorkingDirectory=/personium/elasticsearch/work

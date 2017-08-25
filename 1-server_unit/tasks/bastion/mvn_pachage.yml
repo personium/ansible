@@ -4,11 +4,11 @@
   command: /opt/apache-maven-3.3.9/bin/mvn package -Dmaven.test.skip=true
   args:
     chdir: /tmp/personium-{{ build_mod }}
-    creates: /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ release_mod }}.war
+    creates: /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ build_mod }}.war
   environment:
     JAVA_HOME: /opt/jdk
 
 - name: move module
-  command: mv /tmp/personium-{{ build_mod }}/target/personium-{{ release_mod }}.war /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ release_mod }}.war
+  command: mv /tmp/personium-{{ build_mod }}/target/personium-{{ build_mod }}.war /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ build_mod }}.war
   args:
-    creates: /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ release_mod }}.war
+    creates: /root/ansible/resource/ap/opt/tomcat/webapps/personium-{{ build_mod }}.war

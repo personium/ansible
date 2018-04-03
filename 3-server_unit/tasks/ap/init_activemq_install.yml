@@ -1,0 +1,31 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: Create download directory
+  file: "state=directory path=/usr/local/src/activemq owner=root group=root"
+
+- name: Download apache-activemq-5.15.2-bin.tar.gz
+  command: wget -q -O apache-activemq-5.15.2-bin.tar.gz --no-check-certificate http://archive.apache.org/dist/activemq/5.15.2/apache-activemq-5.15.2-bin.tar.gz
+  args:
+    chdir: /usr/local/src/activemq
+    creates: /usr/local/src/activemq/apache-activemq-5.15.2-bin.tar.gz
+
+- name: Expand apache-activemq-5.15.2-bin.tar.gz
+  unarchive: src=/usr/local/src/activemq/apache-activemq-5.15.2-bin.tar.gz dest=/usr/local/src/activemq copy=no
+
+- name: Deploy activemq
+  command: mv /usr/local/src/activemq/apache-activemq-5.15.2 /opt/apache-activemq-5.15.2 creates="/opt/apache-activemq-5.15.2"
+
+- name: Create symlink /opt/activemq
+  file: state=link src=/opt/apache-activemq-5.15.2 dest=/opt/activemq owner=root group=root mode=0777
+
+- name: Deploy /etc/systemd/system/activemq.service
+  copy: src=./resource/ap/etc/systemd/system/activemq.service dest=/etc/systemd/system/activemq.service  owner=root group=root mode=0755
+
+- name: reload activemq
+  command: systemctl daemon-reload
+
+- name: Start activemq
+  systemd:
+    name: activemq
+    state: started
+    enabled: yes

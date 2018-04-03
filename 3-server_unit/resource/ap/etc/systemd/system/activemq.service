@@ -1,0 +1,14 @@
+[Unit]
+Description=activemq message queue
+After=network.target
+
+[Service]
+PIDFile=/opt/activemq/data/activemq.pid
+Environment=JAVA_HOME=/opt/jdk
+ExecStart=/opt/activemq/bin/activemq start
+ExecStop=/opt/activemq/bin/activemq stop
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

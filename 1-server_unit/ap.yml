@@ -1,6 +1,7 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
 - include: ./tasks/ap/init_personium-dir.yml
+- include: ./tasks/ap/init_activemq_install.yml
 - include: ./tasks/ap/init_tomcat_install.yml
 - include: ./tasks/ap/init_personium_setup.yml
 - include: ./tasks/ap/personium_deploy.yml

@@ -8,14 +8,8 @@
   register: init_svcmgr_result
   failed_when: "init_svcmgr_result.rc != 0"
 
-- name: Get servicemanager cell account information
-  fetch: src=/tmp/servicemanager_account dest=~/servicemanager_account flat=yes
-
 - name: Delete /tmp/personium-init-svcmgr.sh
   file: path=/tmp/personium-init-svcmgr.sh state=absent
 
 - name: Delete personium-init-svcmgr.log
   file: path=/tmp/personium-init-svcmgr.log state=absent
-
-- name: Delete cell account information
-  file: path=/tmp/servicemanager_account state=absent

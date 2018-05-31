@@ -6,10 +6,15 @@
 - name: Deploy /etc/firewalld/zones/personium-zone.xml
   template: src=./resource/{{ tag_ServerType }}/etc/firewalld/zones/personium-zone.xml.j2 dest=/etc/firewalld/zones/personium-zone.xml owner=root group=root mode=0644
 
+- name: restart dbus
+  systemd:
+    name: dbus
+    state: restarted
+
 - name: Start firewalld
   systemd:
     name: firewalld
-    state: started
+    state: restarted
     enabled: yes
 
 - name: Setting default zone

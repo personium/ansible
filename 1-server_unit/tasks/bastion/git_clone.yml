@@ -9,6 +9,7 @@
     dest: /tmp/personium-core
     version: "{{ personium_core_version }}"
     depth: 1
+    force: yes
 
 - name: git clone engine repo
   git:
@@ -16,3 +17,4 @@
     dest: /tmp/personium-engine
     version: "{{ personium_engine_version }}"
     depth: 1
+    force: yes

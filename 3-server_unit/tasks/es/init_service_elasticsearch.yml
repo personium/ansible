@@ -11,3 +11,9 @@
     name: elasticsearch
     state: started
     enabled: yes
+
+- name: Deploy check_cluster_health.sh
+  copy: src=./resource/es/personium/check_cluster_health.sh dest=/personium/check_cluster_health.sh owner=root group=root mode=0755
+
+- name: exec check_cluster_health.sh
+  command: /bin/bash /personium/check_cluster_health.sh {{es_private_ip}}

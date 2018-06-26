@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015-2017.
+# Copyright FUJITSU LIMITED 2015-2018.
 
 - name: Deploy /tmp/personium-init-svcmgr.sh
   template: src=./resource/bastion/tmp/personium-init-svcmgr.sh.j2 dest=/tmp/personium-init-svcmgr.sh mode=744

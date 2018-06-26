@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015-2017.
+# Copyright FUJITSU LIMITED 2015-2018.
 
 - name: Deploy /etc/systemd/system/elasticsearch.service
   template: src=./resource/es/etc/systemd/system/elasticsearch.service dest=/etc/systemd/system/elasticsearch.service owner=root group=root mode=0755

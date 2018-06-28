@@ -77,7 +77,7 @@ The following key file will be generated automatically during the Ansible execut
 #### 2: Deploy Ansible (server destination : Bastion server)
 
 * Connect to the Bastion server using WinSCP or other related tools  
-\* WinSCP : http://win-scp.joydownload.jp/?c=5&gclid=CK7L0pvWpcACFVYHvAodOF0AgQ
+\* WinSCP : https://winscp.net/eng/download.php
 * Upload the `Ansible` folder on Bastion server under `/root/` directory.
 
 
@@ -131,7 +131,6 @@ Following is the self-signed ssl certificate creation procedure.
     - server.crt
     - server.csr
     - server.key  
-  \* Refer [Create SSL certificate](http://qiita.com/nenokido2000/items/1d1c79a0a443ed923e92x) for more details.
 
 #### 6: Deploy SSL certificate / private key
 
@@ -319,7 +318,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
     # date; ansible-playbook init_personium.yml ; date
 ```
 
-  \* After few minutes-hours (varies on case by case) Ansible process will be done. (\* Don't kill the process in between) Personium Unit will be created with the configured FQDN. Also will be accessible from web (ex: https://FQDN)
+  \* After few minutes-hours (varies on case by case) Ansible process will be done. (\* Don't kill the process in between) Personium Unit will be created with the configured FQDN. Also will be accessible from web (ex: https&#58;//FQDN)
 
 * Confirm if Ansible executed properly
 

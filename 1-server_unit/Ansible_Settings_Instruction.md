@@ -34,7 +34,7 @@ Below are the files where modification is required.
 
 {SSH_PrivateKey}
 # -> Set the secret key in the absolute path for  ansible user ssh public key authentication
-# EX: {SSH_PrivateKey}->root/.ssh/id_rsa
+# EX: {SSH_PrivateKey}->/root/.ssh/id_rsa
 ```
 
 #### Bastion server
@@ -80,9 +80,9 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: web
 
-  nginx_version: 1.13.3
+  nginx_version: 1.14.0
 
-  nginx_hm_version: 0.31
+  nginx_hm_version: 0.32
 ```
 
 #### AP server (file destination : /group_vars/ap.yml)

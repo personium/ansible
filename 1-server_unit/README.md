@@ -2,7 +2,7 @@
 ---------------------------------------
 
 ## Overview
-The purpose of this document is to explain explecitely how to construct Personium unit on 4 servers using Ansible.
+The purpose of this document is to explain explecitely how to construct Personium unit on 1 server using Ansible.
 This ansible is checking the operation with Personium version 1.5.2 later and CentOS 7.2.
 
 ## Server setup :white_check_mark:

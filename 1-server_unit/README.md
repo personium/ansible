@@ -183,7 +183,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 - Access to the remote server
 
 ```console
-    $ sudo su –  (\* switch to the root user)
+    $ sudo su �  (\* switch to the root user)
     # vim /root/.ssh/authorized_keys  (\* Add the key below and save)
     -----------------
     ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxUTAHN8vxgp8w2tBeSYKLDvISg3LF9W/iiIQ5boQNPfHQkpXtbFAVmQ1uDMBf3bUOzQN0

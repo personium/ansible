@@ -157,9 +157,9 @@ Following is the self-signed ssl certificate creation procedure.
     Your public key has been saved in /root/.ssh/id_rsa.pub.  (\* press enter)
 ```
 
-The `public key` will be placed in `/home/demo/.ssh/id_rsa.pub`
+The `public key` will be placed in `/root/.ssh/id_rsa.pub`
 
-The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
+The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 
 
 ##### **Step 2:** Put the public key to other remote servers. Follow the steps below:
@@ -183,7 +183,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 - Access to the remote server
 
 ```console
-    $ sudo su �  (\* switch to the root user)
+    $ su -  (\* switch to the root user)
     # vim /root/.ssh/authorized_keys  (\* Add the key below and save)
     -----------------
     ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAxUTAHN8vxgp8w2tBeSYKLDvISg3LF9W/iiIQ5boQNPfHQkpXtbFAVmQ1uDMBf3bUOzQN0
@@ -236,7 +236,7 @@ The `private key` (identification) will be placed in `/home/demo/.ssh/id_rsa`
 
 ```console
 - Access to Bastion server
-    $ su root  (\* switch to the root user)
+    $ su -  (\* switch to the root user)
     # ssh -i ~/.ssh/id_rsa root@[Private IP of remote server]  (\*ssh to remote servers as root user)
 
     # exit (\* Exit from remote server, after confirming the successful access from bastion server)

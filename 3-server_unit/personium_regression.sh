@@ -19,7 +19,7 @@ fi
 
 URL_DOMAIN=${1}
 
-SPECIFIED_ACCESS_TOKEN=`grep "master_token" ~/ansible/static_inventory/hosts | sed -e "s/master_token=//"`
+SPECIFIED_ACCESS_TOKEN=`grep "master_token" ~/ansible/static_inventory/hosts | sed -e "s/master_token=//" | uniq`
 
 XDCVERSION=default
 CURL_LOG=/tmp/rt_curl_${XDCVERSION}.txt
@@ -61,6 +61,20 @@ fi
 
 echo ${ACCESSTOKEN} >> ${RT_LOG}
 
+echo "Delete rule" >> ${RT_LOG}
+curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__ctl/Rule(Name='testRule')" -H "Accept: application/json" -H "Authorization: Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+
+echo "Delete Service Source" >> ${RT_LOG}
+curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col/__src/test.js" -H "Accept:application/json" -H "Content-Type: text/javascript" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+
+echo "Delete Collection" >> ${RT_LOG}
+curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col" -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+
+echo "Delete Box" >> ${RT_LOG}
+curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__ctl/Box('box')" -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -H "If-Match: *" -i -k -s > ${CURL_LOG}
+
+echo "Delete Cell" >> ${RT_LOG}
+curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X DELETE -H "Accept:application/json" -H "If-Match: *" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
 
 echo "Ceate Cell" >> ${RT_LOG}
 curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell" -X POST  -d "{\"Name\":\"startuptest\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
@@ -107,6 +121,26 @@ do
 done
 
 
+echo "Register rule" >> ${RT_LOG}
+curl -X POST -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__ctl/Rule" -d "{\"Name\":\"testRule\", \"EventType\":\"test\", \"EventExternal\":true, \"Action\":\"log\"}" -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+check_response 201 "Register rule"
+
+
+echo "Event receptionist" >> ${RT_LOG}
+curl -X POST -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__event" -d "{\"Type\":\"action_value\",\"Object\":\"object_value\",\"Info\":\"result_value\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+check_response 200 "Event receptionist"
+
+
+echo "Get Logfile" >> ${RT_LOG}
+curl -X GET -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__log/current/default.log" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+check_response 200 "Get Logfile"
+
+
+echo "Delete rule" >> ${RT_LOG}
+curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__ctl/Rule(Name='testRule')" -H "Accept: application/json" -H "Authorization: Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+check_response 204 "Delete rule"
+
+
 echo "Delete Service Source" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col/__src/test.js" $XDCVERSION_HEADER -H "Accept:application/json" -H "Content-Type: text/javascript" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
 check_response 204 "Delete Service Source"
@@ -115,16 +149,6 @@ check_response 204 "Delete Service Source"
 echo "Delete Collection" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/box/col" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
 check_response 204 "Delete Collection"
-
-
-echo "Event receptionist" >> ${RT_LOG}
-curl -X POST -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__event" -d "{\"level\":\"INFO\",\"action\":\"action_value\",\"object\":\"object_value\",\"result\":\"result_value\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 200 "Event receptionist"
-
-
-echo "Get Logfile" >> ${RT_LOG}
-curl -X GET -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/startuptest/__log/current/default.log" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
-check_response 200 "Get Logfile"
 
 
 echo "Delete Box" >> ${RT_LOG}

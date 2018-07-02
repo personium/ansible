@@ -22,11 +22,13 @@
 DOMAIN={{ base_url }}
 MASTER_TOKEN={{ master_token }}
 CELL_NAME=unitadmin
+ROLE_UA_NAME=UnitAdmin
+ROLE_CCA_NAME=CellContentsAdmin
 CELL_OWNER={{ base_url }}/#unitadmin
 UNITADMIN_ACCOUNT_FILE=/root/ansible/unitadmin_account
 
 # Account and password to create
-UU_NAME=(unitadmin personium-rt)
+UU_NAME=(unitadmin)
 UU_PASS=()
 CELL_URL=$DOMAIN/$CELL_NAME
 
@@ -53,24 +55,49 @@ check_response 200 "UNIT ADMIN Cell created"
 
 # Create account
 echo "######  Create account  ######"
-for i in `seq 0 1 $UU_MAX_IDX`; do
-  UU_PASS+=(`perl -le 'print map { ("a".."z","A".."Z", 0..9)[rand 36] } 1..16'`)
+UU_PASS+=(`perl -le 'print map { ("a".."z","A".."Z", 0..9)[rand 36] } 1..16'`)
 
-  echo "   creating account ["${UU_NAME[$i]}"]"
-  echo "            passwd  ["${UU_PASS[$i]}"]"
-  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Account -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Credential: ${UU_PASS[$i]}" -d "{\"Name\":\"${UU_NAME[$i]}\"}" -k -i -s`
-  echo "$CURL_RESULT"
-  check_response 201 "Account created"
+echo "   creating account ["${UU_NAME}"]"
+echo "            passwd  ["${UU_PASS}"]"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Account -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Credential: ${UU_PASS}" -d "{\"Name\":\"${UU_NAME}\"}" -k -i -s`
+echo "$CURL_RESULT"
+check_response 201 "Account created"
 
-  echo "   -- Account check"
-  echo "checking account["${UU_NAME[$i]}"]"
-  CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__token -X POST -d "grant_type=password&username=${UU_NAME[$i]}&password=${UU_PASS[$i]}" -k -i -s`
-  echo "$CURL_RESULT"
-  check_response 200 "Check Account Created"
+echo "   -- Account check"
+echo "checking account["${UU_NAME}"]"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__token -X POST -d "grant_type=password&username=${UU_NAME}&password=${UU_PASS}" -k -i -s`
+echo "$CURL_RESULT"
+check_response 200 "Check Account Created"
 
-done
+# Create UnitAdmin role
+echo "######  Create UnitAdmin role  ######"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Role -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"Name\":\"$ROLE_UA_NAME\"}" -k -i -s`
+echo "$CURL_RESULT"
+check_response 201 "UnitAdmin Role created"
+
+echo "-- UnitAdmin Role check"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$CELL_URL/__ctl/Role(%27$ROLE_UA_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
+echo "$CURL_RESULT"
+check_response 200 "Check UnitAdmin Role Created"
+
+# Create CellContentsAdmin role
+echo "######  Create CellContentsAdmin role  ######"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Role -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"Name\":\"$ROLE_CCA_NAME\"}" -k -i -s`
+echo "$CURL_RESULT"
+check_response 201 "CellContentsAdmin Role created"
+
+echo "-- CellContentsAdmin Role check"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$CELL_URL/__ctl/Role(%27$ROLE_CCA_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
+echo "$CURL_RESULT"
+check_response 200 "Check CellContentsAdmin Role Created"
+
+# Link unitadmin - CellContentsAdmin
+echo "######  Link unitadmin - CellContentsAdmin  ######"
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$CELL_URL/__ctl/Role(%27$ROLE_CCA_NAME%27)/\\$links/_Account" -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"uri\":\"$CELL_URL/__ctl/Account('${UU_NAME}')\"}" -k -i -s`
+echo "$CURL_RESULT"
+check_response 204 "Link unitadmin - CellContentsAdmin"
+
 
 # Upon confirming the password without trouble, drop the created information into a file
-for i in `seq 0 1 $UU_MAX_IDX`; do
-  echo "${UU_NAME[$i]}" "${UU_PASS[$i]}" >> ${UNITADMIN_ACCOUNT_FILE}
-done
+
+echo "${UU_NAME}" "${UU_PASS}" >> ${UNITADMIN_ACCOUNT_FILE}

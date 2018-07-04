@@ -267,7 +267,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Add epel repository to Bastion server
 
 ```console
-    # yum localinstall http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+    # yum localinstall http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
     this ok [y/N]:  (\* type [y] and press enter)
 ```
 

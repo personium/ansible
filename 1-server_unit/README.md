@@ -141,7 +141,7 @@ Following is the self-signed ssl certificate creation procedure.
 
 #### 7: Generate SSH key
 
-* Setup the ssh keys (RSA key pair) to access other servers from bastion server as "root" user. Follow the steps below:
+* Setup the ssh keys (RSA key pair) to access other servers from bastion server as root user. Follow the steps below:
 
 ##### **Step 1:** Create the RSA Key Pair on the client machine (Bastion server)
 

@@ -31,7 +31,7 @@
   file: "state=directory path=/usr/local/src/tomcat owner=root group=root"
 
 - name: Download apache_tomcat_{{ tomcat_version }}.tar.gz
-  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-8/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz dest=/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}.tar.gz
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-9/v{{ tomcat_version }}/bin/apache-tomcat-{{ tomcat_version }}.tar.gz dest=/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}.tar.gz
 
 - name: Expand apache_tomcat_{{ tomcat_version }}.tar.gz
   unarchive: src=/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}.tar.gz dest=/usr/local/src/tomcat copy=no
@@ -59,6 +59,9 @@
 
 - name: Deploy jsvc
   command: cp /usr/local/src/tomcat/commons-daemon-{{ commons_daemon_version }}-native-src/unix/jsvc /usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}/bin/ creates="/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }}/bin/jsvc"
+
+- name: Change Tomcat dir Owner
+  file: "path=/usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }} state=directory recurse=yes owner=root group=personium"
 
 - name: Deploy tomcat
   command: mv /usr/local/src/tomcat/apache-tomcat-{{ tomcat_version }} /opt/apache-tomcat-{{ tomcat_version }} creates="/opt/apache-tomcat-{{ tomcat_version }}"

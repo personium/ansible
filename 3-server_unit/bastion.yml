@@ -2,10 +2,10 @@
 
 - include: ./tasks/bastion/git_clone.yml
 - include: ./tasks/bastion/init_maven.yml
-- include: ./tasks/bastion/mvn_pachage.yml
+- include: ./tasks/bastion/mvn_package.yml
   vars:
     build_mod: core
 
-- include: ./tasks/bastion/mvn_pachage.yml
+- include: ./tasks/bastion/mvn_package.yml
   vars:
     build_mod: engine

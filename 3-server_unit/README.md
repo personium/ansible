@@ -82,7 +82,7 @@ The following key file will be generated automatically during the Ansible execut
 
 * Connect to the Bastion server using WinSCP or other related tools  
 \* WinSCP : https://winscp.net/eng/download.php
-* Upload the `Ansible` folder on Bastion server under `/root/` directory.
+* Upload the `ansible` folder on Bastion server under `/root/` directory.
 
 
 #### 4: Prepare Self-signed unit certificate and secret key

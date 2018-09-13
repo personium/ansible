@@ -35,6 +35,14 @@ Below are the files where modification is required.
 {SSH_PrivateKey}
 # -> Set the secret key in the absolute path for  ansible user ssh public key authentication
 # EX: {SSH_PrivateKey}->/root/.ssh/id_rsa
+
+{Master_Token}
+# -> To authorize all kind of operation, set the master token (Strictly managed)
+# EX: {Master_Token}->abc123
+
+{Personium_FQDN}
+# -> Specify the FQDN for Personium server(same as unit FQDN)
+# EX: {Personium_FQDN}->ec2-54-65-33-203.ap-northeast-1.compute.amazonaws.com
 ```
 
 #### Bastion server
@@ -52,21 +60,13 @@ Below are the files where modification is required.
 #### Personium server
 
 ```yaml
-{PIO_FQDN}
-# -> Specify the FQDN for Personium server(same as unit FQDN)
-# EX: {PIO_FQDN}->ec2-54-65-33-203.ap-northeast-1.compute.amazonaws.com
-
-{PIO_Private_IP}
+{Personium_Private_IP}
 # -> Specify the private IP of  Personium server
-# EX: {AP_Private_IP}->172.31.13.38
+# EX: {Personium_Private_IP}->172.31.13.38
 
-{PIO_Tag_Name}
+{Personium_Tag_Name}
 # -> Specify the host name for AP server
-# EX: {AP_Tag_Name}->test-ap
-
-{Master_Token}
-# -> To authorize all kind of operation, set the master token (Strictly managed)
-# EX: {Master_Token}->abc123
+# EX: {Personium_Tag_Name}->test-ap
 ```
 
 ### Part 2 (Tuning Personium) :white_check_mark:

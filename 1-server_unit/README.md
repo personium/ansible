@@ -61,35 +61,40 @@ The following key file will be generated automatically during the Ansible execut
   * DNS registered fixed global IP address
   * Fixed private IP of all the remote servers.
 
+#### 1: Git clone Ansible
 
-#### 1: Setup Ansible parameters
+* Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
+\* From now on, we describe `1-server_unit` under cloned folder as `$ansible`.
 
-* Edit the following files of Ansible folder
-  * Edit `/static_inventory/hosts` file and set the value of each parameter.
-  * Check `/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
+#### 2: Setup Ansible parameters
+
+* Edit the following files
+  * Edit `$ansible/static_inventory/hosts` file and set the value of each parameter.
+  * Check `$ansible/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
 \* Please refer to [Ansible Settings Instruction](Ansible_Settings_Instruction.md "") file, for more details about each parameter.
 
-#### 2: Deploy Ansible (server destination : Bastion server)
+#### 3: Deploy Ansible (server destination : Bastion server)
 
 * Connect to the Bastion server using WinSCP or other related tools  
 \* WinSCP : https://winscp.net/eng/download.php
-* Upload the `Ansible` folder on Bastion server under `/root/` directory.
+* Upload the `$ansible` folder on Bastion server under `/root/` directory.
+* Rename the `1-server_unit` folder to `ansible`.  
+ For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
 
 
-#### 3: Prepare Self-signed unit certificate and secret key
+#### 4: Prepare Self-signed unit certificate and secret key
 
 * Please refer to [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md ""), for self-signed unit certificate creation procedure.
 
-
-#### 4: Configure the self-signed unit certificate and private key
+#### 5: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
-  * Deploy the **self-signed unit certificate** and **private key** under `ansible/resource/ap/opt/x509/` folder with the following file names.
+  * Deploy the **self-signed unit certificate** and **private key** under `/root/ansible/resource/ap/opt/x509/` folder with the following file names.
     - unit-self-sign.crt(self-signed unit certificate)
     - unit.key(private key)  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md "").
 
-#### 5: Prepare SSL certificate / private key
+#### 6: Prepare SSL certificate / private key
 
 * Prepare the SSL certificate and private key separately  
 \* Create and use self-signed SSL certificate unless the official SSL certificate is not available.
@@ -127,7 +132,7 @@ Following is the self-signed ssl certificate creation procedure.
     - server.csr
     - server.key  
 
-#### 6: Deploy SSL certificate / private key
+#### 7: Deploy SSL certificate / private key
 
 * Certificate deployment
    * Deploy the certificate under `/root/ansible/resource/web/opt/nginx/conf/` folder
@@ -139,7 +144,7 @@ Following is the self-signed ssl certificate creation procedure.
 
 \* In the case of Self-signed SSL certificate, the above process is not required to follow.
 
-#### 7: Generate SSH key
+#### 8: Generate SSH key
 
 * Setup the ssh keys (RSA key pair) to access other servers from bastion server as root user. Follow the steps below:
 

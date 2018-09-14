@@ -61,7 +61,7 @@ The following key file will be generated automatically during the Ansible execut
   * DNS registered fixed global IP address
   * Fixed private IP of all the remote servers.
 
-#### 1: Git cloan Ansible
+#### 1: Git clone Ansible
 
 * Using git client, clone the `ansible` repository.
 * Rename the `1-server_unit` folder contained in the cloned repository to `ansible`.

@@ -77,8 +77,8 @@ The following key file will be generated automatically during the Ansible execut
 
 * Connect to the Bastion server using WinSCP or other related tools  
 \* WinSCP : https://winscp.net/eng/download.php
-* Rename the `1-server_unit` folder contained in the cloned repository to `ansible`.
 * Upload the `$ansible` folder on Bastion server under `/root/` directory.
+* Rename the `1-server_unit` folder to `ansible`.
  For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
 
 

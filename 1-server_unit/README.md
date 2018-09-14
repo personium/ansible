@@ -63,21 +63,23 @@ The following key file will be generated automatically during the Ansible execut
 
 #### 1: Git clone Ansible
 
-* Using git client, clone the `ansible` repository.
-* Rename the `1-server_unit` folder contained in the cloned repository to `ansible`.
+* Using git client, clone the `ansible` repository. (https://github.com/personium/ansible) to your local environment.  
+\* From now on, we describe this `1-server_unit` folder as `$ansible`.
 
 #### 2: Setup Ansible parameters
 
-* Edit the following files of Ansible folder
-  * Edit `/static_inventory/hosts` file and set the value of each parameter.
-  * Check `/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
+* Edit the following files
+  * Edit `$ansible/static_inventory/hosts` file and set the value of each parameter.
+  * Check `$ansible/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
 \* Please refer to [Ansible Settings Instruction](Ansible_Settings_Instruction.md "") file, for more details about each parameter.
 
 #### 3: Deploy Ansible (server destination : Bastion server)
 
 * Connect to the Bastion server using WinSCP or other related tools  
 \* WinSCP : https://winscp.net/eng/download.php
-* Upload the `ansible` folder on Bastion server under `/root/` directory.
+* Rename the `1-server_unit` folder contained in the cloned repository to `ansible`.
+* Upload the `$ansible` folder on Bastion server under `/root/` directory.
+ For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
 
 
 #### 4: Prepare Self-signed unit certificate and secret key
@@ -88,7 +90,7 @@ The following key file will be generated automatically during the Ansible execut
 #### 5: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
-  * Deploy the **self-signed unit certificate** and **private key** under `ansible/resource/ap/opt/x509/` folder with the following file names.
+  * Deploy the **self-signed unit certificate** and **private key** under `/root/ansible/resource/ap/opt/x509/` folder with the following file names.
     - unit-self-sign.crt(self-signed unit certificate)
     - unit.key(private key)  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md "").

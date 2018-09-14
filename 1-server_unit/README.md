@@ -63,7 +63,7 @@ The following key file will be generated automatically during the Ansible execut
 
 #### 1: Git clone Ansible
 
-* Using git client, clone the `ansible` repository. (https://github.com/personium/ansible) to your local environment.  
+* Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* From now on, we describe this `1-server_unit` folder as `$ansible`.
 
 #### 2: Setup Ansible parameters
@@ -85,7 +85,6 @@ The following key file will be generated automatically during the Ansible execut
 #### 4: Prepare Self-signed unit certificate and secret key
 
 * Please refer to [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md ""), for self-signed unit certificate creation procedure.
-
 
 #### 5: Configure the self-signed unit certificate and private key
 

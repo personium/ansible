@@ -68,7 +68,7 @@ The following key file will be generated automatically during the Ansible execut
 
 #### 1: Git clone Ansible
 
-* Using git client, clone the `ansible` repository. (https://github.com/personium/ansible) to your local environment.  
+* Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* From now on, we describe this `3-server_unit` folder as `$ansible`.
 
 #### 2: Setup Ansible parameters
@@ -85,7 +85,6 @@ The following key file will be generated automatically during the Ansible execut
 * Rename the `3-server_unit` folder contained in the cloned repository to `ansible`.
 * Upload the `$ansible` folder on Bastion server under `/root/` directory.
  For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
-
 
 #### 4: Prepare Self-signed unit certificate and secret key
 

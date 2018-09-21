@@ -13,7 +13,7 @@ This ansible is checking the operation with Personium version 1.5.2 later and Ce
 |**Servers**      |   **Role**      |   **MW**                           |  **default memory size** (*1) |   **AWS EC2 specs** (*2)|  
 |:----------------|:----------------|:-----------------------------------|:------------------------------|:-------------------------|
 | Server 1        |  Bastion,Web    | nginx                              |                               |      t2.micro            |
-| Server 2        |  AP,NFS         | tomcat(1280MB),memcached(1024MB*2) |  3328MB                       |      m3.medium           |
+| Server 2        |  AP,NFS,MQ         | tomcat(1280MB),memcached(1024MB*2),ActiveMQ() |  3328MB                       |      m3.medium           |
 | Server 3        |  ES             | Elasticsearch(3328MB)              |  3328MB                       |     m3.medium            |
 
 (*1) : Required default memory size. Memory size of each MW configuration file could be modified

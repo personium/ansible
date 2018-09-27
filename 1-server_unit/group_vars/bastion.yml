@@ -1,7 +1,7 @@
-# Copyright FUJITSU LIMITED 2015-2018.
+# Copyright FUJITSU LIMITED 2015-2017.
 
 tag_ServerType: bastion
 
-personium_core_version : 1.6.14
+personium_core_version : master
 
 personium_engine_version : master

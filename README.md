@@ -19,6 +19,7 @@ Although you may construct the Personium unit without using the setup tool, but 
 | `Web`        |  Required        | Reverse proxy server, contains Global IP and also should be accessible to the internet |
 | `AP`         |  Required        | Application server, where Personium will be executed                                |
 | `ES`         |  Required        | server to operate `ElasticSearch`                                                      |
+| `MQ`         |  Required        | server to operate `Message Queue`.|
 | `NFS`        |  Required        | server to operate `Network File System (NFS)`.                                         |
 | `Bastion`    |  Optional        | Bastion server. Used to execute ansible and to connect other servers by ssh.           |
 

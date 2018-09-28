@@ -19,12 +19,12 @@
 # Initial setup script of Unitadmin cell
 
 # Environmental setting
-DOMAIN={{ base_url }}
+DOMAIN=https://{{ base_url }}
 MASTER_TOKEN={{ master_token }}
 CELL_NAME=unitadmin
 ROLE_UA_NAME=UnitAdmin
 ROLE_CCA_NAME=CellContentsAdmin
-CELL_OWNER={{ base_url }}/#unitadmin
+CELL_OWNER=personium-localunit:/$CELL_NAME/#unitadmin
 UNITADMIN_ACCOUNT_FILE=/root/ansible/unitadmin_account
 
 # Account and password to create

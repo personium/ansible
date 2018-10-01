@@ -332,7 +332,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 ```
 
   Check the Ansible log file, if it shows any error  
-  If there is no error, please restart the constructed environment
+  If there is no error, please restart the constructed servers
 
 #### 4: Deployment testing on Bastion server
 

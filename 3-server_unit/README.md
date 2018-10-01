@@ -331,7 +331,8 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
   # egrep -B 3 -A 3 'failed:|error' /root/ansible.log
 ```
 
-  Check the Ansible log file, if it shows any error
+  Check the Ansible log file, if it shows any error  
+  If there is no error, please restart the constructed environment
 
 #### 4: Deployment testing on Bastion server
 

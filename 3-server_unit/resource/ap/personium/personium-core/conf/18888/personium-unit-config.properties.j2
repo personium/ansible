@@ -27,7 +27,7 @@ io.personium.core.masterToken={{ master_token }}
 io.personium.core.unitScheme=https
 #
 
-io.personium.core.unitUser.issuers={{ base_url}}/UnitUserCell/ {{ base_url}}/unitadmin/
+io.personium.core.unitUser.issuers=personium-localunit:/UnitUserCell/ personium-localunit:/unitadmin/
 
 # Duration in seconds of account lock after the authentication failure.
 io.personium.core.lock.accountlock.time=1
@@ -207,7 +207,7 @@ io.personium.core.bar.progress.expireInSec=259200
 #################################################
 
 # Base URL to access to engine module.
-io.personium.core.defaultBaseUrl={{ base_url}}
+io.personium.core.defaultBaseUrl=https://{{ base_url }}
 
 # Unit Master Token.
 # Blank string should be configured in production use to disable it.

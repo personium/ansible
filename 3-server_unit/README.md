@@ -104,6 +104,7 @@ The following key file will be generated automatically during the Ansible execut
 * Prepare the SSL certificate and private key separately  
 \* Create and use self-signed SSL certificate unless the official SSL certificate is not available.
 Following is the self-signed ssl certificate creation procedure.
+Common Name value should be the unit domain name.
 
 ```console
     # cd /root/ansible/resource/web/opt/nginx/conf
@@ -116,7 +117,7 @@ Following is the self-signed ssl certificate creation procedure.
            Locality Name (eg, city) [Default City]:                     \* Optional ( entered value will be visible in the certificate)
            Organization Name (eg, company) [Default Company Ltd]:       \* Optional ( entered value will be visible in the certificate)
            Organizational Unit Name (eg, section) []:                   \* Optional ( entered value will be visible in the certificate)
-           Common Name (eg, your name or your server's hostname) []:    \* Optional ( entered value will be visible in the certificate)
+           Common Name (eg, your name or your server's hostname) []:    \* Required ( entered value will be visible in the certificate)
            Email Address []:                                            \* Optional ( entered value will be visible in the certificate)
 
                Please enter the following 'extra' attributes

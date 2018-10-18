@@ -83,7 +83,7 @@ Confirm that the unit.key is created
     Locality Name (eg, city) [Default City]:
     Organization Name (eg, company) [Default Company Ltd]:
     Organizational Unit Name (eg, section) []:
-    Common Name (eg, your name or your server's hostname) []:example.com            <* Enter the unit domain name (required)
+    Common Name (eg, your name or your server's hostname) []:personium.example.com            <* Enter the unit domain name (required)
     Email Address []:
     Please enter the following 'extra' attributes
     to be sent with your certificate request

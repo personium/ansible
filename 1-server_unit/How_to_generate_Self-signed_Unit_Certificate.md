@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is a manual for the procedure to generate the Self-signed unit certificate, which is required for the ansible execution to build Personium unit.  
+This is a manual for the procedure to generate the Self-signed unit certificate, which is required for the ansible execution to build Personium Unit.  
 Followings will be created by openssl, after performing the procedure below.
 
 | File name | Explanation |
@@ -17,7 +17,7 @@ Now you can get these certificate and key! Below is the procedure to generate th
 
 ---------------------------------------
 
-### Part 1. Create Personium unit secret key (unit.key) on Bastion server
+### Part 1. Create Personium Unit secret key (unit.key) on Bastion server
 
 1. Change directory to the certificate deployment directory of Bastion server.
 
@@ -59,14 +59,14 @@ Now you can get these certificate and key! Below is the procedure to generate th
 ### Part 2. Create self-signed unit certificate
 
 1. Use the openssl command to create a Certificate Signing Request file.  
-    \* Configure it interactively. The Common Name is you specify here specifies the FQND of your Personium unit. (Required)
+    \* The configuration procedure is interactive. Please use the FQDN of your Personium Unit for the value of "Common Name". (Required)
 
     ```console
     # openssl req -new -key unit.key -out unit.csr
     ```
 
     **Example:)**  
-    \* If the FQND of the Personium unit is "personium.example.com"
+    \* In the case when the FQDN of the Personium Unit is "personium.example.com"
 
     ```console
     # openssl req -new -key unit.key -out unit.csr
@@ -113,7 +113,7 @@ Now you can get these certificate and key! Below is the procedure to generate th
     ```console
     # openssl x509 -in unit-self-sign.crt -text
     ```  
-    \* Make sure the CN matches the FQDN of the Personium unit.
+    \* Make sure the CN matches the FQDN of the Personium Unit.
 
     Also check with the following command
 
@@ -134,4 +134,4 @@ Now you can get these certificate and key! Below is the procedure to generate th
 ### Summary
 
 Though there are several option to generate the certificate, this time we generate it by self-signing.
-Generally, self-signed unit certificate can't be used in public, so this procedure should be used only in preparing private Personium unit.
+Generally, self-signed unit certificate can't be used in public, so this procedure should be used only in preparing private Personium Unit.

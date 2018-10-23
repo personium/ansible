@@ -4,72 +4,71 @@
 
 ## Introduction
 
-This is a manual for the procedure to generate the Self-signed unit certificate, which is required for the ansible execution to build personium.io unit.  
+This is a manual for the procedure to generate the Self-signed unit certificate, which is required for the ansible execution to build Personium unit.  
 Followings will be created by openssl, after performing the procedure below.
 
 | File name | Explanation |
 |---|---|
 |unit.key             |This is a unit secret key. Created by RSA secret key of more than 2048bit in DER format. Managing this unit secret key strictly is highly recomended.|
 |unit.csr             |Request for X.509 certificate. This file will be required to create the certificate and not be deployed on the server. |
-|unit-self-sign.crt   |It is a DER format certificate supporting Unit Key. The value of CN should be the domain name of `web` server. |
+|unit-self-sign.crt   |It is a DER format certificate supporting Unit Key. The value of CN should be the FQDN of `web` server. |
 
 Now you can get these certificate and key! Below is the procedure to generate the Self-signed unit certificate.
 
 ---------------------------------------
 
-### Part 1. Create personium.io unit secret key (unit.key) on Bastion server
+### Part 1. Create Personium unit secret key (unit.key) on Bastion server
 
 1. Change directory to the certificate deployment directory of Bastion server.
 
-```console
+    ```console
     # cd /root/ansible/resource/ap/opt/x509/
-```
+    ```
 
-2. Create secret key
+1. Create secret key
 
-```console
+    ```console
     # openssl genrsa -out unit.key 2048 -outform DER
-```  
+    ```  
 
-**Example:)**
+    **Example:)**
 
-```console
+    ```console
     # openssl genrsa -out unit.key 2048 -outform DER
     Generating RSA private key, 2048 bit long modulus
     ............................................................+++
     ...................................................+++
     e is 65537 (0x10001)
     -----------------------------------------------------------------------------------
-```
+    ```
 
-Confirm that the unit.key is created
+1. Confirm that the unit.key is created
 
-```console
+    ```console
     # ls -l
-```
+    ```
 
-**Example:)**
+    **Example:)**
 
-```console
+    ```console
     # ls
     total 4
     -rw-r--r--. 1 root root 1675 Sep  1 20:27 unit.key
-```
+    ```
 
 ### Part 2. Create self-signed unit certificate
 
-1. Create the CSR
+1. Use the openssl command to create a Certificate Signing Request file.  
+    \* Configure it interactively. The Common Name is you specify here specifies the FQND of your Personium unit. (Required)
 
-```console
-  # openssl req -new -key unit.key -out unit.csr
-    > enter the required information interactively.
-      * Common Name value should be the unit domain name (required)
-```
+    ```console
+    # openssl req -new -key unit.key -out unit.csr
+    ```
 
-**Example:)**
+    **Example:)**  
+    \* If the FQND of the Personium unit is "personium.example.io"
 
-
-```console
+    ```console
     # openssl req -new -key unit.key -out unit.csr
     You are about to be asked to enter information that will be incorporated
     into your certificate request.
@@ -90,48 +89,49 @@ Confirm that the unit.key is created
     A challenge password []:
     An optional company name []:
 
-```
+    ```
 
-2. Self-sign the CSR. valid for 3650 days (approximately 10 years)
+1. Self-sign the CSR. valid for 3650 days (approximately 10 years)
 
 
-```console
+    ```console
     # openssl x509 -req -days 3650 -signkey unit.key -out unit-self-sign.crt <unit.csr
-```
+    ```
 
-**Example:)**
+    **Example:)**
 
-```console
+    ```console
     # openssl x509 -req -days 3650 -signkey unit.key -out unit-self-sign.crt <unit.csr
     Signature ok
     subject=/C=XX/L=Default City/O=Default Company Ltd/CN=example.com
     Getting Private key
 
-```
+    ```
 
-3. Check the contents of the generated certificate
+1. Check the contents of the generated certificate
 
-```console
+    ```console
     # openssl x509 -in unit-self-sign.crt -text
-```  
+    ```  
+    \* Make sure the CN matches the FQDN of the Personium unit.
 
-  Also check with the following command
+    Also check with the following command
 
-```console
+    ```console
     # ls -l
-```   
+    ```   
 
-**Example:)**
+    **Example:)**
 
-```console
+    ```console
     # ls -l
     total 12
     -rw-r--r--. 1 root root 1041 Sep  1 20:29 unit.csr
     -rw-r--r--. 1 root root 1675 Sep  1 20:27 unit.key
     -rw-r--r--. 1 root root 1277 Sep  1 20:29 unit-self-sign.crt
-```
+    ```
 
 ### Summary
 
 Though there are several option to generate the certificate, this time we generate it by self-signing.
-Generally, self-signed unit certificate can't be used in public, so this procedure should be used only in preparing private personium.io unit.
+Generally, self-signed unit certificate can't be used in public, so this procedure should be used only in preparing private Personium unit.

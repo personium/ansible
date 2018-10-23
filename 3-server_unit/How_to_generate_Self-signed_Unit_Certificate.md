@@ -66,7 +66,7 @@ Now you can get these certificate and key! Below is the procedure to generate th
     ```
 
     **Example:)**  
-    \* If the FQND of the Personium unit is "personium.example.io"
+    \* If the FQND of the Personium unit is "personium.example.com"
 
     ```console
     # openssl req -new -key unit.key -out unit.csr

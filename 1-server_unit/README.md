@@ -97,7 +97,8 @@ The following key file will be generated automatically during the Ansible execut
 #### 6: Prepare SSL certificate / private key
 
 * Prepare the SSL certificate and private key separately  
-\* Create and use self-signed SSL certificate unless the official SSL certificate is not available.
+If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](Create_Server_Certificate_for_Letsencript.md)  
+\* Create and use self-signed SSL certificate when the official SSL certificate is not available.
 Following is the self-signed ssl certificate creation procedure.
 Common Name value should be the unit domain name.
 

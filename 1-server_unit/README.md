@@ -84,7 +84,7 @@ The following key file will be generated automatically during the Ansible execut
 
 #### 4: Prepare Self-signed unit certificate and secret key
 
-* Please refer to [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md ""), for self-signed unit certificate creation procedure.
+* Please refer to [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md ""), for self-signed unit certificate creation procedure.
 
 #### 5: Configure the self-signed unit certificate and private key
 
@@ -92,12 +92,13 @@ The following key file will be generated automatically during the Ansible execut
   * Deploy the **self-signed unit certificate** and **private key** under `/root/ansible/resource/ap/opt/x509/` folder with the following file names.
     - unit-self-sign.crt(self-signed unit certificate)
     - unit.key(private key)  
-\* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](How_to_generate_Self-signed_Unit_Certificate.md "").
+\* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
 
 #### 6: Prepare SSL certificate / private key
 
 * Prepare the SSL certificate and private key separately  
-\* Create and use self-signed SSL certificate unless the official SSL certificate is not available.
+If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](../Create_Server_Certificate_for_Letsencript.md)  
+\* Create and use self-signed SSL certificate when the official SSL certificate is not available.
 Following is the self-signed ssl certificate creation procedure.
 Common Name value should be the unit domain name.
 

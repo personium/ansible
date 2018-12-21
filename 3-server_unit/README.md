@@ -69,6 +69,8 @@ The following key file will be generated automatically during the Ansible execut
 #### 1: Git clone Ansible
 
 * Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
+\* Please clone or download the zip file from the release branch.  
+\* Since the master branch may contain new features which are under testing and development, errorneous behavior may be expected.  
 \* From now on, we describe this `3-server_unit` folder as `$ansible`.
 
 #### 2: Setup Ansible parameters

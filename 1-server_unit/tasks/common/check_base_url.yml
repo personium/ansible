@@ -1,0 +1,6 @@
+# Copyright FUJITSU LIMITED 2018.
+
+- name: Change base_url
+  set_fact:
+    base_url: "{{ base_url[8:] }}"
+  when: base_url is match("^https://")

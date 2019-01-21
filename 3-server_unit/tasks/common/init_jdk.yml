@@ -1,19 +1,19 @@
-# Copyright FUJITSU LIMITED 2015-2017.
+# Copyright FUJITSU LIMITED 2015-2019.
 
 - name: Download JDK
-  command: 'wget -q -O /usr/src/jdk1.8.0_131.tar.gz --no-cookies --no-check-certificate --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.tar.gz creates=/usr/src/jdk1.8.0_131.tar.gz'
+  command: 'wget -q -O /usr/src/jdk8u192-b12.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u192-b12/OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz creates=/usr/src/jdk8u192-b12.tar.gz'
 
 - name: Expand JDK
-  command: "tar -xzf /usr/src/jdk1.8.0_131.tar.gz -C /usr/src creates=/usr/src/jdk1.8.0_131"
+  command: "tar -xzf /usr/src/jdk8u192-b12.tar.gz -C /usr/src creates=/usr/src/jdk8u192-b12"
 
 - name: Change owner JDK
-  file: "state=directory path=/usr/src/jdk1.8.0_131 owner=root group=root recurse=yes"
+  file: "state=directory path=/usr/src/jdk8u192-b12 owner=root group=root recurse=yes"
 
 - name: Deploy JDK
-  command: "mv /usr/src/jdk1.8.0_131 /opt creates=/opt/jdk1.8.0_131"
+  command: "mv /usr/src/jdk8u192-b12 /opt creates=/opt/jdk8u192-b12"
 
 - name: Create smlink /opt/jdk
-  file: "state=link src=/opt/jdk1.8.0_131 dest=/opt/jdk"
+  file: "state=link src=/opt/jdk8u192-b12 dest=/opt/jdk"
 
 - name: Add JDK to environment variable
   copy: src=./resource/common/etc/bashrc dest=/etc/bashrc owner=root group=root mode=0644

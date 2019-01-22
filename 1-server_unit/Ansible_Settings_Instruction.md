@@ -90,8 +90,6 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: ap
 
-  tomcat_version: 8.0.44
-
   tomcat_xms: 512m
 
   tomcat_xmx: 512m
@@ -99,8 +97,6 @@ Below are the files where modification is required.
   tomcat_metaspace_size: 256m
 
   tomcat_max_metaspace_size: 256m
-
-  commons_daemon_version : 1.0.15
 
   lock_host: 127.0.0.1
 
@@ -111,6 +107,10 @@ Below are the files where modification is required.
   cache_port: 11212
 
   cache_manager: memcached
+
+  tomcat_version: 9.0.10
+  
+  commons_daemon_version : 1.1.0
 ```
 
 #### ES server (file destination : /group_vars/es.yml)
@@ -118,15 +118,21 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: es
 
-  es_heapsize: 1875
-
   version: 2.4.1
+
+  es_heapsize: 1875
 ```
 
 #### NFS server (file destination : /group_vars/nfs.yml)
 
 ```yaml
   tag_ServerType: nfs
+  
+  memcached_version: 1.4.21
+
+  memcached_lock_maxconn: 256
+
+  memcached_cache_maxconn: 256
 
   # lock / cache instance
   cache_in_nfs: true
@@ -139,12 +145,6 @@ Below are the files where modification is required.
   memcached_lock_cachesize: 512
 
   memcached_cache_cachesize: 512
-
-  memcached_version: 1.4.21
-
-  memcached_lock_maxconn: 256
-
-  memcached_cache_maxconn: 256
 ```
 
 #### Bastion server (file destination : /group_vars/bastion.yml)

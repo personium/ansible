@@ -118,7 +118,7 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: es
 
-  version: 2.4.1
+  version: 5.6.14
 
   es_heapsize: 1875
 ```

@@ -5,28 +5,21 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-Environment=ES_HOME=/opt/elasticsearch-2.4.1
-Environment=CONF_DIR=/opt/elasticsearch-2.4.1/config
-Environment=DATA_DIR=/personium/elasticsearch-2.4.1/data
-Environment=LOG_DIR=/personium/elasticsearch-2.4.1/log
-Environment=PID_DIR=/var/run/elasticsearch-2.4.1
-EnvironmentFile=-/opt/elasticsearch-2.4.1/config
-Environment=ES_HEAP_SIZE={{ es_heapsize }}m
+Environment=ES_HOME=/opt/elasticsearch-5.6.14
+Environment=CONF_DIR=/opt/elasticsearch-5.6.14/config
+Environment=DATA_DIR=/personium/elasticsearch-5.6.14/data
+Environment=LOG_DIR=/personium/elasticsearch-5.6.14/log
+Environment=PID_DIR=/var/run/elasticsearch-5.6.14
+EnvironmentFile=-/opt/elasticsearch-5.6.14/config
 Environment=JAVA_HOME=/opt/jdk
 
-WorkingDirectory=/personium/elasticsearch/work
 
 User=elasticsearch
 Group=elasticsearch
 
-ExecStartPre=/opt/elasticsearch-2.4.1/bin/elasticsearch.in.sh
+ExecStartPre=/opt/elasticsearch-5.6.14/bin/elasticsearch.in.sh
 
-ExecStart=/opt/elasticsearch-2.4.1/bin/elasticsearch \
-                                                -Des.pidfile=${PID_DIR}/elasticsearch.pid \
-                                                -Des.default.path.home=${ES_HOME} \
-                                                -Des.default.path.logs=${LOG_DIR} \
-                                                -Des.default.path.data=${DATA_DIR} \
-                                                -Des.default.path.conf=${CONF_DIR}
+ExecStart=/opt/elasticsearch-5.6.14/bin/elasticsearch
 
 StandardOutput=journal
 StandardError=inherit

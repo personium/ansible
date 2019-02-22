@@ -6,6 +6,12 @@
 - name: systemd reload
   command: systemctl daemon-reload
 
+- name: Deploy sysctl.conf
+  copy: src=./resource/es/etc/sysctl.conf dest=/etc/sysctl.conf owner=root group=root mode=0644
+
+- name: Reflect sysctl.conf
+  command: sysctl -p
+
 - name: Start elasticsearch
   systemd:
     name: elasticsearch

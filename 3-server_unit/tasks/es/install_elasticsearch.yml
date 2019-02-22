@@ -4,7 +4,7 @@
   file: "state=directory path=/usr/local/src/elasticsearch-{{ version }} owner=root group=root recurse=yes"
 
 - name: Download elasticsearch-{{ version }}.tar.gz
-  get_url: url=https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-{{ version }}.tar.gz dest=/usr/local/src/elasticsearch-{{ version }}/elasticsearch-{{ version }}.tar.gz
+  get_url: url=https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-{{ version }}.tar.gz dest=/usr/local/src/elasticsearch-{{ version }}/elasticsearch-{{ version }}.tar.gz
 
 - name: Deploy elasticsearch
   unarchive: src=/usr/local/src/elasticsearch-{{ version }}/elasticsearch-{{ version }}.tar.gz dest=/opt copy=no
@@ -12,19 +12,14 @@
 - name: Deploy elasticsearch.yml
   template: src=./resource/es/opt/elasticsearch-{{ version }}/config/elasticsearch.yml.j2 dest=/opt/elasticsearch-{{ version }}/config/elasticsearch.yml owner=elasticsearch group=elasticsearch mode=0644
 
+- name: Deploy jvm.options
+  template: src=./resource/es/opt/elasticsearch-{{ version }}/config/jvm.options dest=/opt/elasticsearch-{{ version }}/config/jvm.options owner=elasticsearch group=elasticsearch mode=0660
+
 - name: Change owner /opt/elasticsearch-{{ version }} directory
   file: "path=/opt/elasticsearch-{{ version }} owner=elasticsearch group=elasticsearch recurse=yes"
 
 - name: Change tmp directory permission
   file: "path=/tmp mode=0777 recurse=yes state=directory"
-
-- name: Plugin install check
-  stat: path=/opt/elasticsearch-{{ version }}/plugins/delete-by-query
-  register: fm
-
-- name: Install delete-by-query plugin
-  command: "/opt/elasticsearch-{{ version }}/bin/plugin install delete-by-query"
-  when: not fm.stat.exists
 
 - name: Deploy /etc/logrotate.d/es-service
   copy: src=./resource/es/etc/logrotate.d/es-service dest=/etc/logrotate.d/es-service owner=root group=root mode=0644

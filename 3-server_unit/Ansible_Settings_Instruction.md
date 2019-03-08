@@ -51,7 +51,14 @@ Below are the files where modification is required.
 {Bastion_Network_Separation}
 # -> Specify the network catagory for Bastion server
 # EX: {Bastion_Network_Separation}->172.31.10.0/24
+
+{Path_Based_Cell_Url_Enabled}
+# -> URL format to access cell*1
+# -> true:path based cell url
+# -> false:per cell fqdn url
+# EX: {Path_Based_Cell_Url_Enabled}->false
 ```
+*1.For explanation about URL format to access cell, please confirm [here](https://personium.io/docs/ja/server-operator/setup_percell.html).
 
 #### Web server
 
@@ -95,7 +102,14 @@ Below are the files where modification is required.
 {Master_Token}
 # -> To authorize all kind of operation, set the master token (Strictly managed)
 # EX: {Master_Token}->abc123
+
+{Path_Based_Cell_Url_Enabled}
+# -> URL format to access cell*1
+# -> true:path based cell url
+# -> false:per cell fqdn url
+# EX: {Path_Based_Cell_Url_Enabled}->false
 ```
+*1.For explanation about URL format to access cell, please confirm [here](https://personium.io/docs/ja/server-operator/setup_percell.html).
 
 #### ES server
 

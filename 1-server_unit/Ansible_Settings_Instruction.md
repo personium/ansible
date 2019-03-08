@@ -43,7 +43,14 @@ Below are the files where modification is required.
 {Personium_FQDN}
 # -> Specify the FQDN for Personium server(same as unit FQDN)
 # EX: {Personium_FQDN}->ec2-54-65-33-203.ap-northeast-1.compute.amazonaws.com
+
+{Path_Based_Cell_Url_Enabled}
+# -> URL format to access cell*1
+# -> true:path based cell url
+# -> false:per cell fqdn url
+# EX: {Path_Based_Cell_Url_Enabled}->false
 ```
+*1.For explanation about URL format to access cell, please confirm [here](https://personium.io/docs/ja/server-operator/setup_percell.html).
 
 #### Bastion server
 

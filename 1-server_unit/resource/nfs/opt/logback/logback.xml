@@ -101,7 +101,7 @@
 
 	<logger  name="io.personium.core.event"  additivity="false">
 		<!-- To output the DEBUG level log of user script even in production, "DEBUG" is set -->
-		<level value="DEBUG" />
+		<level value="INFO" />
 		<appender-ref ref="FILE_USER" />
 		<appender-ref ref="stdout" />
 	</logger>

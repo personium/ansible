@@ -8,16 +8,15 @@
 
 
 if [ $# -ne 1 ]; then
-   echo "Usage: personium_regression.sh {FQDN}"
+   echo "Usage: personium_regression.sh {url_domain}"
    echo "This argument is necessary."
    exit 1
 fi
 
-
 FQDN=${1}
 CELL_NAME=startuptest
 URL_DOMAIN=https://${FQDN}
-PATH_BASED_CELL_URL=`grep "pathBasedCellUrl" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.pathBasedCellUrl.enabled=//"`
+PATH_BASED_CELL_URL=`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i {{ ansible_ssh_private_key_file }} root@{{ ap_private_ip }} grep "pathBasedCellUrl" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.pathBasedCellUrl.enabled=//"`
 
 if [ "false" == "${PATH_BASED_CELL_URL}" ]; then
     grep ${CELL_NAME}.${FQDN} /etc/hosts > /dev/null
@@ -31,7 +30,7 @@ else
     CELL_URL=https://${FQDN}/${CELL_NAME}
 fi
 
-SPECIFIED_ACCESS_TOKEN=`grep "core.masterToken" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.masterToken=//"`
+SPECIFIED_ACCESS_TOKEN=`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i {{ ansible_ssh_private_key_file }} root@{{ ap_private_ip }} grep "core.masterToken" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.masterToken=//"`
 
 XDCVERSION=default
 CURL_LOG=/tmp/rt_curl_${XDCVERSION}.txt
@@ -77,7 +76,7 @@ echo "Delete rule" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${CELL_URL}/__ctl/Rule(Name='testRule')" -H "Accept: application/json" -H "Authorization: Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
 
 echo "Delete Service Source" >> ${RT_LOG}
-curl -X DELETE -w "\nstatus:%{http_code}\n" "${CELL_URL}/col/__src/test.js" -H "Accept:application/json" -H "Content-Type: text/javascript" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
+curl -X DELETE -w "\nstatus:%{http_code}\n" "${CELL_URL}/box/col/__src/test.js" -H "Accept:application/json" -H "Content-Type: text/javascript" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
 
 echo "Delete Collection" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${CELL_URL}/box/col" -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -i -k -s > ${CURL_LOG}
@@ -86,15 +85,15 @@ echo "Delete Box" >> ${RT_LOG}
 curl -X DELETE -w "\nstatus:%{http_code}\n" "${CELL_URL}/__ctl/Box('box')" -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -H "If-Match: *" -i -k -s > ${CURL_LOG}
 
 echo "Delete Cell" >> ${RT_LOG}
-curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name=%27${CELL_NAME}%27)" -X DELETE -H "Accept:application/json" -H "If-Match: *" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
+curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X DELETE -H "Accept:application/json" -H "If-Match: *" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
 
 echo "Ceate Cell" >> ${RT_LOG}
-curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell" -X POST  -d "{\"Name\":\"${CELL_NAME}\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
+curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell" -X POST  -d "{\"Name\":\"startuptest\"}" $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
 check_response 201 "Ceate Cell"
 
 
 echo "Get Cell" >> ${RT_LOG}
-curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name=%27${CELL_NAME}%27)" -X GET  $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
+curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X GET  $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
 check_response 200 "Get Cell"
 
 
@@ -169,12 +168,12 @@ check_response 204 "Delete Box"
 
 
 echo "Delete Cell" >> ${RT_LOG}
-curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name=%27${CELL_NAME}%27)" -X DELETE $XDCVERSION_HEADER -H "Accept:application/json" -H "If-Match: *" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
+curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X DELETE $XDCVERSION_HEADER -H "Accept:application/json" -H "If-Match: *" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
 check_response 204 "Delete Cell"
 
 
 echo "Check Delete Cell" >> ${RT_LOG}
-curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name=%27${CELL_NAME}%27)" -X GET $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
+curl -w "\nstatus:%{http_code}\n" "${URL_DOMAIN}/__ctl/Cell(Name='startuptest')" -X GET $XDCVERSION_HEADER -H "Accept:application/json" -H "Authorization:Bearer $ACCESSTOKEN" -k -i -s > ${CURL_LOG}
 check_response 404 "Check Delete Cell"
 
 

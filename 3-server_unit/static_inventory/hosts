@@ -73,7 +73,7 @@ ansible_ssh_user={Ansible_Execution_User}
 ## Secret key for executing ansible(Absolute path)
 ansible_ssh_private_key_file={SSH_PrivateKey}
 
-# Master Token of Personium
+## Master Token of Personium
 master_token={Master_Token}
 
 ## Web server FQDN
@@ -91,6 +91,11 @@ bastion_network_sep={Bastion_Network_Separation}
 
 ## Network address of AP server to access elasticsearch
 ap_network_sep={AP_Network_Separation}
+
+## URL format to access cell
+## true:path based cell url
+## false:per cell fqdn url
+path_based_cell_url_enabled={Path_Based_Cell_Url_Enabled}
 
 ############ Setting items of ES server ############
 [tag_ServerType_es:vars]
@@ -163,8 +168,13 @@ ansible_ssh_user={Ansible_Execution_User}
 ## Secret key for executing ansible(Absolute path)
 ansible_ssh_private_key_file={SSH_PrivateKey}
 
-# Master Token of Personium
+## Master Token of Personium
 master_token={Master_Token}
 
 ## Web server FQDN
 base_url={Web_FQDN}
+
+## URL format to access cell
+## true:path based cell url
+## false:per cell fqdn url
+path_based_cell_url_enabled={Path_Based_Cell_Url_Enabled}

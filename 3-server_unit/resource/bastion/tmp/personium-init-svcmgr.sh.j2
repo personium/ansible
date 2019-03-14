@@ -19,19 +19,30 @@
 # Initial setup script of Unitadmin cell
 
 # Environmental setting
-DOMAIN=https://{{ base_url }}
+DOMAIN={{ base_url }}
 MASTER_TOKEN={{ master_token }}
 CELL_NAME=unitadmin
 ROLE_UA_NAME=UnitAdmin
 ROLE_CCA_NAME=CellContentsAdmin
 CELL_OWNER=personium-localunit:/$CELL_NAME/#unitadmin
 UNITADMIN_ACCOUNT_FILE=/root/ansible/unitadmin_account
+PATH_BASED_CELL_URL={{ path_based_cell_url_enabled }}
+
+if [ "false" == "${PATH_BASED_CELL_URL}" ]; then
+    grep ${CELL_NAME}.${DOMAIN} /etc/hosts > /dev/null
+
+    if [ $? -eq 1 ]; then
+      echo "127.0.0.1" ${CELL_NAME}.${DOMAIN} >> /etc/hosts
+    fi
+
+    CELL_URL=https://${CELL_NAME}.${DOMAIN}
+else
+    CELL_URL=https://${DOMAIN}/${CELL_NAME}
+fi
 
 # Account and password to create
 UU_NAME=(unitadmin)
 UU_PASS=()
-CELL_URL=$DOMAIN/$CELL_NAME
-
 
 function check_response() {
   STATUS=${1}
@@ -45,11 +56,11 @@ function check_response() {
 
 #Create Cell
 echo "######  Create UNIT ADMIN Cell  ######"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $DOMAIN/__ctl/Cell -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Unit-User: $CELL_OWNER" -d "{\"Name\":\"$CELL_NAME\"}" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" https://$DOMAIN/__ctl/Cell -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Unit-User: $CELL_OWNER" -d "{\"Name\":\"$CELL_NAME\"}" -k -i -s`
 echo "$CURL_RESULT"
 
 echo "-- Cell check"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$DOMAIN/__ctl/Cell(%27$CELL_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "https://$DOMAIN/__ctl/Cell(%27$CELL_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
 echo "$CURL_RESULT"
 check_response 200 "UNIT ADMIN Cell created"
 

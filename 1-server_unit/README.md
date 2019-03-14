@@ -107,7 +107,7 @@ Common Name value should be the unit domain name.
 ```console
     # cd /root/ansible/resource/web/opt/nginx/conf
     # openssl genrsa -des3 -out server.key 1024
-           Enter pass phrase for server.key:                            \* Optional (Characters length: is 4 - 8191)
+           Enter pass phrase for server.key:                            \* Required (Characters length: is 4 - 8191)
     # openssl req -new -key server.key -out server.csr
            Enter pass phrase for server.key:                            \* enter the value of `server.key`
            Country Name (2 letter code) [XX]:                           \* Optional ( entered value will be visible in the certificate)
@@ -118,10 +118,10 @@ Common Name value should be the unit domain name.
            Common Name (eg, your name or your server's hostname) []:    \* Required ( entered value will be visible in the certificate)
            Email Address []:                                            \* Optional ( entered value will be visible in the certificate)
 
-               Please enter the following 'extra' attributes
-               to be sent with your certificate request
-               A challenge password []:
-               An optional company name []:
+           Please enter the following 'extra' attributes
+           to be sent with your certificate request
+           A challenge password []:
+           An optional company name []:
 
     # cp server.key server.key.org
     # openssl rsa -in server.key.org -out server.key
@@ -162,8 +162,8 @@ Common Name value should be the unit domain name.
     Enter file in which to save the key (/root/.ssh/id_rsa):  (\* press enter to save the rsa key pair at /root/.ssh/id_rsa, otherwise specify the alternative path)
     Enter passphrase (empty for no passphrase):               (\* press enter to save the key without password)
     Enter same passphrase again:                              (\* press enter if no password added on passphrase)
-    Your identification has been saved in /root/.ssh/id_rsa.  (\* press enter)
-    Your public key has been saved in /root/.ssh/id_rsa.pub.  (\* press enter)
+    Your identification has been saved in /root/.ssh/id_rsa.
+    Your public key has been saved in /root/.ssh/id_rsa.pub.
 ```
 
 The `public key` will be placed in `/root/.ssh/id_rsa.pub`
@@ -227,7 +227,11 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
     # chmod 600 /root/.ssh/authorized_keys
     # ls -la /root/.ssh/authorized_keys
     -rw-------. 1 root root 952 Aug 27 02:41 /root/.ssh/authorized_keys
+```
 
+* Check the permission. Change if necessary
+
+```console
     # ls -la /root/
     drwx------.  2 root root 4096 Aug 27 02:41 .ssh
 ```
@@ -236,7 +240,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 
 ```console
     # chmod 700 /root/.ssh
-    # ls -la /root/.ssh
+    # ls -la /root/
     drwx------.  2 root root 4096 Aug 27 02:41 .ssh
     # exit
 ```
@@ -325,8 +329,8 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Execute the reachability testing tool
 
 ```
-    # /bin/sh personium_regression.sh https://{{ FQDN of Web server }}
-    [PCS Version(default) RT OK]
+    # /bin/sh personium_regression.sh {{ FQDN of Web server }}
+    [personium Version(default) RT OK]
 ```
 
 \* reachability testing is done, if it shows the same

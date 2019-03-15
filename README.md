@@ -69,7 +69,7 @@ For the setting procedure, please refer to [setup-vagrant](https://github.com/pe
     | logback       | logback        |        1.0.3 | --                |
     |               | slf4j          |        1.6.4 | --                |
     | memcached     | memcached      |       1.4.21 | cache             |
-    | elasticsearch | elasticsearch  |       5.6.14 | db & search engine|
+    | elasticsearch | elasticsearch  |        6.6.1 | db & search engine|
 
 This document introduced pattern based initial requirements to construct the Personium unit. Please choose the right pattern that suits your purpose.
 Please go thru with other documents to learn about the process to construct the Personium unit.

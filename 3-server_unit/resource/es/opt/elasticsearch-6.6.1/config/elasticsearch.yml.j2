@@ -40,8 +40,6 @@ path.data: /personium/elasticsearch-{{ version }}/data
 #
 path.logs: /personium/elasticsearch-{{ version }}/log
 #
-path.conf: /opt/elasticsearch-{{ version }}/config
-#
 # ----------------------------------- Memory -----------------------------------
 #
 # Lock the memory on startup:
@@ -94,7 +92,7 @@ discovery.zen.ping.unicast.hosts: ["{{ es_private_ip }}"]
 #
 #action.destructive_requires_name: true
 
-action.auto_create_index: false
+action.auto_create_index: ".security,.monitoring*,.watches,.triggered_watches,.watcher-history*"
 http.cors.enabled: true
 http.cors.allow-origin: "*"
 indices.fielddata.cache.size: 80%

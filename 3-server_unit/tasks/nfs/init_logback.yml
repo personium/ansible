@@ -1,10 +1,10 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
 - name: Download logback
-  command: wget -q -O logback-1.0.3.tar.gz --no-check-certificate http://logback.qos.ch/dist/logback-1.0.3.tar.gz
+  command: wget -q -O logback-{{ logback_version }}.tar.gz --no-check-certificate http://logback.qos.ch/dist/logback-{{ logback_version }}.tar.gz
   args:
     chdir: /usr/local/src
-    creates: /usr/local/src/logback-1.0.3.tar.gz
+    creates: /usr/local/src/logback-{{ logback_version }}.tar.gz
 
 - name: Download slf4j
   command: wget -q -O slf4j-1.6.4.tar.gz --no-check-certificate http://www.slf4j.org/dist/slf4j-1.6.4.tar.gz
@@ -19,10 +19,10 @@
   file: path=/personium/logback/log/logback.log state=touch owner=personium group=personium mode=644
 
 - name: Expand logback
-  command: tar xzf /usr/local/src/logback-1.0.3.tar.gz
+  command: tar xzf /usr/local/src/logback-{{ logback_version }}.tar.gz
   args:
     chdir: /opt/logback
-    creates: /opt/logback/logback-1.0.3
+    creates: /opt/logback/logback-{{ logback_version }}
 
 - name: Expand slf4j
   command: tar xzf /usr/local/src/slf4j-1.6.4.tar.gz
@@ -30,8 +30,8 @@
     chdir: /opt/logback
     creates: /opt/logback/slf4j-1.6.4
 
-- name: Change owner /opt/logback/logback-1.0.3 directory
-  file: state=directory path=/opt/logback/logback-1.0.3 owner=personium group=personium recurse=yes
+- name: Change owner /opt/logback/logback-{{ logback_version }} directory
+  file: state=directory path=/opt/logback/logback-{{ logback_version }} owner=personium group=personium recurse=yes
 
 - name: Change owner /opt/logback/slf4j-1.6.4 directory
   file: state=directory path=/opt/logback/slf4j-1.6.4 owner=personium group=personium recurse=yes

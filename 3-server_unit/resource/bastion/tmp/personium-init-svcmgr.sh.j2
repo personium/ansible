@@ -49,7 +49,7 @@ function check_response() {
   OPERATION=${2}
   RESPONSE_CODE=`echo "${CURL_RESULT}" | /bin/grep 'status:'`
   if [ "${RESPONSE_CODE}" != "status:${STATUS}" ]; then
-    echo "${OPERATION}faild."
+    echo "${OPERATION} faild."
     exit 2
   fi
 }

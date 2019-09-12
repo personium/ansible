@@ -22,7 +22,7 @@ if [ "false" == "${PATH_BASED_CELL_URL}" ]; then
     grep ${CELL_NAME}.${FQDN} /etc/hosts > /dev/null
 
     if [ $? -eq 1 ]; then
-      echo "127.0.0.1" ${CELL_NAME}.${FQDN} >> /etc/hosts
+      echo "{{ web_private_ip }}" ${CELL_NAME}.${FQDN} >> /etc/hosts
     fi
 
     CELL_URL=https://${CELL_NAME}.${FQDN}

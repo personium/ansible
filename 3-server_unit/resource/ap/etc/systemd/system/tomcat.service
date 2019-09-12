@@ -1,5 +1,5 @@
 [Unit]
-Description=Apache Tomcat 8
+Description=Apache Tomcat 9
 After=network.target activemq.service
 
 [Service]

@@ -64,11 +64,12 @@ For the setting procedure, please refer to [setup-vagrant](https://github.com/pe
     | java          | AdoptOpenJDK   |        8u192 | --                |
     | tomcat        | tomcat         |       9.0.10 | web               |
     |               | commons-daemon |        1.1.0 | --                |
-    | nginx         | nginx          |       1.14.0 | proxy             |
-    |               | Headers More   |         0.32 | --                |
-    | logback       | logback        |        1.0.3 | --                |
+    | activemq      | activemq       |       5.15.8 | --                |
+    | nginx         | nginx          |       1.14.2 | proxy             |
+    |               | Headers More   |         0.33 | --                |
+    | logback       | logback        |        1.2.3 | --                |
     |               | slf4j          |        1.6.4 | --                |
-    | memcached     | memcached      |       1.4.21 | cache             |
+    | memcached     | memcached      |       1.5.12 | cache             |
     | elasticsearch | elasticsearch  |        6.6.1 | db & search engine|
 
 This document introduced pattern based initial requirements to construct the Personium unit. Please choose the right pattern that suits your purpose.

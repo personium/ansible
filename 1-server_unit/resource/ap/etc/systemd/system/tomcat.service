@@ -1,5 +1,5 @@
 [Unit]
-Description=Apache Tomcat 8
+Description=Apache Tomcat 9
 After=network.target activemq.service
 
 [Service]
@@ -12,6 +12,7 @@ Environment=JRE_HOME=/opt/jre
 Environment=CATALINA_BASE=/opt/tomcat
 Environment=TOMCAT_USER=personium
 
+ExecStartPre=/bin/sleep 20
 ExecStart=/opt/tomcat/bin/daemon.sh --java-home /opt/jdk --catalina-home /opt/tomcat --catalina-base /opt/tomcat --catalina-pid /opt/tomcat/tomcat.pid --tomcat-user personium start
 ExecStop=/opt/tomcat/bin/daemon.sh --java-home /opt/jdk --catalina-home /opt/tomcat --catalina-base /opt/tomcat --catalina-pid /opt/tomcat/tomcat.pid stop
 [Install]

@@ -6,7 +6,7 @@ After=network.target
 [Service]
 Type=simple
 EnvironmentFile=-/etc/sysconfig/memcached_cache
-ExecStart=/opt/memcached-1.4.21/bin/memcached -u $USER -p $PORT -m $CACHESIZE -c $MAXCONN $OPTIONS
+ExecStart=/opt/memcached-{{ memcached_version }}/bin/memcached -u $USER -p $PORT -m $CACHESIZE -c $MAXCONN $OPTIONS
 
 [Install]
 WantedBy=multi-user.target

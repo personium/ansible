@@ -37,6 +37,9 @@ web_global_ip={Web_Global_IP}
 ## Web server FQDN
 base_url={Web_FQDN}
 
+## Private IP Address of WEB server
+web_private_ip={WEB_Private_IP}
+
 ## Private IP Address of AP server
 ap_private_ip={AP_Private_IP}
 

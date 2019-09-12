@@ -50,7 +50,6 @@
     - ./group_vars/web.yml
   tasks:
     - include: ./web.yml
-    - include: ./tasks/web/init_personium_regression.yml
   handlers:
     - include: ./handlers/common/restart_iptables.yml
     - include: ./handlers/web/reload_nginx.yml
@@ -63,3 +62,4 @@
     - ./group_vars/bastion.yml
   tasks:
     - include: ./tasks/bastion/init_servicemanager.yml
+

@@ -31,7 +31,7 @@ There are different patterns of setup tools to construct the Personium unit. Ple
 
 #### Pattern-1 : 1 server
 
-* Machine environment : **Linux**
+* Machine environment : **CentOS 7**
 * The number of Personium unit servers : **1 Server**
   * Server-1 elements : Bastion, Web, AP, ES
 * Setup time : 1 hour
@@ -44,7 +44,7 @@ For the setting procedure, please refer to [setup-vagrant](https://github.com/pe
 
 #### Pattern-2 : 3 server
 
-* Machine environment : **Linux**
+* Machine environment : **CentOS 7**
 * The number of Personium unit servers : **3 Servers**
   * Server-1 elements : Bastion,Web
   * Server-2 elements : AP,NFS

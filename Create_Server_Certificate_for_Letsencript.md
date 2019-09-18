@@ -33,7 +33,7 @@ Create a server certificate using certbot.
 1. Execute the following command to start certificate creation processing by certbot.
 
     ```console
-    # certbot certonly --domain {FQDN} --manual --prefered-challenges dns
+    # certbot certonly --domain {FQDN} --domain "*.{FQDN}" --manual --preferred-challenges dns
     ```
 
 1. Register your email address in Let's Encrypt.
@@ -99,6 +99,23 @@ Create a server certificate using certbot.
     cue8r-99XuwWtmRhJqZeEpB4F1szNr4BH17qot_kX9g
 
     Before continuing, verify the record is deployed.
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    ```
+
+1. Follow the instructions and register the TXT record in the DNS server that manages the domain, again.
+
+    ```console
+    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    Please deploy a DNS TXT record under the name
+    _acme-challenge.{FQDN} with the following value:
+
+    8pDJZ1pCXmhh-OHSaV2IM_dLztGk31AnQytk1MJhx9E
+
+    Before continuing, verify the record is deployed.
+    (This must be set up in addition to the previous challenges; do not remove,
+    replace, or undo the previous challenge tasks yet. Note that you might be
+    asked to create multiple distinct TXT records with the same name. This is
+    permitted by DNS standards.)
     - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     ```
 

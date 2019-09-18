@@ -1,6 +1,6 @@
 [Unit]
 Description=activemq message queue
-After=network.target
+After=network.target elasticsearch.service
 
 [Service]
 PIDFile=/opt/activemq/data/activemq.pid

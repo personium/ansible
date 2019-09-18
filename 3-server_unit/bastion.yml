@@ -9,3 +9,5 @@
 - include: ./tasks/bastion/mvn_package.yml
   vars:
     build_mod: engine
+- include: ./tasks/bastion/init_personium_regression.yml
+

@@ -16,13 +16,13 @@ fi
 FQDN=${1}
 CELL_NAME=startuptest
 URL_DOMAIN=https://${FQDN}
-PATH_BASED_CELL_URL=`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i {{ ansible_ssh_private_key_file }} root@{{ ap_private_ip }} grep "pathBasedCellUrl" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.pathBasedCellUrl.enabled=//"`
+PATH_BASED_CELL_URL=`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i {{ ansible_ssh_private_key_file }} {{ ansible_ssh_user }}@{{ ap_private_ip }} grep "pathBasedCellUrl" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.pathBasedCellUrl.enabled=//"`
 
 if [ "false" == "${PATH_BASED_CELL_URL}" ]; then
     grep ${CELL_NAME}.${FQDN} /etc/hosts > /dev/null
 
     if [ $? -eq 1 ]; then
-      echo "127.0.0.1" ${CELL_NAME}.${FQDN} >> /etc/hosts
+      echo "{{ web_private_ip }}" ${CELL_NAME}.${FQDN} >> /etc/hosts
     fi
 
     CELL_URL=https://${CELL_NAME}.${FQDN}
@@ -30,7 +30,7 @@ else
     CELL_URL=https://${FQDN}/${CELL_NAME}
 fi
 
-SPECIFIED_ACCESS_TOKEN=`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i {{ ansible_ssh_private_key_file }} root@{{ ap_private_ip }} grep "core.masterToken" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.masterToken=//"`
+SPECIFIED_ACCESS_TOKEN=`ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i {{ ansible_ssh_private_key_file }} {{ ansible_ssh_user }}@{{ ap_private_ip }} grep "core.masterToken" /personium/personium-core/conf/18888/personium-unit-config.properties | sed -e "s/io.personium.core.masterToken=//"`
 
 XDCVERSION=default
 CURL_LOG=/tmp/rt_curl_${XDCVERSION}.txt

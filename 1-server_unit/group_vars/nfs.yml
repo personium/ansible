@@ -2,7 +2,7 @@
 
 tag_ServerType: nfs
 
-memcached_version: 1.4.21
+memcached_version: 1.5.12
 memcached_lock_maxconn: 256
 memcached_cache_maxconn: 256
 
@@ -15,3 +15,5 @@ cache_port: 11212
 # memcached cachesize
 memcached_lock_cachesize: 512
 memcached_cache_cachesize: 512
+
+logback_version: 1.2.3

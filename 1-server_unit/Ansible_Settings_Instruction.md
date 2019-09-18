@@ -87,9 +87,9 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: web
 
-  nginx_version: 1.14.0
+  nginx_version: 1.14.2
 
-  nginx_hm_version: 0.32
+  nginx_hm_version: 0.33
 ```
 
 #### AP server (file destination : /group_vars/ap.yml)
@@ -116,8 +116,10 @@ Below are the files where modification is required.
   cache_manager: memcached
 
   tomcat_version: 9.0.10
-  
+
   commons_daemon_version : 1.1.0
+
+  activemq_version: 5.15.8
 ```
 
 #### ES server (file destination : /group_vars/es.yml)
@@ -135,7 +137,7 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: nfs
   
-  memcached_version: 1.4.21
+  memcached_version: 1.5.12
 
   memcached_lock_maxconn: 256
 
@@ -152,6 +154,8 @@ Below are the files where modification is required.
   memcached_lock_cachesize: 512
 
   memcached_cache_cachesize: 512
+
+  logback_version: 1.2.3
 ```
 
 #### Bastion server (file destination : /group_vars/bastion.yml)

@@ -20,7 +20,7 @@ Below are the files where modification is required.
 
     # should be changed to
 
-    ansible_ssh_user=root
+    ansible_ssh_user=ec2-user
 ```
 
 * Modify the hosts file as per instruction below
@@ -28,6 +28,26 @@ Below are the files where modification is required.
 #### Common Server Setting
 
 ```yaml
+{Bastion_Private_IP}
+# -> Specify the private IP of Bastion server
+# EX: {Bastion_Private_IP}->172.31.10.248
+
+{Web_Private_IP}
+# -> Specify the private IP of Web server
+# EX: {Web_Private_IP}->172.31.10.248
+
+{AP_Private_IP}
+# -> Specify the private IP of  AP server
+# EX: {AP_Private_IP}->172.31.13.38
+
+{ES_Private_IP}
+# -> Set the private IP for ES server
+# EX: {ES_Private_IP}->172.31.3.80
+
+{NFS_Private_IP}
+# -> Set the private IP for NFS server
+# EX: {NFS_Private_IP}->172.31.13.38
+
 {Ansible_Execution_User}
 # -> Specify a user ansible execution
 # EX: {Ansible_Execution_User}->root
@@ -35,41 +55,6 @@ Below are the files where modification is required.
 {SSH_PrivateKey}
 # -> Set the secret key in the absolute path for  ansible user ssh public key authentication
 # EX: {SSH_PrivateKey}->/root/.ssh/id_rsa
-```
-
-#### Bastion server
-
-```yaml
-{Bastion_Private_IP}
-# -> Specify the private IP of Bastion server
-# EX: {Bastion_Private_IP}->172.31.10.248
-
-{Bastion_Tag_Name}
-# -> Specify the host name for Bastion server
-# EX: {Bastion_Tag_Name}->bastion-web
-
-{Bastion_Network_Separation}
-# -> Specify the network catagory for Bastion server
-# EX: {Bastion_Network_Separation}->172.31.10.0/24
-
-{Path_Based_Cell_Url_Enabled}
-# -> URL format to access cell*1
-# -> true:path based cell url
-# -> false:per cell fqdn url
-# EX: {Path_Based_Cell_Url_Enabled}->false
-```
-*1.For explanation about URL format to access cell, please confirm [here](https://personium.io/docs/ja/server-operator/setup_percell.html).
-
-#### Web server
-
-```yaml
-{Web_Private_IP}
-# -> Specify the private IP of Web server
-# EX: {Web_Private_IP}->172.31.10.248
-
-{Web_Tag_Name}
-# -> Specify the host name for Web server
-# EX: {Web_Tag_Name}->bastion-web
 
 {Web_Global_IP}
 # -> Specify the global IP for Web server
@@ -78,30 +63,23 @@ Below are the files where modification is required.
 {Web_FQDN}
 # -> Specify the FQDN for Web server(same as unit FQDN)
 # EX: {Web_FQDN}->ec2-54-65-33-203.ap-northeast-1.compute.amazonaws.com
-```
 
-#### AP server
+{Bastion_Network_Separation}
+# -> Specify the network catagory for Bastion server
+# EX: {Bastion_Network_Separation}->172.31.10.0/24
 
-```yaml
-{AP_Private_IP}
-# -> Specify the private IP of  AP server
-# EX: {AP_Private_IP}->172.31.13.38
+{WEB_Network_Separation}
+# -> Specify the network catagory for WEB server
+# EX: {WEB_Network_Separation}->172.31.10.0/24
 
 {AP_Network_Separation}
 # -> Specify the network catagory for AP server
 # EX: {AP_Network_Separation}->172.31.13.0/24
 
-{AP_Tag_Name}
-# -> Specify the host name for AP server
-# EX: {AP_Tag_Name}->test-ap
-
-{PIO_LOGVOL}
-# -> Specify the disk name for Personium log
-# EX: {PIO_LOGVOL}->vdb
-
 {Master_Token}
 # -> To authorize all kind of operation, set the master token (Strictly managed)
-# EX: {Master_Token}->abc123
+# EX: enable_mastertoken=true
+#     {Master_Token}->abc123
 
 {Path_Based_Cell_Url_Enabled}
 # -> URL format to access cell*1
@@ -109,15 +87,40 @@ Below are the files where modification is required.
 # -> false:per cell fqdn url
 # EX: {Path_Based_Cell_Url_Enabled}->false
 ```
+
 *1.For explanation about URL format to access cell, please confirm [here](https://personium.io/docs/ja/server-operator/setup_percell.html).
+
+#### Bastion server
+
+```yaml
+{Bastion_Tag_Name}
+# -> Specify the host name for Bastion server
+# EX: {Bastion_Tag_Name}->bastion-web
+```
+
+#### Web server
+
+```yaml
+{Web_Tag_Name}
+# -> Specify the host name for Web server
+# EX: {Web_Tag_Name}->bastion-web
+```
+
+#### AP server
+
+```yaml
+{AP_Tag_Name}
+# -> Specify the host name for AP server
+# EX: {AP_Tag_Name}->test-ap
+
+{PIO_LOGVOL}
+# -> Specify the disk name for Personium log
+# EX: {PIO_LOGVOL}->vdb
+```
 
 #### ES server
 
 ```yaml
-{ES_Private_IP}
-# -> Set the private IP for ES server
-# EX: {ES_Private_IP}->172.31.3.80
-
 {ES_Tag_Name}
 # -> Specify the host name for ES server
 # EX: {ES_Tag_Name}->test-ES
@@ -130,10 +133,6 @@ Below are the files where modification is required.
 #### NFS server
 
 ```yaml
-{NFS_Private_IP}
-# -> Set the private IP for NFS server
-# EX: {NFS_Private_IP}->172.31.13.38
-
 {nfs_Tag_Name}
 # -> Specify the host name for nfs server
 # EX: {nfs_Tag_Name}->test-NFS
@@ -154,9 +153,9 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: web
 
-  nginx_version: 1.14.0
+  nginx_version: 1.14.2
 
-  nginx_hm_version: 0.32
+  nginx_hm_version: 0.33
 ```
 
 #### AP server (file destination : /group_vars/ap.yml)
@@ -185,6 +184,8 @@ Below are the files where modification is required.
   tomcat_version: 9.0.10
 
   commons_daemon_version : 1.1.0
+
+  activemq_version: 5.15.8
 ```
 
 #### ES server (file destination : /group_vars/es.yml)
@@ -202,7 +203,7 @@ Below are the files where modification is required.
 ```yaml
   tag_ServerType: nfs
 
-  memcached_version: 1.4.21
+  memcached_version: 1.5.12
 
   memcached_lock_maxconn: 1024
 
@@ -219,6 +220,8 @@ Below are the files where modification is required.
   memcached_lock_cachesize: 512
 
   memcached_cache_cachesize: 512
+
+  logback_version: 1.2.3
 ```
 
 #### bastion server (file destination : /group_vars/bastion.yml)

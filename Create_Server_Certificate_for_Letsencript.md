@@ -33,7 +33,7 @@ Create a server certificate using certbot.
 1. Execute the following command to start certificate creation processing by certbot.
 
     ```console
-    # certbot certonly --domain {FQDN} --manual --prefered-challenges dns
+    # certbot certonly --domain {FQDN} --manual --preferred-challenges dns
     ```
 
 1. Register your email address in Let's Encrypt.

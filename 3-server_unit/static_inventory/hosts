@@ -56,6 +56,9 @@ personium_nfs={NFS_Private_IP}
 ## network address of the bastion server that allows ssh connection
 bastion_network_sep={Bastion_Network_Separation}
 
+## Network address of WEB server
+web_network_sep={WEB_Network_Separation}
+
 ## Network address of AP server
 ap_network_sep={AP_Network_Separation}
 #### for firewalld setting ####

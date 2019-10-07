@@ -32,7 +32,7 @@ if [ "false" == "${PATH_BASED_CELL_URL}" ]; then
     grep ${CELL_NAME}.${DOMAIN} /etc/hosts > /dev/null
 
     if [ $? -eq 1 ]; then
-      echo "127.0.0.1" ${CELL_NAME}.${DOMAIN} >> /etc/hosts
+      echo "{{ web_private_ip }}" ${CELL_NAME}.${DOMAIN} >> /etc/hosts
     fi
 
     CELL_URL=https://${CELL_NAME}.${DOMAIN}

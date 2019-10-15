@@ -55,11 +55,16 @@ The following key file will be generated automatically during the Ansible execut
 ## Initial setup for Ansible :white_check_mark:
 
 * Prerequisite:
+  * All infrastructure is created
   * User account: root
   * Ansible execution user account: root
   * Ansible execution environment : Web/Bastion server
-  * DNS registered fixed global IP address
+  * Fixed global IP address is attached to the Web server
   * Fixed private IP of all the remote servers.
+
+#### 0: Configure DNS setting
+
+See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md).
 
 #### 1: Git clone Ansible
 

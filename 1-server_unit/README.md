@@ -100,41 +100,8 @@ The following key file will be generated automatically during the Ansible execut
 
 * Prepare the SSL certificate and private key separately  
 If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](../Create_Server_Certificate_for_Letsencript.md)  
-\* Create and use self-signed SSL certificate when the official SSL certificate is not available.
-Following is the self-signed ssl certificate creation procedure.
-Common Name value should be the unit domain name.
-
-```console
-    # cd /root/ansible/resource/web/opt/nginx/conf
-    # openssl genrsa -des3 -out server.key 1024
-           Enter pass phrase for server.key:                            \* Required (Characters length: is 4 - 8191)
-    # openssl req -new -key server.key -out server.csr
-           Enter pass phrase for server.key:                            \* enter the value of `server.key`
-           Country Name (2 letter code) [XX]:                           \* Optional ( entered value will be visible in the certificate)
-           State or Province Name (full name) []:                       \* Optional ( entered value will be visible in the certificate)
-           Locality Name (eg, city) [Default City]:                     \* Optional ( entered value will be visible in the certificate)
-           Organization Name (eg, company) [Default Company Ltd]:       \* Optional ( entered value will be visible in the certificate)
-           Organizational Unit Name (eg, section) []:                   \* Optional ( entered value will be visible in the certificate)
-           Common Name (eg, your name or your server's hostname) []:    \* Required ( entered value will be visible in the certificate)
-           Email Address []:                                            \* Optional ( entered value will be visible in the certificate)
-
-           Please enter the following 'extra' attributes
-           to be sent with your certificate request
-           A challenge password []:
-           An optional company name []:
-
-    # cp server.key server.key.org
-    # openssl rsa -in server.key.org -out server.key
-           Enter pass phrase for server.key.org:     \* enter the value of `server.key`
-    # openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
-    # ls -l server.*
-```
-
-  - Check if the following files are created
-    - server.key.org
-    - server.crt
-    - server.csr
-    - server.key  
+* Create and use self-signed SSL certificate when the official SSL certificate is not available.
+[Example of using Self-sign.](../Create_Server_Certificate_for_Self-sign.md)
 
 #### 7: Deploy SSL certificate / private key
 

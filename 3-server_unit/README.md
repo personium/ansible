@@ -60,27 +60,32 @@ The following key file will be generated automatically during the Ansible execut
 ## Initial setup for Ansible :white_check_mark:
 
 * Prerequisite:
+  * All infrastructure is created
   * User account: root
   * Ansible execution user account: root
   * Ansible execution environment : Web/Bastion server
-  * DNS registered fixed global IP address
+  * Fixed global IP address is attached to the Web server
   * Fixed private IP of all the remote servers.
 
-#### 1: Git clone Ansible
+#### 1: Configure DNS setting
+
+See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md)
+
+#### 2: Git clone Ansible
 
 * Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* Please clone or download the zip file from the release branch.  
 \* Since the master branch may contain new features which are under testing and development, errorneous behavior may be expected.  
 \* From now on, we describe this `3-server_unit` folder as `$ansible`.
 
-#### 2: Setup Ansible parameters
+#### 3: Setup Ansible parameters
 
 * Edit the following files
   * Edit `$ansible/static_inventory/hosts` file and set the value of each parameter.
   * Check `$ansible/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
 \* Please refer to [Ansible Settings Instruction](Ansible_Settings_Instruction.md "") file, for more details about each parameter.
 
-#### 3: Deploy Ansible (server destination : Bastion server)
+#### 4: Deploy Ansible (server destination : Bastion server)
 
 * Connect to the Bastion server using WinSCP or other related tools  
 \* WinSCP : https://winscp.net/eng/download.php
@@ -88,12 +93,12 @@ The following key file will be generated automatically during the Ansible execut
 * Rename the `3-server_unit` folder to `ansible`.  
  For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
 
-#### 4: Prepare Self-signed unit certificate and secret key
+#### 5: Prepare Self-signed unit certificate and secret key
 
 * Please refer to [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md ""), for self-signed unit certificate creation procedure.
 
 
-#### 5: Configure the self-signed unit certificate and private key
+#### 6: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
   * Deploy the **self-signed unit certificate** and **private key** under `/root/ansible/resource/ap/opt/x509/` folder with the following file names.
@@ -101,7 +106,7 @@ The following key file will be generated automatically during the Ansible execut
     - unit.key(private key)  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
 
-#### 6: Prepare SSL certificate / private key
+#### 7: Prepare SSL certificate / private key
 
 * Prepare the SSL certificate and private key separately  
 If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](../Create_Server_Certificate_for_Letsencript.md)  
@@ -141,7 +146,7 @@ Common Name value should be the unit domain name.
     - server.csr
     - server.key  
 
-#### 7: Deploy SSL certificate / private key
+#### 8: Deploy SSL certificate / private key
 
 * Certificate deployment
    * Deploy the certificate under `/root/ansible/resource/web/opt/nginx/conf/` folder
@@ -153,7 +158,7 @@ Common Name value should be the unit domain name.
 
 \* In the case of Self-signed SSL certificate, the above process is not required to follow.
 
-#### 8: Add DISK
+#### 9: Add DISK
 
 * Add the external disk to the servers below (\*Following disk sizes are recommended).
 Note: It is required to add the external disk on the following path
@@ -165,7 +170,7 @@ Note: It is required to add the external disk on the following path
 | AP + NFS server  | 100GB | /dev/xvdc | /opt/nfs_webdav | WebDav, event log |
 
 
-#### 9: Generate SSH key
+#### 10: Generate SSH key
 
 * Setup the ssh keys (RSA key pair) to access other servers from bastion server as root user. Follow the steps below:
 

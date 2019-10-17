@@ -5,7 +5,7 @@
 Following is server self-signed ssl certificate creation procedure.
 
 * Common Name value should be the unit domain name.
-* Subject Alternative Name (SAN) values are also should be the unit domain name
+* Subject Alternative Name (SAN) values should also be the unit domain name
 and wildcard domain name.
 
 ```console

@@ -12,7 +12,6 @@
 - include: ./tasks/common/init_process_account_personium.yml
 - include: ./tasks/nfs/init_personium-dir.yml
 - include: ./tasks/nfs/init_nfs-server.yml
-- include: ./tasks/nfs/init_logback.yml
 - include: ./tasks/nfs/init_memcached_env_os.yml
   when: cache_in_nfs
 - include: ./tasks/nfs/init_memcached_install.yml

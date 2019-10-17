@@ -14,6 +14,12 @@
 - name: Deploy logback.xml
   copy: src=./resource/ap/opt/logback/logback.xml dest=/opt/logback/logback.xml owner=personium group=personium mode=0644
 
+- name: Create /personium/logback/log/logback.log
+  file: path=/personium/logback/log/logback.log state=touch owner=personium group=personium mode=644
+
+- name: Deploy /etc/logrotate.d/personium-core-log
+  copy: src=./resource/ap/etc/logrotate.d/personium-core-log dest=/etc/logrotate.d/personium-core-log owner=root group=root mode=0644
+
 - name: Stop tomcat
   systemd:
     name: tomcat

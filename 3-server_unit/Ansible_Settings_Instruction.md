@@ -181,7 +181,7 @@ Below are the files where modification is required.
 
   cache_manager: memcached
 
-  tomcat_version: 9.0.10
+  tomcat_version: 9.0.27
 
   commons_daemon_version : 1.1.0
 

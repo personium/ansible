@@ -75,7 +75,7 @@ See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md)
 
 * Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* Please clone or download the zip file from the release branch.  
-\* Since the master branch may contain new features which are under testing and development, errorneous behavior may be expected.  
+\* Since the master branch may contain new features which are under testing and development, erroneous behavior may be expected.  
 \* From now on, we describe this `3-server_unit` folder as `$ansible`.
 
 #### 3: Setup Ansible parameters
@@ -109,7 +109,7 @@ See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md)
 #### 7: Prepare SSL certificate / private key
 
 * Prepare the SSL certificate and private key separately  
-If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](../Create_Server_Certificate_for_Letsencript.md)
+If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](../Create_Server_Certificate_for_Letsencrypt.md)
 * Create and use self-signed SSL certificate when the official SSL certificate is not available.
 [Example of using Self-sign.](../Create_Server_Certificate_for_Self-sign.md)
 
@@ -324,7 +324,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 
 \* reachability testing is done, if it shows the same
 
- For the developers conveniency this document introduced the procedure to construct Personium unit using Ansible.
+ For the developers convenience this document introduced the procedure to construct Personium unit using Ansible.
 Hope developers will enjoy deploying Personium unit on any of their suitable environment. Please try Personium and let us know your feedback or comments for further betterment of Personium. Your feedback and comments will be highly appreciated.
 
 --------------------------------------------------------------------

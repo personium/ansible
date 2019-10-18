@@ -61,9 +61,9 @@ The following key file will be generated automatically during the Ansible execut
 
 * Prerequisite:
   * All infrastructure is created
-  * User account: root
+  * User account: sudo user
   * Ansible execution user account: root
-  * Ansible execution environment : Web/Bastion server
+  * Ansible execution environment : Bastion server
   * Fixed global IP address is attached to the Web server
   * Fixed private IP of all the remote servers.
 

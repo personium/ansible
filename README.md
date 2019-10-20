@@ -62,7 +62,7 @@ For the setting procedure, please refer to [setup-vagrant](https://github.com/pe
     |Category       | Name           |Version       |                   |
     |:--------------|:---------------|-------------:|:------------------|
     | java          | AdoptOpenJDK   |        8u192 | --                |
-    | tomcat        | tomcat         |       9.0.10 | web               |
+    | tomcat        | tomcat         |       9.0.27 | web               |
     |               | commons-daemon |        1.1.0 | --                |
     | activemq      | activemq       |       5.15.8 | --                |
     | nginx         | nginx          |       1.14.2 | proxy             |

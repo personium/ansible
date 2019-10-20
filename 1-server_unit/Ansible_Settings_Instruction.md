@@ -154,8 +154,6 @@ Below are the files where modification is required.
   memcached_lock_cachesize: 512
 
   memcached_cache_cachesize: 512
-
-  logback_version: 1.2.3
 ```
 
 #### Bastion server (file destination : /group_vars/bastion.yml)

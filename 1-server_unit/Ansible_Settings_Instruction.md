@@ -117,7 +117,7 @@ Below are the files where modification is required.
 
   tomcat_version: 9.0.27
 
-  commons_daemon_version : 1.1.0
+  commons_daemon_version : 1.2.2
 
   activemq_version: 5.15.8
 ```

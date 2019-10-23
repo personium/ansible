@@ -2,7 +2,7 @@
 ---------------------------------------
 
 ## Overview
-The purpose of this document is to explain explecitely how to construct Personium unit on 1 server using Ansible.
+The purpose of this document is to explain explicitly how to construct Personium unit on 1 server using Ansible.
 This ansible is checking the operation with Personium version 1.5.2 later and CentOS 7.2.
 
 ## Server setup :white_check_mark:
@@ -55,27 +55,32 @@ The following key file will be generated automatically during the Ansible execut
 ## Initial setup for Ansible :white_check_mark:
 
 * Prerequisite:
-  * User account: root
+  * All infrastructure is created
+  * User account: sudo user
   * Ansible execution user account: root
-  * Ansible execution environment : Web/Bastion server
-  * DNS registered fixed global IP address
+  * Ansible execution environment : Bastion server
+  * Fixed global IP address is attached to the Web server
   * Fixed private IP of all the remote servers.
 
-#### 1: Git clone Ansible
+#### 1: Configure DNS setting
+
+See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md).
+
+#### 2: Git clone Ansible
 
 * Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* Please clone or download the zip file from the release branch.  
-\* Since the master branch may contain new features which are under testing and development, errorneous behavior may be expected.  
+\* Since the master branch may contain new features which are under testing and development, erroneous behavior may be expected.  
 \* From now on, we describe `1-server_unit` under cloned folder as `$ansible`.
 
-#### 2: Setup Ansible parameters
+#### 3: Setup Ansible parameters
 
 * Edit the following files
   * Edit `$ansible/static_inventory/hosts` file and set the value of each parameter.
   * Check `$ansible/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
 \* Please refer to [Ansible Settings Instruction](Ansible_Settings_Instruction.md "") file, for more details about each parameter.
 
-#### 3: Deploy Ansible (server destination : Bastion server)
+#### 4: Deploy Ansible (server destination : Bastion server)
 
 * Connect to the Bastion server using WinSCP or other related tools  
 \* WinSCP : https://winscp.net/eng/download.php
@@ -84,11 +89,11 @@ The following key file will be generated automatically during the Ansible execut
  For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
 
 
-#### 4: Prepare Self-signed unit certificate and secret key
+#### 5: Prepare Self-signed unit certificate and secret key
 
 * Please refer to [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md ""), for self-signed unit certificate creation procedure.
 
-#### 5: Configure the self-signed unit certificate and private key
+#### 6: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
   * Deploy the **self-signed unit certificate** and **private key** under `/root/ansible/resource/ap/opt/x509/` folder with the following file names.
@@ -96,47 +101,14 @@ The following key file will be generated automatically during the Ansible execut
     - unit.key(private key)  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
 
-#### 6: Prepare SSL certificate / private key
+#### 7: Prepare SSL certificate / private key
 
 * Prepare the SSL certificate and private key separately  
-If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](../Create_Server_Certificate_for_Letsencript.md)  
-\* Create and use self-signed SSL certificate when the official SSL certificate is not available.
-Following is the self-signed ssl certificate creation procedure.
-Common Name value should be the unit domain name.
+If you have a domain and can set it to DNS, you can use an official SSL certificate. [Example of using Let's Encrypt.](../Create_Server_Certificate_for_Letsencrypt.md)  
+* Create and use self-signed SSL certificate when the official SSL certificate is not available.
+[Example of using Self-sign.](../Create_Server_Certificate_for_Self-sign.md)
 
-```console
-    # cd /root/ansible/resource/web/opt/nginx/conf
-    # openssl genrsa -des3 -out server.key 1024
-           Enter pass phrase for server.key:                            \* Required (Characters length: is 4 - 8191)
-    # openssl req -new -key server.key -out server.csr
-           Enter pass phrase for server.key:                            \* enter the value of `server.key`
-           Country Name (2 letter code) [XX]:                           \* Optional ( entered value will be visible in the certificate)
-           State or Province Name (full name) []:                       \* Optional ( entered value will be visible in the certificate)
-           Locality Name (eg, city) [Default City]:                     \* Optional ( entered value will be visible in the certificate)
-           Organization Name (eg, company) [Default Company Ltd]:       \* Optional ( entered value will be visible in the certificate)
-           Organizational Unit Name (eg, section) []:                   \* Optional ( entered value will be visible in the certificate)
-           Common Name (eg, your name or your server's hostname) []:    \* Required ( entered value will be visible in the certificate)
-           Email Address []:                                            \* Optional ( entered value will be visible in the certificate)
-
-           Please enter the following 'extra' attributes
-           to be sent with your certificate request
-           A challenge password []:
-           An optional company name []:
-
-    # cp server.key server.key.org
-    # openssl rsa -in server.key.org -out server.key
-           Enter pass phrase for server.key.org:     \* enter the value of `server.key`
-    # openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
-    # ls -l server.*
-```
-
-  - Check if the following files are created
-    - server.key.org
-    - server.crt
-    - server.csr
-    - server.key  
-
-#### 7: Deploy SSL certificate / private key
+#### 8: Deploy SSL certificate / private key
 
 * Certificate deployment
    * Deploy the certificate under `/root/ansible/resource/web/opt/nginx/conf/` folder
@@ -148,7 +120,7 @@ Common Name value should be the unit domain name.
 
 \* In the case of Self-signed SSL certificate, the above process is not required to follow.
 
-#### 8: Generate SSH key
+#### 9: Generate SSH key
 
 * Setup the ssh keys (RSA key pair) to access other servers from bastion server as root user. Follow the steps below:
 
@@ -335,7 +307,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 
 \* reachability testing is done, if it shows the same
 
- For the developers conveniency this document introduced the procedure to construct Personium unit using Ansible.
+ For the developers convenience this document introduced the procedure to construct Personium unit using Ansible.
 Hope developers will enjoy deploying Personium unit on any of their suitable environment. Please try Personium and let us know your feedback or comments for further betterment of Personium. Your feedback and comments will be highly appreciated.
 
 --------------------------------------------------------------------

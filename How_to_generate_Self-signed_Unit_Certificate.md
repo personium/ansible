@@ -9,7 +9,7 @@ Followings will be created by openssl, after performing the procedure below.
 
 | File name | Explanation |
 |---|---|
-|unit.key             |This is a unit secret key. Created by RSA secret key of more than 2048bit in DER format. Managing this unit secret key strictly is highly recomended.|
+|unit.key             |This is a unit secret key. Created by RSA secret key of more than 2048bit in DER format. Managing this unit secret key strictly is highly recommended.|
 |unit.csr             |Request for X.509 certificate. This file will be required to create the certificate and not be deployed on the server. |
 |unit-self-sign.crt   |It is a DER format certificate supporting Unit Key. The value of CN should be the FQDN of `web` server. |
 

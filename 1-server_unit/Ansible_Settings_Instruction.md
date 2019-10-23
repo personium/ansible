@@ -115,9 +115,9 @@ Below are the files where modification is required.
 
   cache_manager: memcached
 
-  tomcat_version: 9.0.10
+  tomcat_version: 9.0.27
 
-  commons_daemon_version : 1.1.0
+  commons_daemon_version : 1.2.2
 
   activemq_version: 5.15.8
 ```
@@ -154,8 +154,6 @@ Below are the files where modification is required.
   memcached_lock_cachesize: 512
 
   memcached_cache_cachesize: 512
-
-  logback_version: 1.2.3
 ```
 
 #### Bastion server (file destination : /group_vars/bastion.yml)

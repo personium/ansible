@@ -24,7 +24,6 @@ MASTER_TOKEN={{ master_token }}
 CELL_NAME=unitadmin
 ROLE_UA_NAME=UnitAdmin
 ROLE_CCA_NAME=CellContentsAdmin
-CELL_OWNER=personium-localunit:/$CELL_NAME/#unitadmin
 UNITADMIN_ACCOUNT_FILE=/root/ansible/unitadmin_account
 PATH_BASED_CELL_URL={{ path_based_cell_url_enabled }}
 
@@ -35,10 +34,12 @@ if [ "false" == "${PATH_BASED_CELL_URL}" ]; then
       echo "127.0.0.1" ${CELL_NAME}.${DOMAIN} >> /etc/hosts
     fi
 
-    CELL_URL=https://${CELL_NAME}.${DOMAIN}
+    CELL_URL=https://${CELL_NAME}.${DOMAIN}/
 else
-    CELL_URL=https://${DOMAIN}/${CELL_NAME}
+    CELL_URL=https://${DOMAIN}/${CELL_NAME}/
 fi
+
+CELL_OWNER=${CELL_URL}#unitadmin
 
 # Account and password to create
 UU_NAME=(unitadmin)
@@ -70,41 +71,41 @@ UU_PASS+=(`perl -le 'print map { ("a".."z","A".."Z", 0..9)[rand 36] } 1..16'`)
 
 echo "   creating account ["${UU_NAME}"]"
 echo "            passwd  ["${UU_PASS}"]"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Account -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Credential: ${UU_PASS}" -d "{\"Name\":\"${UU_NAME}\"}" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" ${CELL_URL}__ctl/Account -X POST -H "Authorization: Bearer $MASTER_TOKEN" -H "X-Personium-Credential: ${UU_PASS}" -d "{\"Name\":\"${UU_NAME}\"}" -k -i -s`
 echo "$CURL_RESULT"
 check_response 201 "Account created"
 
 echo "   -- Account check"
 echo "checking account["${UU_NAME}"]"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__token -X POST -d "grant_type=password&username=${UU_NAME}&password=${UU_PASS}" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" ${CELL_URL}__token -X POST -d "grant_type=password&username=${UU_NAME}&password=${UU_PASS}" -k -i -s`
 echo "$CURL_RESULT"
 check_response 200 "Check Account Created"
 
 # Create UnitAdmin role
 echo "######  Create UnitAdmin role  ######"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Role -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"Name\":\"$ROLE_UA_NAME\"}" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" ${CELL_URL}__ctl/Role -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"Name\":\"$ROLE_UA_NAME\"}" -k -i -s`
 echo "$CURL_RESULT"
 check_response 201 "UnitAdmin Role created"
 
 echo "-- UnitAdmin Role check"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$CELL_URL/__ctl/Role(%27$ROLE_UA_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "${CELL_URL}__ctl/Role(%27$ROLE_UA_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
 echo "$CURL_RESULT"
 check_response 200 "Check UnitAdmin Role Created"
 
 # Create CellContentsAdmin role
 echo "######  Create CellContentsAdmin role  ######"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" $CELL_URL/__ctl/Role -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"Name\":\"$ROLE_CCA_NAME\"}" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" ${CELL_URL}__ctl/Role -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"Name\":\"$ROLE_CCA_NAME\"}" -k -i -s`
 echo "$CURL_RESULT"
 check_response 201 "CellContentsAdmin Role created"
 
 echo "-- CellContentsAdmin Role check"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$CELL_URL/__ctl/Role(%27$ROLE_CCA_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "${CELL_URL}__ctl/Role(%27$ROLE_CCA_NAME%27)" -X GET -H "Authorization: Bearer $MASTER_TOKEN" -k -i -s`
 echo "$CURL_RESULT"
 check_response 200 "Check CellContentsAdmin Role Created"
 
 # Link unitadmin - CellContentsAdmin
 echo "######  Link unitadmin - CellContentsAdmin  ######"
-CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "$CELL_URL/__ctl/Role(%27$ROLE_CCA_NAME%27)/\\$links/_Account" -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"uri\":\"$CELL_URL/__ctl/Account('${UU_NAME}')\"}" -k -i -s`
+CURL_RESULT=`curl -w "\nstatus:%{http_code}\n" "${CELL_URL}__ctl/Role(%27$ROLE_CCA_NAME%27)/\\$links/_Account" -X POST -H "Authorization: Bearer $MASTER_TOKEN" -d "{\"uri\":\"${CELL_URL}__ctl/Account('${UU_NAME}')\"}" -k -i -s`
 echo "$CURL_RESULT"
 check_response 204 "Link unitadmin - CellContentsAdmin"
 

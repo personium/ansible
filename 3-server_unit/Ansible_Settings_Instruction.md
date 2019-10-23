@@ -65,15 +65,15 @@ Below are the files where modification is required.
 # EX: {Web_FQDN}->ec2-54-65-33-203.ap-northeast-1.compute.amazonaws.com
 
 {Bastion_Network_Separation}
-# -> Specify the network catagory for Bastion server
+# -> Specify the network category for Bastion server
 # EX: {Bastion_Network_Separation}->172.31.10.0/24
 
 {WEB_Network_Separation}
-# -> Specify the network catagory for WEB server
+# -> Specify the network category for WEB server
 # EX: {WEB_Network_Separation}->172.31.10.0/24
 
 {AP_Network_Separation}
-# -> Specify the network catagory for AP server
+# -> Specify the network category for AP server
 # EX: {AP_Network_Separation}->172.31.13.0/24
 
 {Master_Token}
@@ -181,9 +181,9 @@ Below are the files where modification is required.
 
   cache_manager: memcached
 
-  tomcat_version: 9.0.10
+  tomcat_version: 9.0.27
 
-  commons_daemon_version : 1.1.0
+  commons_daemon_version : 1.2.2
 
   activemq_version: 5.15.8
 ```
@@ -220,8 +220,6 @@ Below are the files where modification is required.
   memcached_lock_cachesize: 512
 
   memcached_cache_cachesize: 512
-
-  logback_version: 1.2.3
 ```
 
 #### bastion server (file destination : /group_vars/bastion.yml)

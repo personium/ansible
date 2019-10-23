@@ -15,5 +15,3 @@ cache_port: 11212
 # memcached cachesize
 memcached_lock_cachesize: 512
 memcached_cache_cachesize: 512
-
-logback_version: 1.2.3

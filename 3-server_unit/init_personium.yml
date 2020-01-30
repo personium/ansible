@@ -2,7 +2,7 @@
 
 - hosts: tag_ServerType_bastion
   connection: local
-  sudo: yes
+  become: yes
   vars_files:
     - ./group_vars/common.yml
     - ./group_vars/bastion.yml
@@ -14,7 +14,7 @@
     - include: ./handlers/common/restart_iptables.yml
 
 - hosts: tag_ServerType_es
-  sudo: yes
+  become: yes
   vars_files:
     - ./group_vars/common.yml
     - ./group_vars/es.yml
@@ -24,7 +24,7 @@
     - include: ./handlers/common/restart_iptables.yml
 
 - hosts: tag_ServerType_nfs
-  sudo: yes
+  become: yes
   vars_files:
     - ./group_vars/common.yml
     - ./group_vars/nfs.yml
@@ -34,7 +34,7 @@
     - include: ./handlers/common/restart_iptables.yml
 
 - hosts: tag_ServerType_ap
-  sudo: yes
+  become: yes
   vars_files:
     - ./group_vars/common.yml
     - ./group_vars/ap.yml
@@ -44,7 +44,7 @@
     - include: ./handlers/common/restart_iptables.yml
 
 - hosts: tag_ServerType_web
-  sudo: yes
+  become: yes
   vars_files:
     - ./group_vars/common.yml
     - ./group_vars/web.yml
@@ -56,7 +56,7 @@
 
 - hosts: tag_ServerType_bastion
   connection: local
-  sudo: yes
+  become: yes
   vars_files:
     - ./group_vars/common.yml
     - ./group_vars/bastion.yml

@@ -57,37 +57,32 @@ The following key file will be generated automatically during the Ansible execut
 * Prerequisite:
   * All infrastructure is created
   * User account: sudo user
-  * Ansible execution user account: root
-  * Ansible execution environment : Bastion server
-  * Fixed global IP address is attached to the Web server
+  * Ansible execution user account: sudo user
+  * Ansible execution environment : server 1
+  * Fixed global IP address is attached to the server 1
   * Fixed private IP of all the remote servers.
 
 #### 1: Configure DNS setting
 
 See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md).
 
-#### 2: Git clone Ansible
+#### 2: Log in Server 1
+
+Log in Server 1. Then, switch user which has sudo privilege.
+
+#### 3: Git clone Ansible
 
 * Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* Please clone or download the zip file from the release branch.  
 \* Since the master branch may contain new features which are under testing and development, erroneous behavior may be expected.  
 \* From now on, we describe `1-server_unit` under cloned folder as `$ansible`.
 
-#### 3: Setup Ansible parameters
+#### 4: Setup Ansible parameters
 
 * Edit the following files
   * Edit `$ansible/static_inventory/hosts` file and set the value of each parameter.
   * Check `$ansible/group_vars/[group name].yml` file. Re-set the parameter value, if server tuning is necessary.  
 \* Please refer to [Ansible Settings Instruction](Ansible_Settings_Instruction.md "") file, for more details about each parameter.
-
-#### 4: Deploy Ansible (server destination : Bastion server)
-
-* Connect to the Bastion server using WinSCP or other related tools  
-\* WinSCP : https://winscp.net/eng/download.php
-* Upload the `$ansible` folder on Bastion server under `/root/` directory.
-* Rename the `1-server_unit` folder to `ansible`.  
- For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
-
 
 #### 5: Prepare Self-signed unit certificate and secret key
 
@@ -96,7 +91,7 @@ See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md).
 #### 6: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
-  * Deploy the **self-signed unit certificate** and **private key** under `/root/ansible/resource/ap/opt/x509/` folder with the following file names.
+  * Deploy the **self-signed unit certificate** and **private key** under `$ansible/resource/ap/opt/x509/` folder with the following file names.
     - unit-self-sign.crt(self-signed unit certificate)
     - unit.key(private key)  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
@@ -111,9 +106,9 @@ If you have a domain and can set it to DNS, you can use an official SSL certific
 #### 8: Deploy SSL certificate / private key
 
 * Certificate deployment
-   * Deploy the certificate under `/root/ansible/resource/web/opt/nginx/conf/` folder
+   * Deploy the certificate under `$ansible/resource/web/opt/nginx/conf/` folder
 ```
-    /root/ansible/resource/web/opt/nginx/conf/
+    $ansible/resource/web/opt/nginx/conf/
        - server.crt(SSL certificate)
        - server.key(private key)
 ```
@@ -235,14 +230,14 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Add epel repository to Bastion server
 
 ```console
-    # yum localinstall http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+    $ sudo yum localinstall http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
     this ok [y/N]:  (\* type [y] and press enter)
 ```
 
 * Install Ansible
 
 ```console
-    # yum install ansible
+    $ sudo yum install ansible
     this ok [y/N]:  (\* type [y] and press enter)
 ```
 
@@ -254,7 +249,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
   \* Check the hosts file if anything is missing
 
 ```console
-      # cat /root/ansible/static_inventory/hosts | grep "{"
+      $ cat $ansible/static_inventory/hosts | grep "{"
 ```
 
   - If nothing shows, meaning all are configured
@@ -263,12 +258,12 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
   \* Check if all the yml files under group_vars are modified as required
 
 ```console
-      # cat /root/ansible/group_vars/ap.yml
-      # cat /root/ansible/group_vars/bastion.yml
-      # cat /root/ansible/group_vars/common.yml
-      # cat /root/ansible/group_vars/es.yml
-      # cat /root/ansible/group_vars/nfs.yml
-      # cat /root/ansible/group_vars/web.yml
+      $ cat $ansible/group_vars/ap.yml
+      $ cat $ansible/group_vars/bastion.yml
+      $ cat $ansible/group_vars/common.yml
+      $ cat $ansible/group_vars/es.yml
+      $ cat $ansible/group_vars/nfs.yml
+      $ cat $ansible/group_vars/web.yml
 ```
 
 #### 3: Execute Ansible
@@ -276,13 +271,13 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Access to the Bastion server and change to the `Ansible` directory
 
 ```console
-    # cd /root/ansible/
+    $ cd $ansible
 ```
 
 * Execute Ansible
 
 ```console
-    # date; ansible-playbook init_personium.yml ; date
+    $ date; ansible-playbook init_personium.yml ; date
 ```
 
   \* After few minutes-hours (varies on case by case) Ansible process will be done. (\* Don't kill the process in between) Personium Unit will be created with the configured FQDN. Also will be accessible from web (ex: https&#58;//FQDN)
@@ -290,7 +285,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Confirm if Ansible executed properly
 
 ```console
-  # egrep -B 3 -A 3 'failed:|error' /root/ansible.log
+  $ egrep -B 3 -A 3 'failed:|error' $ansible/ansible.log
 ```
 
   Check the Ansible log file, if it shows any error  
@@ -301,7 +296,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Execute the reachability testing tool
 
 ```
-    # /bin/sh personium_regression.sh {{ FQDN of Web server }}
+    $ sudo /bin/sh personium_regression.sh {{ FQDN of Web server }}
     [personium Version(default) RT OK]
 ```
 

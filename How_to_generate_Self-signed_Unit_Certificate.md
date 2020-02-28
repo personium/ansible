@@ -22,7 +22,7 @@ Now you can get these certificate and key! Below is the procedure to generate th
 1. Change directory to the certificate deployment directory of Bastion server.
 
     ```console
-    # cd /root/ansible/resource/ap/opt/x509/
+    # cd $ansible/resource/ap/opt/x509/
     ```
 
 1. Create secret key

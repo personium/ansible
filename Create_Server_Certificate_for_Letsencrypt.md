@@ -167,6 +167,6 @@ Create a server certificate using certbot.
 Execute the following command and save the certificate in the material directory to be distributed by ansible.
 
 ```console
-# cp /etc/letsencrypt/live/{FQDN}/fullchain.pem /root/ansible/resource/web/opt/nginx/conf/server.crt
-# cp /etc/letsencrypt/live/{FQDN}/privkey.pem /root/ansible/resource/web/opt/nginx/conf/server.key
+# cp /etc/letsencrypt/live/{FQDN}/fullchain.pem $ansible/resource/web/opt/nginx/conf/server.crt
+# cp /etc/letsencrypt/live/{FQDN}/privkey.pem $ansible/resource/web/opt/nginx/conf/server.key
 ```

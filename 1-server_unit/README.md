@@ -86,7 +86,7 @@ See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md).
 \* WinSCP : https://winscp.net/eng/download.php
 * Upload the `$ansible` folder on Bastion server under `/root/` directory.
 * Rename the `1-server_unit` folder to `ansible`.  
- For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on /root/ansible/static_inventory/hosts.
+ For example, `hosts` file which changed on [2: Setup Ansible parameters] is located on $ansible/static_inventory/hosts.
 
 
 #### 5: Prepare Self-signed unit certificate and secret key
@@ -96,7 +96,7 @@ See [DNS Setup for per-cell URL](../DNS_Setup_for_per-cell_url.md).
 #### 6: Configure the self-signed unit certificate and private key
 
 * Arrange certificate
-  * Deploy the **self-signed unit certificate** and **private key** under `/root/ansible/resource/ap/opt/x509/` folder with the following file names.
+  * Deploy the **self-signed unit certificate** and **private key** under `$ansible/resource/ap/opt/x509/` folder with the following file names.
     - unit-self-sign.crt(self-signed unit certificate)
     - unit.key(private key)  
 \* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
@@ -111,9 +111,9 @@ If you have a domain and can set it to DNS, you can use an official SSL certific
 #### 8: Deploy SSL certificate / private key
 
 * Certificate deployment
-   * Deploy the certificate under `/root/ansible/resource/web/opt/nginx/conf/` folder
+   * Deploy the certificate under `$ansible/resource/web/opt/nginx/conf/` folder
 ```
-    /root/ansible/resource/web/opt/nginx/conf/
+    $ansible/resource/web/opt/nginx/conf/
        - server.crt(SSL certificate)
        - server.key(private key)
 ```
@@ -254,7 +254,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
   \* Check the hosts file if anything is missing
 
 ```console
-      # cat /root/ansible/static_inventory/hosts | grep "{"
+      # cat $ansible/static_inventory/hosts | grep "{"
 ```
 
   - If nothing shows, meaning all are configured
@@ -263,12 +263,12 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
   \* Check if all the yml files under group_vars are modified as required
 
 ```console
-      # cat /root/ansible/group_vars/ap.yml
-      # cat /root/ansible/group_vars/bastion.yml
-      # cat /root/ansible/group_vars/common.yml
-      # cat /root/ansible/group_vars/es.yml
-      # cat /root/ansible/group_vars/nfs.yml
-      # cat /root/ansible/group_vars/web.yml
+      # cat $ansible/group_vars/ap.yml
+      # cat $ansible/group_vars/bastion.yml
+      # cat $ansible/group_vars/common.yml
+      # cat $ansible/group_vars/es.yml
+      # cat $ansible/group_vars/nfs.yml
+      # cat $ansible/group_vars/web.yml
 ```
 
 #### 3: Execute Ansible
@@ -276,7 +276,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Access to the Bastion server and change to the `Ansible` directory
 
 ```console
-    # cd /root/ansible/
+    # cd $ansible
 ```
 
 * Execute Ansible
@@ -290,7 +290,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Confirm if Ansible executed properly
 
 ```console
-  # egrep -B 3 -A 3 'failed:|error' /root/ansible.log
+  # egrep -B 3 -A 3 'failed:|error' $ansible/ansible.log
 ```
 
   Check the Ansible log file, if it shows any error  

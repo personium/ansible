@@ -11,16 +11,19 @@
 ############ Setting items of All servers ############
 [all:vars]
 ## Hostname
-# EX: {tag_Name}->1-server
-tag_Name={Bastion_Tag_Name}
+# EX: {Tag_Name}->1-server.example
+tag_Name={Tag_Name}
 
 ## Master Token of Personium
+# EX: {Master_Token}->abc123
 master_token={Master_Token}
 
 ## Web server FQDN
+# EX: {Personium_FQDN}->1-server.example
 base_url={Personium_FQDN}
 
 ## URL format to access cell
 ## true:path based cell url
 ## false:per cell fqdn url
+# EX: {Path_Based_Cell_Url_Enabled}->false
 path_based_cell_url_enabled={Path_Based_Cell_Url_Enabled}

@@ -16,11 +16,11 @@ Below are the files where modification is required.
 * Example
 
 ```yaml
-    ansible_ssh_user={Ansible_Execution_User}
+    master_token={Master_Token}
 
     # should be changed to
 
-    ansible_ssh_user=root
+    master_token=abc123
 ```
 
 * Modify the hosts file as per instruction below
@@ -28,13 +28,9 @@ Below are the files where modification is required.
 #### Common Server Setting
 
 ```yaml
-{Ansible_Execution_User}
-# -> Specify a user ansible execution
-# EX: {Ansible_Execution_User}->root
-
-{SSH_PrivateKey}
-# -> Set the secret key in the absolute path for  ansible user ssh public key authentication
-# EX: {SSH_PrivateKey}->/root/.ssh/id_rsa
+{Tag_Name}
+# -> Specify the host name for server 1
+# EX: {Tag_Name}->1-server.example
 
 {Master_Token}
 # -> To authorize all kind of operation, set the master token (Strictly managed)
@@ -42,7 +38,7 @@ Below are the files where modification is required.
 
 {Personium_FQDN}
 # -> Specify the FQDN for Personium server(same as unit FQDN)
-# EX: {Personium_FQDN}->ec2-54-65-33-203.ap-northeast-1.compute.amazonaws.com
+# EX: {Personium_FQDN}->1-server.example
 
 {Path_Based_Cell_Url_Enabled}
 # -> URL format to access cell*1
@@ -51,30 +47,6 @@ Below are the files where modification is required.
 # EX: {Path_Based_Cell_Url_Enabled}->false
 ```
 *1.For explanation about URL format to access cell, please confirm [here](https://personium.io/docs/ja/server-operator/setup_percell.html).
-
-#### Bastion server
-
-```yaml
-{Bastion_Private_IP}
-# -> Specify the private IP of Bastion server
-# EX: {Bastion_Private_IP}->172.31.10.248
-
-{Bastion_Tag_Name}
-# -> Specify the host name for Bastion server
-# EX: {Bastion_Tag_Name}->bastion-web
-```
-
-#### Personium server
-
-```yaml
-{Personium_Private_IP}
-# -> Specify the private IP of  Personium server
-# EX: {Personium_Private_IP}->172.31.13.38
-
-{Personium_Tag_Name}
-# -> Specify the host name for AP server
-# EX: {Personium_Tag_Name}->test-ap
-```
 
 ### Part 2 (Tuning Personium) :white_check_mark:
 

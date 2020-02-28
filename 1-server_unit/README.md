@@ -296,7 +296,7 @@ The `private key` (identification) will be placed in `/root/.ssh/id_rsa`
 * Execute the reachability testing tool
 
 ```
-    $ /bin/sh personium_regression.sh {{ FQDN of Web server }}
+    $ sudo /bin/sh personium_regression.sh {{ FQDN of Web server }}
     [personium Version(default) RT OK]
 ```
 

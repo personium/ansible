@@ -1,4 +1,4 @@
 # Copyright FUJITSU LIMITED 2019.
 
 - name: Deploy personium_regression.sh
-  template: src=./resource/bastion/personium_regression.sh.j2 dest=/root/ansible/personium_regression.sh mode=744
+  template: src=./resource/bastion/personium_regression.sh.j2 dest=./personium_regression.sh mode=744

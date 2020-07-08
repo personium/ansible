@@ -4,58 +4,39 @@
   group: name=nginx gid=2010 state=present
 
 - name: Create user
-  user: name=nginx uid=2010 shell=/sbin/nologin group=nginx home=/personium/nginx/lib comment="Nginx Administrator" createhome=no
+  user: name=nginx uid=2010 shell=/sbin/nologin group=nginx comment="Nginx Administrator" create_home=no
 
 - name: Create /personium directory
-  file: "state=directory path=/personium owner=root group=root"
+  file: state=directory path=/personium owner=root group=root
 
-- name: Create /opt/disk1/nginx directory
-  file: state=directory path=/opt/disk1/nginx owner=root group=root mode=0755
+- name: Create /opt directories
+  file: state=directory path=/opt{{ item }} owner=root group=root mode=0755
+  with_items:
+    - /disk1/nginx/
+    - /disk1/nginx/log
+    - /disk1/nginx/log/main
+    - /disk1/nginx/log/accesslog_443
+    - /disk1/nginx/log/accesslog_80
+    - /disk1/var
+    - /disk1/var/lib
+    - /disk1/var/log
+    - /var
+    - /var/lib
+    - /var/log
 
-- name: Create /opt/disk1/nginx/lib directory
-  file: state=directory path=/opt/disk1/nginx/lib owner=nginx group=root mode=0755
+- name: Create /opt/disk1/nginx directories
+  file: state=directory path=/opt/disk1/nginx{{ item }} owner=nginx group=root mode=0755
+  with_items:
+    - /lib
 
-- name: Create /opt/disk1/nginx/log directory
-  file: state=directory path=/opt/disk1/nginx/log owner=root group=root mode=0755
+- name: Create symlinks
+  file: state=link src={{ item.src }} dest={{ item.dest }} owner=root group=root mode=0777
+  with_items:
+    - { src: /opt/disk1/nginx, dest: /personium/nginx }
+    - { src: /personium/nginx/lib, dest: /opt/disk1/var/lib/nginx }
+    - { src: /personium/nginx/log, dest: /opt/disk1/var/log/nginx }
+    - { src: /personium/nginx/lib, dest: /opt/var/lib/nginx }
+    - { src: /personium/nginx/log, dest: /opt/var/log/nginx }
 
-- name: Create /opt/disk1/nginx/log/main directory
-  file: state=directory path=/opt/disk1/nginx/log/main owner=root group=root mode=0755
-
-- name: Create /opt/disk1/nginx/log/accesslog_443 directory
-  file: state=directory path=/opt/disk1/nginx/log/accesslog_443 owner=root group=root mode=0755
-
-- name: Create /opt/disk1/nginx/log/accesslog_80 directory
-  file: state=directory path=/opt/disk1/nginx/log/accesslog_80 owner=root group=root mode=0755
-
-- name: Create /opt/disk1/nginx symlink
-  file: state=link src=/opt/disk1/nginx dest=/personium/nginx owner=root group=root mode=0777
-
-- name: Create /opt/disk1/var directory
-  file: state=directory path=/opt/disk1/var owner=root group=root mode=0755
-
-- name: Create /opt/disk1/var/lib directory
-  file: state=directory path=/opt/disk1/var/lib owner=root group=root mode=0755
-
-- name: Create /opt/disk1/var/log directory
-  file: state=directory path=/opt/disk1/var/log owner=root group=root mode=0755
-
-- name: Create /personium/nginx/lib symlink
-  file: state=link src=/personium/nginx/lib dest=/opt/disk1/var/lib/nginx owner=root group=root mode=0777
-
-- name: Create /personium/nginx/log symlink
-  file: state=link src=/personium/nginx/log dest=/opt/disk1/var/log/nginx owner=root group=root mode=0777
-
-- name: Create /opt/var directory
-  file: state=directory path=/opt/var owner=root group=root mode=0755
-
-- name: Create /opt/var/lib directory
-  file: state=directory path=/opt/var/lib owner=root group=root mode=0755
-
-- name: Create /opt/var/log directory
-  file: state=directory path=/opt/var/log owner=root group=root mode=0755
-
-- name: Create /personium/nginx/lib symlink
-  file: state=link src=/personium/nginx/lib dest=/opt/var/lib/nginx owner=root group=root mode=0777
-
-- name: Create /personium/nginx/log symlink
-  file: state=link src=/personium/nginx/log dest=/opt/var/log/nginx owner=root group=root mode=0777
+- name: Set nginx user's home
+  user: name=nginx home=/personium/nginx/lib create_home=no

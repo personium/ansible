@@ -29,30 +29,31 @@ Although you may construct the Personium unit without using the setup tool, but 
 This setup tool will install middleware and configure the OS and its network on your machine (linux server or virtual machine on windows/mac) before installing Personium module.
 There are different patterns of setup tools to construct the Personium unit. Please select the setup tool based on you purpose.
 
-#### Pattern-1 : 1 server
+#### Pattern-1 : all-in-one
 
 * Machine environment : **CentOS 7**
 * The number of Personium unit servers : **1 Server**
   * Server-1 elements : Bastion, Web, AP, ES
 * Setup time : 1 hour
-* Setup tool: [setup-ansible/1-server_unit](https://github.com/personium/ansible/tree/master/1-server_unit "1-server_unit").  
+* Setup tool: [ansible/all-in-one](./all-in-one "all-in-one").  
 * Note  
   If you are more curious about Personium and want to develop some simple applications or to test this system, you can select this pattern. You will get Personium unit on a single server.
 
 \* By using Vagrant it is possible to easily build a virtual machine in the local machine environment and check the operation of Personium.  
 For the setting procedure, please refer to [setup-vagrant](https://github.com/personium/setup-vagrant).
 
-#### Pattern-2 : 3 server
+#### Pattern-2 : 3-tier
 
 * Machine environment : **CentOS 7**
-* The number of Personium unit servers : **3 Servers**
-  * Server-1 elements : Bastion,Web
-  * Server-2 elements : AP,NFS
-  * Server-3 elements : ES
+* The number of Personium unit servers : **4 Servers**
+  * Server-1 elements : Bastion
+  * Server-2 elements : Web
+  * Server-3 elements : AP,NFS
+  * Server-4 elements : ES
 * Setup time :  2 hours
-* Setup tool: [ansible/3-server_unit](https://github.com/personium/ansible/tree/master/3-server_unit "3-server_unit").  
+* Setup tool: [ansible/3-tier](./3-tier "3-tier").  
 * Note  
-  If you are devoted to Personium and want to release some marvelous applications with it, you should try this pattern! You will get Personium unit with 3 servers, which will meet practical performance.
+  If you are devoted to Personium and want to release some marvelous applications with it, you should try this pattern! You will get Personium unit with 3-tier, which will meet practical performance.
 
 
 #### Middleware on VM

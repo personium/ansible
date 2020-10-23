@@ -1,8 +1,8 @@
-# 3-server unit setup with Ansible
+# 3-tier unit setup with Ansible
 ---------------------------------------
 
 ## Overview
-The purpose of this document is to explain explicitly how to construct Personium unit on 3 servers using Ansible.
+The purpose of this document is to explain explicitly how to construct Personium unit on 3-tier using Ansible.
 This ansible is checking the operation with Personium version 1.5.2 later and CentOS 7.2.
 
 ## Server setup :white_check_mark:
@@ -12,10 +12,10 @@ This ansible is checking the operation with Personium version 1.5.2 later and Ce
 
 |**Servers**      |   **Role**      |   **MW**                           |  **default memory size** (*1) |   **AWS EC2 specs** (*2)|  
 |:----------------|:----------------|:-----------------------------------|:------------------------------|:-------------------------|
-| Server 0        |  Bastion        |                                    |                               |      t2.micro            |
-| Server 1        |  Web            | nginx                              |                               |      t2.micro            |
-| Server 2        |  AP,NFS,MQ      | tomcat(1280MB),memcached(1024MB*2),ActiveMQ |  3328MB                       |      m3.medium           |
-| Server 3        |  ES             | Elasticsearch(3328MB)              |  3328MB                       |     m3.medium            |
+| Server 1        |  Bastion        |                                    |                               |      t2.micro            |
+| Server 2        |  Web            | nginx                              |                               |      t2.micro            |
+| Server 3        |  AP,NFS,MQ      | tomcat(1280MB),memcached(1024MB*2),ActiveMQ |  3328MB                       |      m3.medium           |
+| Server 4        |  ES             | Elasticsearch(3328MB)              |  3328MB                       |     m3.medium            |
 
 (*1) : Required default memory size. Memory size of each MW configuration file could be modified
 
@@ -24,7 +24,7 @@ This ansible is checking the operation with Personium version 1.5.2 later and Ce
 Alternatively, you can use HeatTemplate to create the infrastructure.  
 [Heat Template Sample](https://github.com/personium/openstack-heat/)
 
-<img src="3-server_unit.jpg" title="3-server_unit" style="width:70%;height:auto;">
+<img src="3-tier.jpg" title="3-tier" style="width:70%;height:auto;">
 
 #### File structure
 
@@ -81,7 +81,7 @@ Log in Bastion Server.
 * Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* Please clone or download the zip file from the release branch.  
 \* Since the master branch may contain new features which are under testing and development, erroneous behavior may be expected.  
-\* From now on, we describe this `3-server_unit` folder as `$ansible`.
+\* From now on, we describe this `3-tier` folder as `$ansible`.
 
 #### 4: Setup Ansible parameters
 

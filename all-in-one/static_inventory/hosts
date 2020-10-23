@@ -15,7 +15,7 @@
 master_token={Master_Token}
 
 ## Web server FQDN
-# EX: {Personium_FQDN}->1-server.example
+# EX: {Personium_FQDN}->all-in-one.example
 base_url={Personium_FQDN}
 
 ## URL format to access cell

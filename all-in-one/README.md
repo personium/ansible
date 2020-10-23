@@ -1,8 +1,8 @@
-# 1-server unit setup with Ansible
+# all-in-one unit setup with Ansible
 ---------------------------------------
 
 ## Overview
-The purpose of this document is to explain explicitly how to construct Personium unit on 1 server using Ansible.
+The purpose of this document is to explain explicitly how to construct Personium unit on all-in-one using Ansible.
 This ansible is checking the operation with Personium version 1.5.2 later and CentOS 7.2.
 
 ## Server setup :white_check_mark:
@@ -18,7 +18,7 @@ This ansible is checking the operation with Personium version 1.5.2 later and Ce
 
 (*2) : Tested AWS EC2 instance specs  
 
-<img src="1-server_unit.jpg" title="1-server_unit" style="width:70%;height:auto;">
+<img src="all-in-one.jpg" title="all-in-one" style="width:70%;height:auto;">
 
 #### File structure
 
@@ -75,7 +75,7 @@ Log in Server 1. Then, switch user which has sudo privilege.
 * Using git client, clone the `ansible` repository (https://github.com/personium/ansible) to your local environment.  
 \* Please clone or download the zip file from the release branch.  
 \* Since the master branch may contain new features which are under testing and development, erroneous behavior may be expected.  
-\* From now on, we describe `1-server_unit` under cloned folder as `$ansible`.
+\* From now on, we describe `all-in-one` under cloned folder as `$ansible`.
 
 #### 4: Setup Ansible parameters
 

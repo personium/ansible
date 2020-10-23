@@ -34,7 +34,7 @@ Below are the files where modification is required.
 
 {Personium_FQDN}
 # -> Specify the FQDN for Personium server(same as unit FQDN)
-# EX: {Personium_FQDN}->1-server.example
+# EX: {Personium_FQDN}->all-in-one.example
 
 {Path_Based_Cell_Url_Enabled}
 # -> URL format to access cell*1

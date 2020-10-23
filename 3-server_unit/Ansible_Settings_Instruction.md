@@ -90,29 +90,9 @@ Below are the files where modification is required.
 
 *1.For explanation about URL format to access cell, please confirm [here](https://personium.io/docs/ja/server-operator/setup_percell.html).
 
-#### Bastion server
-
-```yaml
-{Bastion_Tag_Name}
-# -> Specify the host name for Bastion server
-# EX: {Bastion_Tag_Name}->bastion-web
-```
-
-#### Web server
-
-```yaml
-{Web_Tag_Name}
-# -> Specify the host name for Web server
-# EX: {Web_Tag_Name}->bastion-web
-```
-
 #### AP server
 
 ```yaml
-{AP_Tag_Name}
-# -> Specify the host name for AP server
-# EX: {AP_Tag_Name}->test-ap
-
 {PIO_LOGVOL}
 # -> Specify the disk name for Personium log
 # EX: {PIO_LOGVOL}->vdb
@@ -121,10 +101,6 @@ Below are the files where modification is required.
 #### ES server
 
 ```yaml
-{ES_Tag_Name}
-# -> Specify the host name for ES server
-# EX: {ES_Tag_Name}->test-ES
-
 {ES_DATA_VOL}
 # -> Specify the disk name for ES Data Log
 # EX: {ES_DATA_VOL}->vdb
@@ -133,10 +109,6 @@ Below are the files where modification is required.
 #### NFS server
 
 ```yaml
-{nfs_Tag_Name}
-# -> Specify the host name for nfs server
-# EX: {nfs_Tag_Name}->test-NFS
-
 {NFS_WEBDAV_VOL}
 # -> Specify the disk name for NFS_WEBDAV
 # EX: {NFS_WEBDAV_VOL}->vdc

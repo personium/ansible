@@ -28,10 +28,6 @@ Below are the files where modification is required.
 #### Common Server Setting
 
 ```yaml
-{Tag_Name}
-# -> Specify the host name for server 1
-# EX: {Tag_Name}->1-server.example
-
 {Master_Token}
 # -> To authorize all kind of operation, set the master token (Strictly managed)
 # EX: {Master_Token}->abc123

@@ -10,10 +10,6 @@
 
 ############ Setting items of All servers ############
 [all:vars]
-## Hostname
-# EX: {Tag_Name}->1-server.example
-tag_Name={Tag_Name}
-
 ## Master Token of Personium
 # EX: {Master_Token}->abc123
 master_token={Master_Token}

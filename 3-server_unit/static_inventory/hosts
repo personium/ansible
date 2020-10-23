@@ -77,20 +77,15 @@ path_based_cell_url_enabled={Path_Based_Cell_Url_Enabled}
 ############ Setting items of bastion server ############
 [tag_ServerType_bastion:vars]
 
-## Hostname
-tag_Name={Bastion_Tag_Name}
+
 
 ############ Setting items of Web server ############
 [tag_ServerType_web:vars]
 
-## Hostname
-tag_Name={Web_Tag_Name}
+
 
 ############ Setting items of AP server ############
 [tag_ServerType_ap:vars]
-
-## Hostname
-tag_Name={AP_Tag_Name}
 
 ## Disk name for Personium log
 pio_logvol={PIO_LOGVOL}
@@ -98,17 +93,11 @@ pio_logvol={PIO_LOGVOL}
 ############ Setting items of ES server ############
 [tag_ServerType_es:vars]
 
-## hostname
-tag_Name={ES_Tag_Name}
-
 ## Disk name for ES Data Log
 es_data_vol={ES_DATA_VOL}
 
 ############ Setting items of NFS server ############
 [tag_ServerType_nfs:vars]
-
-## Hostname
-tag_Name={nfs_Tag_Name}
 
 ## Disk name for NFS_WEBDAV
 nfs_webdav_vol={NFS_WEBDAV_VOL}

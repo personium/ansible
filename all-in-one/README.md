@@ -124,7 +124,7 @@ If you have a domain and can set it to DNS, you can use an official SSL certific
 * Add epel repository to Bastion server
 
 ```console
-    $ sudo yum localinstall http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
+    $ sudo yum install epel-release
     this ok [y/N]:  (\* type [y] and press enter)
 ```
 

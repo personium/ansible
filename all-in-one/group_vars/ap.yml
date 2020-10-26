@@ -23,7 +23,7 @@ activemq_version: 5.15.8
 
 # engine extensions
 install_engine_extensions: yes
-ex-ew-services_ver: 1.0.2
-ex-httpclient_ver: 1.1.5
-ex-mailsender_ver: 1.5.3
-ex-slack_ver: 1.0.2
+ex_ew_services_ver: 1.0.2
+ex_httpclient_ver: 1.1.5
+ex_mailsender_ver: 1.5.3
+ex_slack_ver: 1.0.2

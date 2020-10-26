@@ -44,11 +44,11 @@
     owner: personium
     group: personium
     mode: '0644'
-    with_items:
-      - "https://personium.io/mvnrepo/io/personium/personium-ex-ew-services/{{ ex-ew-services_ver }}/personium-ex-ew-services-{{ ex-ew-services_ver }}-libs.jar"
-      - "https://personium.io/mvnrepo/io/personium/personium-ex-httpclient/{{ ex-httpclient_ver }}/personium-ex-httpclient-{{ ex-httpclient_ver }}-libs.jar"
-      - "https://personium.io/mvnrepo/io/personium/personium-ex-mailsender/{{ ex-mailsender_ver }}/personium-ex-mailsender-{{ ex-mailsender_ver }}-libs.jar"
-      - "https://personium.io/mvnrepo/io/personium/personium-ex-slack/{{ ex-slack_ver}}/personium-ex-slack-{{ ex-slack_ver }}-libs.jar"
+  with_items:
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-ew-services/{{ ex_ew_services_ver }}/personium-ex-ew-services-{{ ex_ew_services_ver }}-libs.jar"
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-httpclient/{{ ex_httpclient_ver }}/personium-ex-httpclient-{{ ex_httpclient_ver }}-libs.jar"
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-mailsender/{{ ex_mailsender_ver }}/personium-ex-mailsender-{{ ex_mailsender_ver }}-libs.jar"
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-slack/{{ ex_slack_ver}}/personium-ex-slack-{{ ex_slack_ver }}-libs.jar"
   when: install_engine_extensions | bool
 
 - name: Start tomcat

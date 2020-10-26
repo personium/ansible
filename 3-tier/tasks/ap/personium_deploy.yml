@@ -40,6 +40,20 @@
 - name: Deploy personium-custom-errorpage.jar
   copy: src=./resource/ap/opt/tomcat/lib/personium-custom-errorpage.jar dest=/opt/tomcat/lib/personium-custom-errorpage.jar owner=root group=root mode=644
 
+- name: Deploy engine extensions
+  get_url:
+    url: "{{ item }}"
+    dest: /personium/personium-engine/extensions
+    owner: personium
+    group: personium
+    mode: '0644'
+    with_items:
+      - "https://personium.io/mvnrepo/io/personium/personium-ex-ew-services/{{ ex-ew-services_ver }}/personium-ex-ew-services-{{ ex-ew-services_ver }}-libs.jar"
+      - "https://personium.io/mvnrepo/io/personium/personium-ex-httpclient/{{ ex-httpclient_ver }}/personium-ex-httpclient-{{ ex-httpclient_ver }}-libs.jar"
+      - "https://personium.io/mvnrepo/io/personium/personium-ex-mailsender/{{ ex-mailsender_ver }}/personium-ex-mailsender-{{ ex-mailsender_ver }}-libs.jar"
+      - "https://personium.io/mvnrepo/io/personium/personium-ex-slack/{{ ex-slack_ver}}/personium-ex-slack-{{ ex-slack_ver }}-libs.jar"
+  when: install_engine_extensions | bool
+
 - name: Start tomcat
   systemd:
     name: tomcat

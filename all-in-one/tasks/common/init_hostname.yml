@@ -1,0 +1,4 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: Deploy /etc/hosts
+  template: src=./resource/common/etc/hosts.j2 dest=/etc/hosts owner=root group=root mode=0644

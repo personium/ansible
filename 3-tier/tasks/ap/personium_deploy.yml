@@ -1,0 +1,60 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: Get secret16
+  command: cat /personium/personium-core/conf/token.key
+  register: secret16
+
+- name: Get salt
+  command: cat /personium/personium-core/conf/salt.key
+  register: salt
+
+- name: Deploy personium-config.properties
+  template: src=./resource/ap/personium/personium-core/conf/18888/personium-unit-config.properties.j2 dest=/personium/personium-core/conf/18888/personium-unit-config.properties owner=root group=root mode=0644
+
+- name: Deploy logback.xml
+  copy: src=./resource/ap/opt/logback/logback.xml dest=/opt/logback/logback.xml owner=personium group=personium mode=0644
+
+- name: Create /personium/logback/log/logback.log
+  file: path=/personium/logback/log/logback.log state=touch owner=personium group=personium mode=644
+
+- name: Deploy /etc/logrotate.d/personium-core-log
+  copy: src=./resource/ap/etc/logrotate.d/personium-core-log dest=/etc/logrotate.d/personium-core-log owner=root group=root mode=0644
+
+- name: Stop tomcat
+  systemd:
+    name: tomcat
+    state: stopped
+
+- name: Delete /opt/tomcat/webapps/personium-core
+  file: state=absent path=/opt/tomcat/webapps/personium-core
+
+- name: Delete /opt/tomcat/webapps/personium-engine
+  file: state=absent path=/opt/tomcat/webapps/personium-engine
+
+- name: Deploy personium-core.war
+  copy: src=./resource/ap/opt/tomcat/webapps/personium-core.war dest=/opt/tomcat/webapps/personium-core.war owner=personium group=personium mode=644
+
+- name: Deploy personium-engine.war
+  copy: src=./resource/ap/opt/tomcat/webapps/personium-engine.war dest=/opt/tomcat/webapps/personium-engine.war owner=personium group=personium mode=644
+
+- name: Deploy personium-custom-errorpage.jar
+  copy: src=./resource/ap/opt/tomcat/lib/personium-custom-errorpage.jar dest=/opt/tomcat/lib/personium-custom-errorpage.jar owner=root group=root mode=644
+
+- name: Deploy engine extensions
+  get_url:
+    url: "{{ item }}"
+    dest: /personium/personium-engine/extensions
+    owner: personium
+    group: personium
+    mode: '0644'
+  with_items:
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-ew-services/{{ ex_ew_services_ver }}/personium-ex-ew-services-{{ ex_ew_services_ver }}-libs.jar"
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-httpclient/{{ ex_httpclient_ver }}/personium-ex-httpclient-{{ ex_httpclient_ver }}-libs.jar"
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-mailsender/{{ ex_mailsender_ver }}/personium-ex-mailsender-{{ ex_mailsender_ver }}-libs.jar"
+    - "https://personium.io/mvnrepo/io/personium/personium-ex-slack/{{ ex_slack_ver}}/personium-ex-slack-{{ ex_slack_ver }}-libs.jar"
+  when: install_engine_extensions | bool
+
+- name: Start tomcat
+  systemd:
+    name: tomcat
+    state: started

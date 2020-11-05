@@ -90,11 +90,12 @@ Log in Server 1. Then, switch user which has sudo privilege.
 
 #### 6: Configure the self-signed unit certificate and private key
 
-* Arrange certificate
-  * Deploy the **self-signed unit certificate** and **private key** under `$ansible/resource/ap/opt/x509/` folder with the following file names.
+* Arrange certificate  
+Deploy the **self-signed unit certificate** and **private key** under `$ansible/resource/ap/opt/x509/` folder with the following file names.   
+  > You may skip this procedure if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
+
     - unit-self-sign.crt(self-signed unit certificate)
     - unit.key(private key)  
-\* You may escape the procedure above, if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
 
 #### 7: Prepare SSL certificate / private key
 
@@ -105,16 +106,13 @@ If you have a domain and can set it to DNS, you can use an official SSL certific
 
 #### 8: Deploy SSL certificate / private key
 
-* Certificate deployment
-   * Deploy the certificate under `$ansible/resource/web/opt/nginx/conf/` folder
-```
-    $ansible/resource/web/opt/nginx/conf/
-       - server.crt(SSL certificate)
-       - server.key(private key)
-```
+* Certificate deployment  
+Deploy the certificate under `$ansible/resource/web/opt/nginx/conf/` folder.  
+> You may skip this procedure if you use the procedures from previous step to generate SSL certificate.  
 
-\* In the case of Self-signed SSL certificate, the above process is not required to follow.
-
+        $ansible/resource/web/opt/nginx/conf/
+          - server.crt(SSL certificate)
+          - server.key(private key)
 
 ## Ansible configuration :white_check_mark:
 

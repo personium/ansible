@@ -88,12 +88,11 @@ Log in Server 1. Then, switch user which has sudo privilege.
 
 * Please refer to [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md ""), for self-signed unit certificate creation procedure.
 
-#### 6: Configure the self-signed unit certificate and private key
+#### 6: Configure the self-signed unit certificate and private key  
+You may skip this procedure if the self-signed unit certificate is created based on the procedures from the previous step ([How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "")).  
 
 * Arrange certificate  
 Deploy the **self-signed unit certificate** and **private key** under `$ansible/resource/ap/opt/x509/` folder with the following file names.   
-  > You may skip this procedure if the self-signed unit certificate is created based on the [How to generate Self-signed Unit Certificate](../How_to_generate_Self-signed_Unit_Certificate.md "").
-
     - unit-self-sign.crt(self-signed unit certificate)
     - unit.key(private key)  
 
@@ -104,15 +103,16 @@ If you have a domain and can set it to DNS, you can use an official SSL certific
 * Create and use self-signed SSL certificate when the official SSL certificate is not available.
 [Example of using Self-sign.](../Create_Server_Certificate_for_Self-sign.md)
 
-#### 8: Deploy SSL certificate / private key
+#### 8: Deploy SSL certificate / private key  
+You may skip this procedure if you use the procedures from previous step to generate SSL certificate.  
 
 * Certificate deployment  
 Deploy the certificate under `$ansible/resource/web/opt/nginx/conf/` folder.  
-> You may skip this procedure if you use the procedures from previous step to generate SSL certificate.  
-
-        $ansible/resource/web/opt/nginx/conf/
-          - server.crt(SSL certificate)
-          - server.key(private key)
+```
+$ansible/resource/web/opt/nginx/conf/
+  - server.crt(SSL certificate)
+  - server.key(private key)
+```  
 
 ## Ansible configuration :white_check_mark:
 

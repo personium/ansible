@@ -12,6 +12,8 @@
     - include: ./bastion.yml
   handlers:
     - include: ./handlers/common/restart_firewalld.yml
+  tags:
+    - bastion_pre
 
 - hosts: tag_ServerType_personium
   connection: local
@@ -25,10 +27,10 @@
   tasks:
     - include: ./tasks/common/config_cron.yml
     - include: ./common.yml
-    - include: ./es.yml
-    - include: ./nfs.yml
-    - include: ./ap.yml
-    - include: ./web.yml
+    - include: ./es.yml tags=es
+    - include: ./nfs.yml tags=nfs
+    - include: ./ap.yml tags=ap
+    - include: ./web.yml tags=web
   handlers:
     - include: ./handlers/common/restart_firewalld.yml
     - include: ./handlers/web/reload_nginx.yml
@@ -41,3 +43,5 @@
     - ./group_vars/bastion.yml
   tasks:
     - include: ./tasks/bastion/init_servicemanager.yml
+  tags:
+    - bastion_post

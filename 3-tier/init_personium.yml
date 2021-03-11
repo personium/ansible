@@ -12,6 +12,8 @@
     - include: ./bastion.yml
   handlers:
     - include: ./handlers/common/restart_iptables.yml
+  tags:
+    - bastion_pre
 
 - hosts: tag_ServerType_es
   become: yes
@@ -22,6 +24,8 @@
     - include: ./es.yml
   handlers:
     - include: ./handlers/common/restart_iptables.yml
+  tags:
+    - es
 
 - hosts: tag_ServerType_nfs
   become: yes
@@ -32,6 +36,8 @@
     - include: ./nfs.yml
   handlers:
     - include: ./handlers/common/restart_iptables.yml
+  tags:
+    - nfs
 
 - hosts: tag_ServerType_ap
   become: yes
@@ -42,6 +48,8 @@
     - include: ./ap.yml
   handlers:
     - include: ./handlers/common/restart_iptables.yml
+  tags:
+    - ap
 
 - hosts: tag_ServerType_web
   become: yes
@@ -53,6 +61,8 @@
   handlers:
     - include: ./handlers/common/restart_iptables.yml
     - include: ./handlers/web/reload_nginx.yml
+  tags:
+    - web
 
 - hosts: tag_ServerType_bastion
   connection: local
@@ -62,4 +72,5 @@
     - ./group_vars/bastion.yml
   tasks:
     - include: ./tasks/bastion/init_servicemanager.yml
-
+  tags:
+    - bastion_post

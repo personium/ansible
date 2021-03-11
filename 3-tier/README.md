@@ -324,3 +324,21 @@ The `private key` (identification) will be placed in `~/.ssh/id_rsa`
 Hope developers will enjoy deploying Personium unit on any of their suitable environment. Please try Personium and let us know your feedback or comments for further betterment of Personium. Your feedback and comments will be highly appreciated.
 
 --------------------------------------------------------------------
+
+## Update the server partially
+
+After sever setup, there are times when you want to partially update the server.
+
+For example, suppose you want to upgrade Nginx. At that time, you perform the following steps.
+
+1. Edit `group_vars/web.yml` to change the value of `nginx_version`
+2. Execute the playbook with `--tags web` option
+
+```console
+  $ ansible-playbook --tags web init_personium.yml
+```
+
+### Caution
+
+If you edit a configuration file without going through the playbook, the modification will not be reflected.
+Please make all corrections through the playbooks or update manually after executing the playbooks.

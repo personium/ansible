@@ -1,13 +1,13 @@
-# Certificate creation using Let's Encrypt.
+# Certificate creation using Let's Encrypt  
 
 -------------------------------------------------
 
-## Introduction.
+## Introduction  
 
 Describe how to create and use certificates by certificate authorities.
 This procedure describes how to create a server certificate using [Let's Encrypt](https://letsencrypt.org/). When using another certificate authority, please create it according to the procedure provided by your certificate authority.
 
-### Confirmed environment.
+### Confirmed environment  
 
 The operation is confirmed in the following environment in the procedure.
 
@@ -16,7 +16,7 @@ The operation is confirmed in the following environment in the procedure.
 | CentOS  | 7.2  |
 | Certbot | 0.27 |
 
-### Part 1 : Installation of certbot.
+### Part 1 : Installation of certbot  
 
 Install `certbot` using the yum command.
 
@@ -25,7 +25,7 @@ Install `certbot` using the yum command.
 # yum install -y certbot
 ```
 
-### Part 2 : Creating a server certificate using Certbot.
+### Part 2 : Creating a server certificate using Certbot  
 
 Create a server certificate using certbot.
 \* This procedure is working interactively.
@@ -162,7 +162,7 @@ Create a server certificate using certbot.
     | chain.pem      | Intermediate Certificate |
     | fullchain.pem  | Server certificate including Intermediate certificate  |
 
-### Part 3 : Registering the created certificate.
+### Part 3 : Registering the created certificate  
 
 Execute the following command and save the certificate in the material directory to be distributed by ansible.
 
@@ -170,3 +170,29 @@ Execute the following command and save the certificate in the material directory
 # cp /etc/letsencrypt/live/{FQDN}/fullchain.pem $ansible/resource/web/opt/nginx/conf/server.crt
 # cp /etc/letsencrypt/live/{FQDN}/privkey.pem $ansible/resource/web/opt/nginx/conf/server.key
 ```
+
+### Part 4 : Renewing SSL certificate before expiry date  
+Perform the following procedures to simplify the SSL certificate renewal routines.  
+
+#### Easy maintenance (execute once) 
+Execute the following commands to set up symbolic links.  
+
+```console
+# cd /opt/nginx/conf
+# rm server.*
+# ln -s /etc/letsencrypt/live/{FQDN}/fullchain.pem server.crt
+# ln -s /etc/letsencrypt/live/{FQDN}/privkey.pem server.key
+# systemctl reload nginx
+```
+
+#### Renew the SSL certificates (execute before expiry date)  
+Perform the following procedures to renew the SSL certificate.  
+
+1. Execute "Part 2 : Creating a server certificate using Certbot"
+
+1. Execute the following command to reload nginx configuration with the latest SSL certificate.  
+
+```console
+# systemctl reload nginx
+```
+

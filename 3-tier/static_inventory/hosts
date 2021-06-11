@@ -1,0 +1,107 @@
+############ Private IP Address of Bastion server ############
+[tag_ServerType_bastion]
+#Fill in the Private IP Address of Bastion server
+{Bastion_Private_IP}
+
+############ Private IP Address of Web server ############
+[tag_ServerType_web]
+#Fill in the Private IP Address of Web server
+{Web_Private_IP}
+
+############ Private IP Address of AP server ############
+[tag_ServerType_ap]
+#Fill in the Private IP Address of AP server
+{AP_Private_IP}
+
+############ Private IP Address of ES server ############
+[tag_ServerType_es]
+#Fill in the Private IP Address of ES server
+{ES_Private_IP}
+
+############ Private IP Address of NFS server ############
+[tag_ServerType_nfs]
+#Fill in the Private IP Address of NFS server
+{NFS_Private_IP}
+
+############ Setting items of All servers ############
+[all:vars]
+## User who runs ansible
+ansible_ssh_user={Ansible_Execution_User}
+
+## Secret key for executing ansible(Absolute path)
+ansible_ssh_private_key_file={SSH_PrivateKey}
+
+## Global IP Address of Web server
+web_global_ip={Web_Global_IP}
+
+## Web server FQDN
+base_url={Web_FQDN}
+
+## Private IP Address of WEB server
+web_private_ip={WEB_Private_IP}
+
+## Private IP Address of AP server
+ap_private_ip={AP_Private_IP}
+
+## Private IP Address of ES server
+es_private_ip={ES_Private_IP}
+
+## DNS of ElastciSearch
+es_elb={ES_Private_IP}
+
+## Private IP Address of NFS server set in /etc/hosts
+personium_nfs={NFS_Private_IP}
+
+#### for firewalld setting ####
+## network address of the bastion server that allows ssh connection
+bastion_network_sep={Bastion_Network_Separation}
+
+## Network address of WEB server
+web_network_sep={WEB_Network_Separation}
+
+## Network address of AP server
+ap_network_sep={AP_Network_Separation}
+#### for firewalld setting ####
+
+## enable master token ##
+enable_mastertoken=false
+
+## Master Token of Personium
+master_token={Master_Token}
+
+## URL format to access cell
+## true:path based cell url
+## false:per cell fqdn url
+path_based_cell_url_enabled={Path_Based_Cell_Url_Enabled}
+
+############ Setting items of bastion server ############
+[tag_ServerType_bastion:vars]
+
+
+
+############ Setting items of Web server ############
+[tag_ServerType_web:vars]
+
+
+
+############ Setting items of AP server ############
+[tag_ServerType_ap:vars]
+
+## Disk name for Personium log
+pio_logvol={PIO_LOGVOL}
+
+############ Setting items of ES server ############
+[tag_ServerType_es:vars]
+
+## Disk name for ES Data Log
+es_data_vol={ES_DATA_VOL}
+
+############ Setting items of NFS server ############
+[tag_ServerType_nfs:vars]
+
+## Disk name for NFS_WEBDAV
+nfs_webdav_vol={NFS_WEBDAV_VOL}
+
+#### for iptables setting ####
+
+

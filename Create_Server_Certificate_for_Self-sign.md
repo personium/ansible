@@ -9,7 +9,7 @@ Following is server self-signed ssl certificate creation procedure.
 and wildcard domain name.
 
 ```console
-    # cd /root/ansible/resource/web/opt/nginx/conf
+    # cd $ansible/resource/web/opt/nginx/conf
     # openssl genrsa -des3 -out server.key 1024
            Enter pass phrase for server.key:                            \* Required (Characters length: is 4 - 8191)
     # openssl req -new -key server.key -out server.csr

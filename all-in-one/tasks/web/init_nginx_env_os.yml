@@ -1,0 +1,42 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- name: Create group
+  group: name=nginx gid=2010 state=present
+
+- name: Create user
+  user: name=nginx uid=2010 shell=/sbin/nologin group=nginx comment="Nginx Administrator" create_home=no
+
+- name: Create /personium directory
+  file: state=directory path=/personium owner=root group=root
+
+- name: Create /opt directories
+  file: state=directory path=/opt{{ item }} owner=root group=root mode=0755
+  with_items:
+    - /disk1/nginx/
+    - /disk1/nginx/log
+    - /disk1/nginx/log/main
+    - /disk1/nginx/log/accesslog_443
+    - /disk1/nginx/log/accesslog_80
+    - /disk1/var
+    - /disk1/var/lib
+    - /disk1/var/log
+    - /var
+    - /var/lib
+    - /var/log
+
+- name: Create /opt/disk1/nginx directories
+  file: state=directory path=/opt/disk1/nginx{{ item }} owner=nginx group=root mode=0755
+  with_items:
+    - /lib
+
+- name: Create symlinks
+  file: state=link src={{ item.src }} dest={{ item.dest }} owner=root group=root mode=0777
+  with_items:
+    - { src: /opt/disk1/nginx, dest: /personium/nginx }
+    - { src: /personium/nginx/lib, dest: /opt/disk1/var/lib/nginx }
+    - { src: /personium/nginx/log, dest: /opt/disk1/var/log/nginx }
+    - { src: /personium/nginx/lib, dest: /opt/var/lib/nginx }
+    - { src: /personium/nginx/log, dest: /opt/var/log/nginx }
+
+- name: Set nginx user's home
+  user: name=nginx home=/personium/nginx/lib create_home=no

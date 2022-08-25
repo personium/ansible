@@ -1,19 +1,19 @@
 # Copyright FUJITSU LIMITED 2015-2019.
 
 - name: Download JDK
-  command: 'wget -q -O /usr/src/jdk8u192-b12.tar.gz https://github.com/AdoptOpenJDK/openjdk8-binaries/releases/download/jdk8u192-b12/OpenJDK8U-jdk_x64_linux_hotspot_8u192b12.tar.gz creates=/usr/src/jdk8u192-b12.tar.gz'
+  command: 'wget -q -O /usr/src/jdk-17.0.4.1+1.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.4.1_1.tar.gz creates=/usr/src/jdk-17.0.4.1+1.tar.gz'
 
 - name: Expand JDK
-  command: "tar -xzf /usr/src/jdk8u192-b12.tar.gz -C /usr/src creates=/usr/src/jdk8u192-b12"
+  command: "tar -xzf /usr/src/jdk-17.0.4.1+1.tar.gz -C /usr/src creates=/usr/src/jdk-17.0.4.1+1"
 
 - name: Change owner JDK
-  file: "state=directory path=/usr/src/jdk8u192-b12 owner=root group=root recurse=yes"
+  file: "state=directory path=/usr/src/jdk-17.0.4.1+1 owner=root group=root recurse=yes"
 
 - name: Deploy JDK
-  command: "mv /usr/src/jdk8u192-b12 /opt creates=/opt/jdk8u192-b12"
+  command: "mv /usr/src/jdk-17.0.4.1+1 /opt creates=/opt/jdk-17.0.4.1+1"
 
 - name: Create smlink /opt/jdk
-  file: "state=link src=/opt/jdk8u192-b12 dest=/opt/jdk"
+  file: "state=link src=/opt/jdk-17.0.4.1+1 dest=/opt/jdk"
 
 - name: Add JDK to environment variable
   copy: src=./resource/common/etc/bashrc dest=/etc/bashrc owner=root group=root mode=0644

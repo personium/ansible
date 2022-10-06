@@ -11,7 +11,7 @@
 
 - name: Reflect sysctl.conf
   command: sysctl -p
-  
+
 - name: Start elasticsearch
   systemd:
     name: elasticsearch

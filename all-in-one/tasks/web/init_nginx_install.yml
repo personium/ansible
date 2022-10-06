@@ -27,7 +27,6 @@
 - name: Install patch
   yum: name=patch state=latest
 
-
 - name: Download nginx-{{ nginx_version }}.tar.gz
   get_url: url=http://nginx.org/download/nginx-{{ nginx_version }}.tar.gz dest=/usr/local/src/nginx-{{ nginx_version }}.tar.gz
 

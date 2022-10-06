@@ -1,4 +1,4 @@
-# Copyright FUJITSU LIMITED 2015.
+# Copyright FUJITSU LIMITED 2015-2017.
 
 - name: Create group
   group: name=memcached gid=2040 state=present
@@ -6,10 +6,10 @@
 - name: Create user
   user: name=memcached uid=2040 shell=/sbin/nologin group=memcached home=/opt/var/lib/memcached comment="Memcached Administrator" createhome=no
 
-- name: Create /opt/var/lib
+- name: Create /opt/var/lib directory
   file: "state=directory path=/opt/var/lib owner=root group=root"
 
-- name: Create Home directory
+- name: Create home directory
   file: "state=directory path=/opt/var/lib/memcached owner=memcached group=memcached recurse=yes"
 
 - name: Create /personium/memcached directory
@@ -18,6 +18,5 @@
 - name: Create /personium/memcached/log directory
   file: state=directory path=/personium/memcached/log owner=memcached group=memcached mode=0755
 
-- name: Create /var/run/memcached
+- name: Create /var/run/memcached directory
   file: state=directory path=/var/run/memcached owner=memcached group=memcached mode=0755
-  

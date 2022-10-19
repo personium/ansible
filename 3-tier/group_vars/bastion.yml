@@ -2,6 +2,8 @@
 
 tag_ServerType: bastion
 
-personium_core_version : master
+personium_core_version: 1.8.0
+personium_core_sha256: 1457ed813f079ee34ea12835b892543189f84a8a6819b7eff011d41b5b87c65d
 
-personium_engine_version : master
+personium_engine_version: 1.6.0
+personium_engine_sha256: 0ec57828248b728bb6eb0c36e8071222677f1f7ff16b28f7a7ec90703e1fc4a1

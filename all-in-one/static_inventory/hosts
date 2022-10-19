@@ -1,0 +1,25 @@
+############ Private IP Address of Bastion server ############
+[tag_ServerType_bastion]
+#Fill in the Private IP Address of Bastion server
+127.0.0.1
+
+############ Private IP Address of Personium server ############
+[tag_ServerType_personium]
+#Fill in the Private IP Address of Personium server
+127.0.0.1
+
+############ Setting items of All servers ############
+[all:vars]
+## Master Token of Personium
+# EX: {Master_Token}->abc123
+master_token={Master_Token}
+
+## Web server FQDN
+# EX: {Personium_FQDN}->all-in-one.example
+base_url={Personium_FQDN}
+
+## URL format to access cell
+## true:path based cell url
+## false:per cell fqdn url
+# EX: {Path_Based_Cell_Url_Enabled}->false
+path_based_cell_url_enabled={Path_Based_Cell_Url_Enabled}

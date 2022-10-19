@@ -9,9 +9,9 @@ Followings will be created by openssl, after performing the procedure below.
 
 | File name | Explanation |
 |---|---|
-|unit.key             |This is a unit secret key. Created by RSA secret key of more than 2048bit in DER format. Managing this unit secret key strictly is highly recommended.|
+|unit.key             |This is a unit secret key. Created by RSA secret key of more than 2048bit in PEM format. Managing this unit secret key strictly is highly recommended.|
 |unit.csr             |Request for X.509 certificate. This file will be required to create the certificate and not be deployed on the server. |
-|unit-self-sign.crt   |It is a DER format certificate supporting Unit Key. The value of CN should be the FQDN of `web` server. |
+|unit-self-sign.crt   |It is a PEM format certificate supporting Unit Key. The value of CN should be the FQDN of `web` server. |
 
 Now you can get these certificate and key! Below is the procedure to generate the Self-signed unit certificate.
 
@@ -22,19 +22,19 @@ Now you can get these certificate and key! Below is the procedure to generate th
 1. Change directory to the certificate deployment directory of Bastion server.
 
     ```console
-    # cd /root/ansible/resource/ap/opt/x509/
+    # cd $ansible/resource/ap/opt/x509/
     ```
 
 1. Create secret key
 
     ```console
-    # openssl genrsa -out unit.key 2048 -outform DER
+    # openssl genrsa -out unit.key 2048
     ```  
 
     **Example:)**
 
     ```console
-    # openssl genrsa -out unit.key 2048 -outform DER
+    # openssl genrsa -out unit.key 2048
     Generating RSA private key, 2048 bit long modulus
     ............................................................+++
     ...................................................+++

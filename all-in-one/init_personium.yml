@@ -1,0 +1,47 @@
+# Copyright FUJITSU LIMITED 2015-2017.
+
+- hosts: tag_ServerType_bastion
+  connection: local
+  become: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/bastion.yml
+  tasks:
+    - include: ./tasks/common/check_base_url.yml
+    - include: ./common.yml
+    - include: ./bastion.yml
+  handlers:
+    - include: ./handlers/common/restart_firewalld.yml
+  tags:
+    - bastion_pre
+
+- hosts: tag_ServerType_personium
+  connection: local
+  become: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/es.yml
+    - ./group_vars/nfs.yml
+    - ./group_vars/ap.yml
+    - ./group_vars/web.yml
+  tasks:
+    - include: ./tasks/common/config_cron.yml
+    - include: ./common.yml
+    - include: ./es.yml tags=es
+    - include: ./nfs.yml tags=nfs
+    - include: ./ap.yml tags=ap
+    - include: ./web.yml tags=web
+  handlers:
+    - include: ./handlers/common/restart_firewalld.yml
+    - include: ./handlers/web/reload_nginx.yml
+
+- hosts: tag_ServerType_bastion
+  connection: local
+  become: yes
+  vars_files:
+    - ./group_vars/common.yml
+    - ./group_vars/bastion.yml
+  tasks:
+    - include: ./tasks/bastion/init_servicemanager.yml
+  tags:
+    - bastion_post

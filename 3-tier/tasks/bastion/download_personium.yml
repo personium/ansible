@@ -1,0 +1,16 @@
+# Copyright FUJITSU LIMITED 2015-2022.
+---
+
+- name: Download personium war from github
+  ansible.builtin.get_url:
+    url: https://github.com/personium/personium-core/releases/download/v{{ personium_core_version }}/personium-core-{{ personium_core_version }}.war
+    dest: ./resource/ap/opt/tomcat/webapps/personium-core.war
+    checksum: "sha256:{{ personium_core_sha256 }}"
+    mode: 0644
+
+- name: Download personium war from github
+  ansible.builtin.get_url:
+    url: https://github.com/personium/personium-engine/releases/download/v{{ personium_engine_version }}/personium-engine-{{ personium_engine_version }}.war
+    dest: ./resource/ap/opt/tomcat/webapps/personium-engine.war
+    checksum: "sha256:{{ personium_engine_sha256 }}"
+    mode: 0644

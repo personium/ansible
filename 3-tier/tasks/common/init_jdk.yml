@@ -1,10 +1,16 @@
 # Copyright FUJITSU LIMITED 2015-2022.
 
 - name: Download JDK
-  command: 'wget -q -O /usr/src/jdk-17.0.4.1+1.tar.gz https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.4.1_1.tar.gz creates=/usr/src/jdk-17.0.4.1+1.tar.gz'
+  ansible.builtin.get_url:
+    url: https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.4.1%2B1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.4.1_1.tar.gz
+    dest: /usr/src/jdk-17.0.4.1+1.tar.gz
+    mode: 0660
 
 - name: Expand JDK
-  command: "tar -xzf /usr/src/jdk-17.0.4.1+1.tar.gz -C /usr/src creates=/usr/src/jdk-17.0.4.1+1"
+  ansible.builtin.unarchive:
+    src: /usr/src/jdk-17.0.4.1+1.tar.gz
+    dest: /usr/src
+    remote_src: true
 
 - name: Change owner JDK
   file: "state=directory path=/usr/src/jdk-17.0.4.1+1 owner=root group=root recurse=yes"

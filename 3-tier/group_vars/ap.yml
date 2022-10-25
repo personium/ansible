@@ -17,9 +17,9 @@ cache_port: 11212
 cache_manager: memcached
 
 
-tomcat_version: 9.0.27
-commons_daemon_version: 1.2.2
-activemq_version: 5.15.8
+tomcat_version: 9.0.68
+commons_daemon_version: 1.3.1
+activemq_version: 5.15.14
 
 # engine extensions
 install_engine_extensions: yes

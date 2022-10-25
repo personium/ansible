@@ -45,10 +45,10 @@
     group: personium
     mode: '0644'
   with_items:
-    - "https://personium.io/mvnrepo/io/personium/personium-ex-ew-services/{{ ex_ew_services_ver }}/personium-ex-ew-services-{{ ex_ew_services_ver }}-libs.jar"
-    - "https://personium.io/mvnrepo/io/personium/personium-ex-httpclient/{{ ex_httpclient_ver }}/personium-ex-httpclient-{{ ex_httpclient_ver }}-libs.jar"
-    - "https://personium.io/mvnrepo/io/personium/personium-ex-mailsender/{{ ex_mailsender_ver }}/personium-ex-mailsender-{{ ex_mailsender_ver }}-libs.jar"
-    - "https://personium.io/mvnrepo/io/personium/personium-ex-slack/{{ ex_slack_ver}}/personium-ex-slack-{{ ex_slack_ver }}-libs.jar"
+    - "https://github.com/personium/personium-ex-ew-services/releases/download/v{{ ex_ew_services_ver }}/personium-ex-ew-services-{{ ex_ew_services_ver }}-libs.jar"
+    - "https://github.com/personium/personium-ex-httpclient/releases/download/v{{ ex_httpclient_ver }}/personium-ex-httpclient-{{ ex_httpclient_ver }}-libs.jar"
+    - "https://github.com/personium/personium-ex-mailsender/releases/download/v{{ ex_mailsender_ver }}/personium-ex-mailsender-{{ ex_mailsender_ver }}-libs.jar"
+    - "https://github.com/personium/personium-ex-slack-messenger/releases/download/v{{ ex_slack_ver }}/personium-ex-slack-messenger-{{ ex_slack_ver }}-libs.jar"
   when: install_engine_extensions | bool
 
 - name: Start tomcat

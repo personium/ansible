@@ -2,11 +2,15 @@
 
 Compatible Personium version: 1.8.0
 
+Enhancement:
+
+- Update Java version to 17. #161
+- Update middlewares. #167
+
 MISC:
 
 - Downloading war files from GitHub releases. #166
 - Downloading extension jar files from GitHub releases. #163
-- Installing Java 17. #161
 
 See: https://github.com/personium/ansible/milestone/6?closed=1
 

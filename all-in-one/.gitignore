@@ -1,3 +1,12 @@
 ansible.log
 
 personium_regression.sh
+
+# binary files
+resource/ap/opt/tomcat/webapps/personium-core.war
+resource/ap/opt/tomcat/webapps/personium-engine.war
+
+# certifications
+resource/ap/opt/x509/unit-self-sign.crt
+resource/ap/opt/x509/unit.csr
+resource/ap/opt/x509/unit.key

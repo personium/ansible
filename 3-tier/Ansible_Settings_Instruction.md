@@ -16,11 +16,11 @@ Below are the files where modification is required.
 * Example
 
 ```yaml
-    ansible_ssh_user={Ansible_Execution_User}
+    master_token={Master_Token}
 
     # should be changed to
 
-    ansible_ssh_user=ec2-user
+    master_token=abc123
 ```
 
 * Modify the hosts file as per instruction below

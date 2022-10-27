@@ -1,12 +1,14 @@
 # Copyright FUJITSU LIMITED 2015-2017.
 
-- include: ./tasks/bastion/git_clone.yml
-- include: ./tasks/bastion/init_maven.yml
+- include: ./tasks/bastion/download_personium.yml
 
-- include: ./tasks/bastion/mvn_package.yml
-  vars:
-    build_mod: core
+# - include: ./tasks/bastion/git_clone.yml
+# - include: ./tasks/bastion/init_maven.yml
 
-- include: ./tasks/bastion/mvn_package.yml
-  vars:
-    build_mod: engine
+# - include: ./tasks/bastion/mvn_package.yml
+#   vars:
+#     build_mod: core
+
+# - include: ./tasks/bastion/mvn_package.yml
+#   vars:
+#     build_mod: engine

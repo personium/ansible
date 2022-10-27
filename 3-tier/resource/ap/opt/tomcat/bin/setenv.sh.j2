@@ -32,8 +32,7 @@ export JAVA_OPTS=" \
            -Xms{{ tomcat_xms }} -Xmx{{ tomcat_xmx }} \
            -XX:MetaspaceSize={{ tomcat_metaspace_size }} -XX:MaxMetaspaceSize={{ tomcat_max_metaspace_size }} \
            -XX:+HeapDumpOnOutOfMemoryError \
-           -XX:+PrintGCDetails \
-           -XX:+PrintGCTimeStamps \
+           -Xlog:gc*:file=$CATALINA_BASE/logs/gc_%p_%t.log::filecount=5,filesize=10k:time \
            -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true \
            -Dlogback.configurationFile=/opt/logback/logback.xml \
            -Dio.personium.configurationFile=/personium/personium-core/conf/18888/personium-unit-config.properties \

@@ -3,4 +3,4 @@
 tag_ServerType: web
 
 nginx_version: 1.23.2
-nginx_hm_version: 0.33
+nginx_hm_version: 0.34
